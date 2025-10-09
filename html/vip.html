@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会员中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .vip-header {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+        }
+        .vip-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        .vip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+        .feature-item {
+            transition: all 0.3s ease;
+        }
+        .feature-item:hover {
+            background-color: #f8fafc;
+        }
+        .price-card {
+            transition: all 0.3s ease;
+        }
+        .price-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .price-card.popular {
+            border: 2px solid #667eea;
+            transform: scale(1.02);
+        }
+        .price-card.popular:hover {
+            transform: scale(1.07);
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-chevron-left text-gray-600"></i>
+        </button>
+        <h1 class="text-lg font-semibold">会员中心</h1>
+        <div class="w-8"></div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 px-6 py-6 space-y-6 overflow-y-auto">
+        <!-- VIP状态卡片 -->
+        <div class="vip-card rounded-3xl p-6 text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-y-16 translate-x-16"></div>
+            <div class="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-y-12 -translate-x-12"></div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-crown text-3xl text-yellow-300"></i>
+                        <div>
+                            <h2 class="text-2xl font-bold">VIP会员</h2>
+                            <p class="text-white opacity-90">享受专属特权</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm opacity-90">到期时间</div>
+                        <div class="font-semibold">2024-03-15</div>
+                    </div>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-2xl p-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm opacity-90">剩余天数</span>
+                        <span class="text-xl font-bold">28 天</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 特权功能 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">VIP特权</h3>
+            <div class="space-y-4">
+                <div class="feature-item flex items-center space-x-4 p-3 rounded-xl">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-infinity text-purple-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-medium text-gray-900">无限匹配</div>
+                        <div class="text-sm text-gray-500">每日无限制匹配次数</div>
+                    </div>
+                    <i class="fas fa-check-circle text-green-500"></i>
+                </div>
+                <div class="feature-item flex items-center space-x-4 p-3 rounded-xl">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-search text-blue-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-medium text-gray-900">高级筛选</div>
+                        <div class="text-sm text-gray-500">更多筛选条件和精准匹配</div>
+                    </div>
+                    <i class="fas fa-check-circle text-green-500"></i>
+                </div>
+                <div class="feature-item flex items-center space-x-4 p-3 rounded-xl">
+                    <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-heart text-pink-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-medium text-gray-900">查看喜欢我</div>
+                        <div class="text-sm text-gray-500">查看所有喜欢你的用户</div>
+                    </div>
+                    <i class="fas fa-check-circle text-green-500"></i>
+                </div>
+                <div class="feature-item flex items-center space-x-4 p-3 rounded-xl">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-star text-yellow-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-medium text-gray-900">优先展示</div>
+                        <div class="text-sm text-gray-500">在推荐列表中优先显示</div>
+                    </div>
+                    <i class="fas fa-check-circle text-green-500"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 续费套餐 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">续费套餐</h3>
+            <div class="space-y-4">
+                <!-- 月度会员 -->
+                <div class="price-card bg-gray-50 rounded-2xl p-4 border-2 border-transparent">
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <h4 class="font-semibold text-gray-900">月度会员</h4>
+                            <p class="text-sm text-gray-500">每月自动续费</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-900">¥29.9</div>
+                            <div class="text-sm text-gray-500">/月</div>
+                        </div>
+                    </div>
+                    <button class="w-full py-3 bg-gray-200 text-gray-700 rounded-xl font-medium">
+                        选择套餐
+                    </button>
+                </div>
+
+                <!-- 季度会员 -->
+                <div class="price-card popular bg-purple-50 rounded-2xl p-4 border-2 border-purple-200">
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <div class="flex items-center space-x-2 mb-1">
+                                <h4 class="font-semibold text-gray-900">季度会员</h4>
+                                <span class="bg-purple-500 text-white text-xs px-2 py-1 rounded-full">推荐</span>
+                            </div>
+                            <p class="text-sm text-gray-500">节省 ¥10</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="flex items-center space-x-1">
+                                <span class="text-lg text-gray-400 line-through">¥89.9</span>
+                                <div class="text-2xl font-bold text-gray-900">¥79.9</div>
+                            </div>
+                            <div class="text-sm text-gray-500">/季</div>
+                        </div>
+                    </div>
+                    <button class="w-full py-3 bg-purple-500 text-white rounded-xl font-medium">
+                        选择套餐
+                    </button>
+                </div>
+
+                <!-- 年度会员 -->
+                <div class="price-card bg-gray-50 rounded-2xl p-4 border-2 border-transparent">
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <h4 class="font-semibold text-gray-900">年度会员</h4>
+                            <p class="text-sm text-gray-500">节省 ¥59.9</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="flex items-center space-x-1">
+                                <span class="text-lg text-gray-400 line-through">¥358.8</span>
+                                <div class="text-2xl font-bold text-gray-900">¥299.9</div>
+                            </div>
+                            <div class="text-sm text-gray-500">/年</div>
+                        </div>
+                    </div>
+                    <button class="w-full py-3 bg-gray-200 text-gray-700 rounded-xl font-medium">
+                        选择套餐
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 单项服务 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">单项服务</h3>
+            <div class="grid grid-cols-1 gap-4">
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-heart text-pink-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">查看喜欢我</div>
+                            <div class="text-sm text-gray-500">查看所有喜欢你的用户</div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg font-semibold text-gray-900">¥2.9</div>
+                        <button class="text-purple-500 text-sm font-medium">购买</button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-star text-yellow-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">超级喜欢</div>
+                            <div class="text-sm text-gray-500">让对方优先看到你</div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg font-semibold text-gray-900">¥5.9</div>
+                        <button class="text-purple-500 text-sm font-medium">购买</button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-pin text-blue-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">置顶动态</div>
+                            <div class="text-sm text-gray-500">动态置顶24小时</div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg font-semibold text-gray-900">¥9.9</div>
+                        <button class="text-purple-500 text-sm font-medium">购买</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部说明 -->
+    <div class="px-6 py-4 bg-white border-t border-gray-100">
+        <div class="text-center text-xs text-gray-500 space-y-1">
+            <p>• 会员服务为虚拟商品，购买后不支持退款</p>
+            <p>• 自动续费可在设置中关闭</p>
+            <p>• 如有疑问请联系客服</p>
+        </div>
+    </div>
+</body>
+</html>

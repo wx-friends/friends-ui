@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态详情</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .comment-item {
+            transition: all 0.3s ease;
+        }
+        .comment-item:hover {
+            background-color: #f8fafc;
+        }
+        .like-btn {
+            transition: all 0.3s ease;
+        }
+        .like-btn:hover {
+            transform: scale(1.1);
+        }
+        .like-btn.liked {
+            color: #ff6b6b;
+        }
+        .photo-gallery {
+            display: grid;
+            gap: 4px;
+        }
+        .photo-gallery.single {
+            grid-template-columns: 1fr;
+        }
+        .photo-gallery.double {
+            grid-template-columns: 1fr 1fr;
+        }
+        .photo-gallery.triple {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+        .photo-gallery.triple .photo-item:first-child {
+            grid-column: 1 / -1;
+        }
+        .photo-gallery.multiple {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .photo-item {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .photo-item:hover {
+            transform: scale(1.02);
+        }
+        .photo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .photo-item:hover .photo-overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-chevron-left text-gray-600"></i>
+        </button>
+        <h1 class="text-lg font-semibold">动态详情</h1>
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-share text-gray-600"></i>
+        </button>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 overflow-y-auto">
+        <!-- 动态内容 -->
+        <div class="bg-white p-6 border-b border-gray-100">
+            <!-- 用户信息 -->
+            <div class="flex items-center space-x-3 mb-4">
+                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=50&h=50&fit=crop&crop=face" 
+                     alt="头像" class="w-12 h-12 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-2">
+                        <h3 class="font-semibold text-gray-900">小雨</h3>
+                        <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500">2小时前 · 距离你 1.2km</p>
+                </div>
+                <button class="w-8 h-8 flex items-center justify-center">
+                    <i class="fas fa-ellipsis-h text-gray-400"></i>
+                </button>
+            </div>
+
+            <!-- 动态文字 -->
+            <p class="text-gray-800 mb-4 leading-relaxed">
+                今天的夕阳特别美，分享给大家～希望每个人都能找到属于自己的那份美好 ✨
+            </p>
+
+            <!-- 照片展示 -->
+            <div class="mb-4">
+                <div class="photo-gallery triple">
+                    <div class="photo-item aspect-video bg-gray-100 rounded-xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop" 
+                             alt="照片1" class="w-full h-full object-cover">
+                        <div class="photo-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="photo-item aspect-square bg-gray-100 rounded-xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200&h=200&fit=crop" 
+                             alt="照片2" class="w-full h-full object-cover">
+                        <div class="photo-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="photo-item aspect-square bg-gray-100 rounded-xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=200&fit=crop" 
+                             alt="照片3" class="w-full h-full object-cover">
+                        <div class="photo-overlay">
+                            <span class="text-sm">+1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 互动统计 -->
+            <div class="flex items-center justify-between py-3 border-t border-gray-100">
+                <div class="flex items-center space-x-4">
+                    <button class="like-btn liked flex items-center space-x-2">
+                        <i class="fas fa-heart text-lg"></i>
+                        <span class="text-sm">12</span>
+                    </button>
+                    <button class="flex items-center space-x-2 text-gray-500">
+                        <i class="far fa-comment text-lg"></i>
+                        <span class="text-sm">3</span>
+                    </button>
+                </div>
+                <div class="text-sm text-gray-500">
+                    128 次浏览
+                </div>
+            </div>
+        </div>
+
+        <!-- 评论区域 -->
+        <div class="bg-white p-6">
+            <h3 class="font-semibold text-gray-900 mb-4">评论 (3)</h3>
+            
+            <!-- 评论列表 -->
+            <div class="space-y-4 mb-6">
+                <!-- 评论1 -->
+                <div class="comment-item p-3 rounded-xl">
+                    <div class="flex items-start space-x-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" 
+                             alt="头像" class="w-8 h-8 rounded-full object-cover">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <span class="font-medium text-gray-900 text-sm">李明</span>
+                                <span class="text-xs text-gray-500">1小时前</span>
+                            </div>
+                            <p class="text-gray-800 text-sm leading-relaxed">照片拍得真不错！这个地方在哪里？</p>
+                            <div class="flex items-center space-x-4 mt-2">
+                                <button class="text-xs text-gray-500 hover:text-gray-700">回复</button>
+                                <button class="text-xs text-gray-500 hover:text-gray-700">点赞</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 评论2 -->
+                <div class="comment-item p-3 rounded-xl">
+                    <div class="flex items-start space-x-3">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" 
+                             alt="头像" class="w-8 h-8 rounded-full object-cover">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <span class="font-medium text-gray-900 text-sm">小雅</span>
+                                <span class="text-xs text-gray-500">30分钟前</span>
+                            </div>
+                            <p class="text-gray-800 text-sm leading-relaxed">好美的夕阳！我也想去这个地方拍照 📸</p>
+                            <div class="flex items-center space-x-4 mt-2">
+                                <button class="text-xs text-gray-500 hover:text-gray-700">回复</button>
+                                <button class="text-xs text-gray-500 hover:text-gray-700">点赞</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 评论3 -->
+                <div class="comment-item p-3 rounded-xl">
+                    <div class="flex items-start space-x-3">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" 
+                             alt="头像" class="w-8 h-8 rounded-full object-cover">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <span class="font-medium text-gray-900 text-sm">王强</span>
+                                <span class="text-xs text-gray-500">15分钟前</span>
+                            </div>
+                            <p class="text-gray-800 text-sm leading-relaxed">太美了！能分享一下拍摄技巧吗？</p>
+                            <div class="flex items-center space-x-4 mt-2">
+                                <button class="text-xs text-gray-500 hover:text-gray-700">回复</button>
+                                <button class="text-xs text-gray-500 hover:text-gray-700">点赞</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部输入区域 -->
+    <div class="bg-white px-6 py-4 border-t border-gray-100">
+        <div class="flex items-center space-x-3">
+            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" 
+                 alt="头像" class="w-8 h-8 rounded-full object-cover">
+            <div class="flex-1 relative">
+                <input type="text" placeholder="写下你的评论..." 
+                       class="w-full px-4 py-3 bg-gray-100 rounded-full focus:outline-none focus:bg-gray-200 transition-colors">
+                <button class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    <i class="fas fa-smile text-gray-400"></i>
+                </button>
+            </div>
+            <button class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
+                <i class="fas fa-paper-plane text-white"></i>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>启动页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .logo-animation {
+            animation: fadeInUp 1.5s ease-out;
+        }
+        .text-animation {
+            animation: fadeInUp 1.5s ease-out 0.5s both;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .heart-beat {
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col items-center justify-center text-white">
+    <!-- 状态栏 -->
+    <div class="absolute top-0 left-0 right-0 flex justify-between items-center px-6 py-2 text-sm font-medium">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-white rounded-sm">
+                <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex flex-col items-center justify-center flex-1">
+        <!-- Logo -->
+        <div class="logo-animation mb-8">
+            <div class="w-24 h-24 bg-white rounded-3xl flex items-center justify-center shadow-2xl">
+                <i class="fas fa-heart text-4xl text-pink-500 heart-beat"></i>
+            </div>
+        </div>
+
+        <!-- 应用名称 -->
+        <div class="text-animation text-center">
+            <h1 class="text-4xl font-bold mb-4">缘分</h1>
+            <p class="text-xl opacity-90 mb-2">遇见更好的自己</p>
+            <p class="text-lg opacity-75">智能匹配 · 真诚交友</p>
+        </div>
+    </div>
+
+    <!-- 底部加载指示器 -->
+    <div class="absolute bottom-12 flex space-x-2">
+        <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+        <div class="w-2 h-2 bg-white opacity-50 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+        <div class="w-2 h-2 bg-white opacity-25 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+    </div>
+
+    <!-- 版本信息 -->
+    <div class="absolute bottom-6 text-sm opacity-60">
+        Version 1.0.0
+    </div>
+</body>
+</html>

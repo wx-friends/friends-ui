@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .setting-item {
+            transition: all 0.3s ease;
+        }
+        .setting-item:hover {
+            background-color: #f8fafc;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .toggle-switch.active {
+            background-color: #667eea;
+        }
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background-color: white;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+        }
+        .toggle-switch.active::before {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-chevron-left text-gray-600"></i>
+        </button>
+        <h1 class="text-lg font-semibold">设置</h1>
+        <div class="w-8"></div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 px-6 py-6 space-y-4">
+        <!-- 账户设置 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div class="setting-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">个人资料</div>
+                        <div class="text-sm text-gray-500">编辑头像、昵称等信息</div>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="setting-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-green-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">账户安全</div>
+                        <div class="text-sm text-gray-500">密码、手机号等安全设置</div>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="setting-item flex items-center justify-between p-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-id-card text-purple-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">身份认证</div>
+                        <div class="text-sm text-gray-500">实名、学历等认证管理</div>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- 隐私设置 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div class="px-4 py-3 border-b border-gray-100">
+                <h3 class="font-semibold text-gray-900">隐私设置</h3>
+            </div>
+            <div class="setting-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-map-marker-alt text-orange-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">位置信息</div>
+                        <div class="text-sm text-gray-500">关闭位置信息则无法查看与用户的距离</div>
+                    </div>
+                </div>
+                <div class="toggle-switch active"></div>
+            </div>
+        </div>
+
+        <!-- 通知设置 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div class="px-4 py-3 border-b border-gray-100">
+                <h3 class="font-semibold text-gray-900">通知设置</h3>
+            </div>
+            <div class="setting-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-heart text-pink-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">匹配通知</div>
+                        <div class="text-sm text-gray-500">新匹配用户通知</div>
+                    </div>
+                </div>
+                <div class="toggle-switch active"></div>
+            </div>
+            <div class="setting-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-comments text-indigo-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">消息通知</div>
+                        <div class="text-sm text-gray-500">新消息提醒</div>
+                    </div>
+                </div>
+                <div class="toggle-switch active"></div>
+            </div>
+            <div class="setting-item flex items-center justify-between p-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-bell text-teal-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">系统通知</div>
+                        <div class="text-sm text-gray-500">应用更新、活动等通知</div>
+                    </div>
+                </div>
+                <div class="toggle-switch"></div>
+            </div>
+        </div>
+
+        <!-- 其他设置 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div class="setting-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-language text-gray-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">语言设置</div>
+                        <div class="text-sm text-gray-500">简体中文</div>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="setting-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-moon text-gray-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">深色模式</div>
+                        <div class="text-sm text-gray-500">跟随系统</div>
+                    </div>
+                </div>
+                <div class="toggle-switch"></div>
+            </div>
+            <div class="setting-item flex items-center justify-between p-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-download text-gray-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">清理缓存</div>
+                        <div class="text-sm text-gray-500">156.2 MB</div>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- 关于我们 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div class="setting-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-info-circle text-gray-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">关于我们</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="setting-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-question-circle text-gray-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">帮助中心</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="setting-item flex items-center justify-between p-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-comment-alt text-gray-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">意见反馈</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- 退出登录 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div class="setting-item flex items-center justify-center p-4">
+                <span class="font-medium text-red-500">退出登录</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部版本信息 -->
+    <div class="px-6 py-4 text-center text-gray-500 text-sm">
+        <p>缘分 v1.0.0</p>
+        <p class="mt-1">© 2024 缘分团队</p>
+    </div>
+</body>
+</html>

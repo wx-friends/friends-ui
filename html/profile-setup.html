@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资料完善</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+        .photo-upload {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .next-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-chevron-left text-gray-600"></i>
+        </button>
+        <h1 class="text-lg font-semibold">完善资料</h1>
+        <div class="w-8"></div>
+    </div>
+
+    <!-- 进度条 -->
+    <div class="bg-white px-6 py-4">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-sm text-gray-600">完成度</span>
+            <span class="text-sm font-semibold text-gray-800">3/5</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="progress-bar h-2 rounded-full" style="width: 60%"></div>
+        </div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 px-6 py-6 space-y-6 overflow-y-auto">
+        <!-- 头像上传 -->
+        <div class="bg-white rounded-2xl p-6">
+            <h3 class="text-lg font-semibold mb-4">上传头像</h3>
+            <div class="flex items-center space-x-4">
+                <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" 
+                         alt="头像" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm text-gray-600 mb-2">选择一张清晰的照片作为头像</p>
+                    <button class="photo-upload text-white px-4 py-2 rounded-xl text-sm font-medium">
+                        <i class="fas fa-camera mr-2"></i>选择照片
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 基本信息 -->
+        <div class="bg-white rounded-2xl p-6">
+            <h3 class="text-lg font-semibold mb-4">基本信息</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">昵称</label>
+                    <input type="text" placeholder="请输入昵称" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                           value="小雨">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">性别</label>
+                        <select class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                            <option>女</option>
+                            <option>男</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">年龄</label>
+                        <input type="number" placeholder="25" 
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                               value="25">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">现居地</label>
+                    <input type="text" placeholder="请选择城市" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                           value="北京市朝阳区">
+                </div>
+            </div>
+        </div>
+
+        <!-- 兴趣标签 -->
+        <div class="bg-white rounded-2xl p-6">
+            <h3 class="text-lg font-semibold mb-4">兴趣标签</h3>
+            <div class="grid grid-cols-3 gap-3">
+                <button class="bg-purple-100 text-purple-600 px-4 py-2 rounded-xl text-sm font-medium border-2 border-purple-200">
+                    旅游
+                </button>
+                <button class="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl text-sm font-medium">
+                    摄影
+                </button>
+                <button class="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl text-sm font-medium">
+                    美食
+                </button>
+                <button class="bg-purple-100 text-purple-600 px-4 py-2 rounded-xl text-sm font-medium border-2 border-purple-200">
+                    电影
+                </button>
+                <button class="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl text-sm font-medium">
+                    音乐
+                </button>
+                <button class="bg-purple-100 text-purple-600 px-4 py-2 rounded-xl text-sm font-medium border-2 border-purple-200">
+                    读书
+                </button>
+                <button class="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl text-sm font-medium">
+                    运动
+                </button>
+                <button class="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl text-sm font-medium">
+                    游戏
+                </button>
+                <button class="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl text-sm font-medium">
+                    艺术
+                </button>
+            </div>
+            <p class="text-xs text-gray-500 mt-3">已选择 3/10 个标签</p>
+        </div>
+    </div>
+
+    <!-- 底部按钮 -->
+    <div class="bg-white px-6 py-4 border-t border-gray-100">
+        <button class="next-btn w-full py-4 rounded-2xl text-white font-semibold text-lg">
+            下一步
+        </button>
+    </div>
+</body>
+</html>

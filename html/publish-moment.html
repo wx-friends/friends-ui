@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布动态</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .photo-upload-area {
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .photo-upload-area:hover {
+            border-color: #667eea;
+            background-color: #f8fafc;
+        }
+        .photo-preview {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .photo-preview:hover {
+            transform: scale(1.02);
+        }
+        .remove-photo {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .char-counter {
+            transition: color 0.3s ease;
+        }
+        .char-counter.warning {
+            color: #f59e0b;
+        }
+        .char-counter.error {
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-chevron-left text-gray-600"></i>
+        </button>
+        <h1 class="text-lg font-semibold">发布动态</h1>
+        <button class="bg-purple-500 text-white px-4 py-2 rounded-xl font-medium text-sm">
+            发布
+        </button>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 px-6 py-6 space-y-6 overflow-y-auto">
+        <!-- 用户信息 -->
+        <div class="flex items-center space-x-3">
+            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=50&h=50&fit=crop&crop=face" 
+                 alt="头像" class="w-12 h-12 rounded-full object-cover">
+            <div>
+                <h3 class="font-semibold text-gray-900">小雨</h3>
+                <p class="text-sm text-gray-500">分享你的美好时刻</p>
+            </div>
+        </div>
+
+        <!-- 文字输入区域 -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <textarea placeholder="分享你的想法、感受或者有趣的事情..." 
+                      class="w-full h-32 resize-none border-none outline-none text-gray-800 placeholder-gray-400 text-base leading-relaxed"
+                      maxlength="200"></textarea>
+            <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-100">
+                <div class="text-xs text-gray-500">
+                    <span class="char-counter">0</span>/200
+                </div>
+                <div class="text-xs text-gray-500">
+                    今日剩余: 2/3 条
+                </div>
+            </div>
+        </div>
+
+        <!-- 照片上传区域 -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <h3 class="font-semibold text-gray-900 mb-4">添加照片</h3>
+            
+            <!-- 已选择的照片 -->
+            <div class="grid grid-cols-3 gap-3 mb-4">
+                <div class="photo-preview aspect-square bg-gray-100 rounded-xl overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop" 
+                         alt="照片1" class="w-full h-full object-cover">
+                    <div class="remove-photo">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="photo-preview aspect-square bg-gray-100 rounded-xl overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200&h=200&fit=crop" 
+                         alt="照片2" class="w-full h-full object-cover">
+                    <div class="remove-photo">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="photo-upload-area aspect-square rounded-xl flex flex-col items-center justify-center cursor-pointer">
+                    <i class="fas fa-plus text-gray-400 text-2xl mb-2"></i>
+                    <span class="text-sm text-gray-500">添加照片</span>
+                </div>
+            </div>
+            
+            <div class="text-xs text-gray-500">
+                最多可上传 9 张照片，第一张将作为封面
+            </div>
+        </div>
+
+        <!-- 位置信息 -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-map-marker-alt text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-900">添加位置</div>
+                        <div class="text-sm text-gray-500">让更多人看到你的动态</div>
+                    </div>
+                </div>
+                <button class="text-blue-600 font-medium">添加</button>
+            </div>
+        </div>
+
+        <!-- 隐私设置 -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <h3 class="font-semibold text-gray-900 mb-4">谁可以看到</h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-globe text-green-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">所有人</div>
+                            <div class="text-sm text-gray-500">广场中的用户都可以看到</div>
+                        </div>
+                    </div>
+                    <div class="w-6 h-6 border-2 border-green-500 bg-green-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check text-white text-xs"></i>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users text-purple-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">仅匹配用户</div>
+                            <div class="text-sm text-gray-500">只有互相匹配的用户可以看到</div>
+                        </div>
+                    </div>
+                    <div class="w-6 h-6 border-2 border-gray-300 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 发布提醒 -->
+        <div class="bg-blue-50 rounded-2xl p-4">
+            <div class="flex items-start space-x-3">
+                <i class="fas fa-info-circle text-blue-500 mt-0.5"></i>
+                <div class="text-sm text-blue-800">
+                    <p class="font-medium mb-1">发布须知</p>
+                    <ul class="space-y-1 text-xs">
+                        <li>• 内容需符合社区规范</li>
+                        <li>• 照片会经过人工审核</li>
+                        <li>• 发布后24小时内可删除</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

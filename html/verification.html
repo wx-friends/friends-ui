@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>身份认证</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .verification-step {
+            transition: all 0.3s ease;
+        }
+        .verification-step:hover {
+            background-color: #f8fafc;
+        }
+        .verification-step.completed {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        .verification-step.current {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            border-color: #667eea;
+            background-color: #f8fafc;
+        }
+        .upload-area.dragover {
+            border-color: #667eea;
+            background-color: #f0f4ff;
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+        .countdown {
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-chevron-left text-gray-600"></i>
+        </button>
+        <h1 class="text-lg font-semibold">身份认证</h1>
+        <div class="w-8"></div>
+    </div>
+
+    <!-- 进度条 -->
+    <div class="bg-white px-6 py-4">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-sm text-gray-600">认证进度</span>
+            <span class="text-sm font-semibold text-gray-800">2/3</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="progress-bar h-2 rounded-full" style="width: 67%"></div>
+        </div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 px-6 py-6 space-y-6 overflow-y-auto">
+        <!-- 认证步骤 -->
+        <div class="space-y-4">
+            <!-- 手机号认证 - 已完成 -->
+            <div class="verification-step completed p-6 rounded-2xl">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-mobile-alt text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-lg">手机号认证</h3>
+                        <p class="text-sm opacity-90">已验证手机号：138****8888</p>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 实名认证 - 当前步骤 -->
+            <div class="verification-step current p-6 rounded-2xl">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-id-card text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-lg">实名认证</h3>
+                        <p class="text-sm opacity-90">身份证信息验证</p>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-arrow-right text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 学历认证 - 未开始 -->
+            <div class="verification-step p-6 rounded-2xl bg-white">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-gray-600 text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-lg text-gray-900">学历认证</h3>
+                        <p class="text-sm text-gray-500">学信网验证</p>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 实名认证详情 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold mb-4">实名认证</h3>
+            
+            <!-- 身份证正面 -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-3">身份证正面</label>
+                <div class="upload-area p-8 rounded-xl text-center">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=200&fit=crop" 
+                         alt="身份证正面" class="w-full max-w-xs mx-auto rounded-lg shadow-lg">
+                    <p class="text-sm text-gray-600 mt-3">已上传身份证正面</p>
+                    <button class="text-blue-600 text-sm mt-2">重新上传</button>
+                </div>
+            </div>
+
+            <!-- 身份证反面 -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-3">身份证反面</label>
+                <div class="upload-area p-8 rounded-xl text-center">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=200&fit=crop" 
+                         alt="身份证反面" class="w-full max-w-xs mx-auto rounded-lg shadow-lg">
+                    <p class="text-sm text-gray-600 mt-3">已上传身份证反面</p>
+                    <button class="text-blue-600 text-sm mt-2">重新上传</button>
+                </div>
+            </div>
+
+            <!-- 人脸识别 -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-3">人脸识别验证</label>
+                <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-xl text-center">
+                    <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-check text-purple-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-900 mb-2">人脸识别验证</h4>
+                    <p class="text-sm text-gray-600 mb-4">请按照提示完成人脸识别</p>
+                    <button class="bg-purple-500 text-white px-6 py-3 rounded-xl font-medium">
+                        开始验证
+                    </button>
+                </div>
+            </div>
+
+            <!-- 认证信息 -->
+            <div class="space-y-3">
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">真实姓名</span>
+                    <span class="font-medium text-gray-900">张小雨</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">身份证号</span>
+                    <span class="font-medium text-gray-900">110101********1234</span>
+                </div>
+                <div class="flex justify-between py-2">
+                    <span class="text-gray-600">认证状态</span>
+                    <span class="text-green-600 font-medium">审核中</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 认证说明 -->
+        <div class="bg-blue-50 rounded-2xl p-4">
+            <div class="flex items-start space-x-3">
+                <i class="fas fa-info-circle text-blue-500 mt-0.5"></i>
+                <div class="text-sm text-blue-800">
+                    <p class="font-medium mb-2">认证说明</p>
+                    <ul class="space-y-1 text-xs">
+                        <li>• 身份证信息仅用于身份验证，我们会严格保护您的隐私</li>
+                        <li>• 认证审核通常需要1-3个工作日</li>
+                        <li>• 认证通过后将在个人资料中显示认证标识</li>
+                        <li>• 如有疑问请联系客服</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部按钮 -->
+    <div class="bg-white px-6 py-4 border-t border-gray-100">
+        <div class="flex space-x-4">
+            <button class="flex-1 py-4 bg-gray-200 text-gray-700 rounded-2xl font-semibold">
+                稍后认证
+            </button>
+            <button class="flex-1 py-4 bg-purple-500 text-white rounded-2xl font-semibold">
+                提交审核
+            </button>
+        </div>
+    </div>
+</body>
+</html>

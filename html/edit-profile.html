@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑资料</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .photo-upload {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .photo-item.primary {
+            grid-column: span 2;
+            grid-row: span 2;
+            aspect-ratio: 1;
+        }
+        .photo-upload-btn {
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .photo-upload-btn:hover {
+            border-color: #667eea;
+            background-color: #f8fafc;
+        }
+        .remove-photo {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            cursor: pointer;
+        }
+        .tag-item {
+            transition: all 0.3s ease;
+        }
+        .tag-item:hover {
+            transform: translateY(-1px);
+        }
+        .tag-item.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-chevron-left text-gray-600"></i>
+        </button>
+        <h1 class="text-lg font-semibold">编辑资料</h1>
+        <button class="text-purple-600 font-medium">保存</button>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 px-6 py-6 space-y-6 overflow-y-auto">
+        <!-- 照片管理 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold">照片管理</h3>
+                <span class="text-sm text-gray-500">5/9 张</span>
+            </div>
+            
+            <div class="photo-grid">
+                <!-- 主照片 -->
+                <div class="photo-item primary bg-gray-100 relative">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=face" 
+                         alt="主照片" class="w-full h-full object-cover">
+                    <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+                        头像
+                    </div>
+                    <div class="remove-photo">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                
+                <!-- 其他照片 -->
+                <div class="photo-item bg-gray-100 relative">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop" 
+                         alt="照片2" class="w-full h-full object-cover">
+                    <div class="remove-photo">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                
+                <div class="photo-item bg-gray-100 relative">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200&h=200&fit=crop" 
+                         alt="照片3" class="w-full h-full object-cover">
+                    <div class="remove-photo">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                
+                <div class="photo-item bg-gray-100 relative">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=200&fit=crop" 
+                         alt="照片4" class="w-full h-full object-cover">
+                    <div class="remove-photo">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                
+                <div class="photo-item bg-gray-100 relative">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=200&h=200&fit=crop" 
+                         alt="照片5" class="w-full h-full object-cover">
+                    <div class="remove-photo">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                
+                <!-- 添加照片按钮 -->
+                <div class="photo-upload-btn photo-item flex flex-col items-center justify-center cursor-pointer">
+                    <i class="fas fa-plus text-gray-400 text-xl mb-1"></i>
+                    <span class="text-xs text-gray-500">添加</span>
+                </div>
+            </div>
+            
+            <button class="photo-upload w-full mt-4 py-3 text-white rounded-xl font-medium">
+                <i class="fas fa-camera mr-2"></i>选择照片
+            </button>
+        </div>
+
+        <!-- 基本信息 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold mb-4">基本信息</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">昵称</label>
+                    <input type="text" value="小雨" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">性别</label>
+                        <select class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                            <option>女</option>
+                            <option>男</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">年龄</label>
+                        <input type="number" value="25" 
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">现居地</label>
+                    <input type="text" value="北京市朝阳区" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">家乡</label>
+                    <input type="text" value="上海市浦东新区" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">身高</label>
+                        <input type="number" value="165" placeholder="cm"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">体重</label>
+                        <input type="number" value="50" placeholder="kg"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 教育职业 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold mb-4">教育职业</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">学历</label>
+                    <select class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                        <option>本科</option>
+                        <option>高中</option>
+                        <option>大专</option>
+                        <option>硕士</option>
+                        <option>博士</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">职业</label>
+                    <input type="text" value="UI设计师" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">年收入</label>
+                    <select class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                        <option>10-20万</option>
+                        <option>5万以下</option>
+                        <option>5-10万</option>
+                        <option>20-50万</option>
+                        <option>50万以上</option>
+                        <option>保密</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 个人简介 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold mb-4">个人简介</h3>
+            <textarea placeholder="介绍一下自己，让更多人了解你..." 
+                      class="w-full h-24 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 resize-none"
+                      maxlength="200">热爱生活，喜欢摄影和旅行。希望能找到一个志同道合的人，一起探索这个世界的美好。</textarea>
+            <div class="flex justify-between items-center mt-2">
+                <span class="text-xs text-gray-500">最多200字</span>
+                <span class="text-xs text-gray-500">68/200</span>
+            </div>
+        </div>
+
+        <!-- 兴趣标签 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold mb-4">兴趣标签</h3>
+            <div class="grid grid-cols-3 gap-3">
+                <button class="tag-item px-4 py-2 rounded-xl border border-purple-200 bg-purple-50 text-purple-600 text-sm font-medium">
+                    旅游
+                </button>
+                <button class="tag-item px-4 py-2 rounded-xl border border-gray-200 bg-gray-50 text-gray-600 text-sm font-medium">
+                    摄影
+                </button>
+                <button class="tag-item px-4 py-2 rounded-xl border border-purple-200 bg-purple-50 text-purple-600 text-sm font-medium">
+                    美食
+                </button>
+                <button class="tag-item px-4 py-2 rounded-xl border border-purple-200 bg-purple-50 text-purple-600 text-sm font-medium">
+                    电影
+                </button>
+                <button class="tag-item px-4 py-2 rounded-xl border border-gray-200 bg-gray-50 text-gray-600 text-sm font-medium">
+                    音乐
+                </button>
+                <button class="tag-item px-4 py-2 rounded-xl border border-gray-200 bg-gray-50 text-gray-600 text-sm font-medium">
+                    读书
+                </button>
+                <button class="tag-item px-4 py-2 rounded-xl border border-gray-200 bg-gray-50 text-gray-600 text-sm font-medium">
+                    运动
+                </button>
+                <button class="tag-item px-4 py-2 rounded-xl border border-gray-200 bg-gray-50 text-gray-600 text-sm font-medium">
+                    游戏
+                </button>
+                <button class="tag-item px-4 py-2 rounded-xl border border-gray-200 bg-gray-50 text-gray-600 text-sm font-medium">
+                    艺术
+                </button>
+            </div>
+            <p class="text-xs text-gray-500 mt-3">已选择 4/10 个标签</p>
+        </div>
+    </div>
+
+    <!-- 底部保存按钮 -->
+    <div class="bg-white px-6 py-4 border-t border-gray-100">
+        <button class="w-full py-4 bg-purple-500 text-white rounded-2xl font-semibold text-lg">
+            保存修改
+        </button>
+    </div>
+</body>
+</html>

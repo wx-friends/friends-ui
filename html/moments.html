@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态广场</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .moment-card {
+            transition: all 0.3s ease;
+        }
+        .moment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .like-btn {
+            transition: all 0.3s ease;
+        }
+        .like-btn:hover {
+            transform: scale(1.1);
+        }
+        .like-btn.liked {
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <h1 class="text-xl font-bold">动态广场</h1>
+        <div class="flex items-center space-x-4">
+            <button class="w-8 h-8 flex items-center justify-center">
+                <i class="fas fa-search text-gray-600"></i>
+            </button>
+            <button class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                <i class="fas fa-plus text-white text-sm"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+        <!-- 动态 1 -->
+        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center space-x-3 mb-4">
+                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=50&h=50&fit=crop&crop=face" 
+                     alt="头像" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-2">
+                        <h3 class="font-semibold text-gray-900">小雨</h3>
+                        <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500">2小时前 · 距离你 1.2km</p>
+                </div>
+            </div>
+            
+            <p class="text-gray-800 mb-4 leading-relaxed">
+                今天的夕阳特别美，分享给大家～希望每个人都能找到属于自己的那份美好 ✨
+            </p>
+            
+            <div class="grid grid-cols-3 gap-2 mb-4">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop" 
+                     alt="照片1" class="w-full h-24 object-cover rounded-xl">
+                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200&h=200&fit=crop" 
+                     alt="照片2" class="w-full h-24 object-cover rounded-xl">
+                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=200&fit=crop" 
+                     alt="照片3" class="w-full h-24 object-cover rounded-xl">
+            </div>
+            
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                <button class="like-btn flex items-center space-x-2 text-gray-500">
+                    <i class="far fa-heart text-lg"></i>
+                    <span class="text-sm">12</span>
+                </button>
+                <button class="flex items-center space-x-2 text-gray-500">
+                    <i class="far fa-comment text-lg"></i>
+                    <span class="text-sm">3</span>
+                </button>
+                <button class="flex items-center space-x-2 text-gray-500">
+                    <i class="far fa-share text-lg"></i>
+                    <span class="text-sm">分享</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 动态 2 -->
+        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center space-x-3 mb-4">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face" 
+                     alt="头像" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-2">
+                        <h3 class="font-semibold text-gray-900">李明</h3>
+                        <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500">4小时前 · 距离你 2.3km</p>
+                </div>
+            </div>
+            
+            <p class="text-gray-800 mb-4 leading-relaxed">
+                周末去了新的咖啡店，环境很棒，咖啡也很好喝！推荐给大家～
+            </p>
+            
+            <div class="mb-4">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop" 
+                     alt="咖啡店" class="w-full h-48 object-cover rounded-xl">
+            </div>
+            
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                <button class="like-btn liked flex items-center space-x-2">
+                    <i class="fas fa-heart text-lg"></i>
+                    <span class="text-sm">8</span>
+                </button>
+                <button class="flex items-center space-x-2 text-gray-500">
+                    <i class="far fa-comment text-lg"></i>
+                    <span class="text-sm">5</span>
+                </button>
+                <button class="flex items-center space-x-2 text-gray-500">
+                    <i class="far fa-share text-lg"></i>
+                    <span class="text-sm">分享</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 动态 3 -->
+        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center space-x-3 mb-4">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face" 
+                     alt="头像" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-2">
+                        <h3 class="font-semibold text-gray-900">小雅</h3>
+                        <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500">6小时前 · 距离你 0.8km</p>
+                </div>
+            </div>
+            
+            <p class="text-gray-800 mb-4 leading-relaxed">
+                今天学会了做新的甜品，虽然卖相一般，但是味道还不错！下次会做得更好的 💪
+            </p>
+            
+            <div class="grid grid-cols-2 gap-2 mb-4">
+                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=200&h=200&fit=crop" 
+                     alt="甜品1" class="w-full h-32 object-cover rounded-xl">
+                <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=200&h=200&fit=crop" 
+                     alt="甜品2" class="w-full h-32 object-cover rounded-xl">
+            </div>
+            
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                <button class="like-btn flex items-center space-x-2 text-gray-500">
+                    <i class="far fa-heart text-lg"></i>
+                    <span class="text-sm">15</span>
+                </button>
+                <button class="flex items-center space-x-2 text-gray-500">
+                    <i class="far fa-comment text-lg"></i>
+                    <span class="text-sm">7</span>
+                </button>
+                <button class="flex items-center space-x-2 text-gray-500">
+                    <i class="far fa-share text-lg"></i>
+                    <span class="text-sm">分享</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bg-white border-t border-gray-200 px-6 py-3">
+        <div class="flex justify-around">
+            <button class="flex flex-col items-center text-gray-400">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">发现</span>
+            </button>
+            <button class="flex flex-col items-center text-gray-400">
+                <i class="fas fa-comments text-xl mb-1"></i>
+                <span class="text-xs">消息</span>
+            </button>
+            <button class="flex flex-col items-center text-purple-600">
+                <i class="fas fa-camera text-xl mb-1"></i>
+                <span class="text-xs">动态</span>
+            </button>
+            <button class="flex flex-col items-center text-gray-400">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">我的</span>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
