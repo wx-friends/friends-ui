@@ -10,13 +10,6 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        .tab-button {
-            transition: all 0.3s ease;
-        }
-        .tab-button.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
         .user-card {
             transition: all 0.3s ease;
         }
@@ -37,23 +30,30 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
     </style>
 </head>
 <body class="h-screen bg-gray-50 flex flex-col">
     <!-- 状态栏 -->
-    <div class="flex justify-between items-center px-6 py-2 text-white text-sm font-medium bg-gradient-to-r from-purple-600 to-blue-600">
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
         <span>9:41</span>
         <div class="flex items-center space-x-1">
             <i class="fas fa-signal text-xs"></i>
             <i class="fas fa-wifi text-xs"></i>
-            <div class="w-6 h-3 border border-white rounded-sm">
-                <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
             </div>
         </div>
     </div>
 
     <!-- 导航栏 -->
-    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-200">
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
         <div class="flex items-center space-x-3">
             <button onclick="goBack()" class="w-8 h-8 flex items-center justify-center">
                 <i class="fas fa-arrow-left text-gray-600"></i>
@@ -84,7 +84,7 @@
             <div class="px-6 py-4">
                 <div class="space-y-4">
                     <!-- 用户卡片 1 -->
-                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
                                 <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face"
@@ -116,7 +116,7 @@
                     </div>
 
                     <!-- 用户卡片 2 -->
-                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
                                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
@@ -145,7 +145,7 @@
                     </div>
 
                     <!-- 用户卡片 3 -->
-                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
                                 <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face"
@@ -177,7 +177,7 @@
                     </div>
 
                     <!-- 用户卡片 4 -->
-                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
                                 <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face"
@@ -213,7 +213,7 @@
             <div class="px-6 py-4">
                 <div class="space-y-4">
                     <!-- 粉丝卡片 1 -->
-                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
                                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face"
@@ -245,7 +245,7 @@
                     </div>
 
                     <!-- 粉丝卡片 2 -->
-                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
                                 <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face"
@@ -274,7 +274,7 @@
                     </div>
 
                     <!-- 粉丝卡片 3 -->
-                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
                                 <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face"
@@ -306,7 +306,7 @@
                     </div>
 
                     <!-- 粉丝卡片 4 -->
-                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
                                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
