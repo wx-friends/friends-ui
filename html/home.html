@@ -57,13 +57,13 @@
 
     <!-- 导航栏 -->
     <div class="px-6 py-4 flex items-center justify-between">
+        <h1 class="text-xl font-bold text-white">发现</h1>
         <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
             <i class="fas fa-filter text-white"></i>
         </button>
-        <h1 class="text-xl font-bold text-white">发现</h1>
-        <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-            <i class="fas fa-search text-white"></i>
-        </button>
+<!--        <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">-->
+<!--            <i class="fas fa-search text-white"></i>-->
+<!--        </button>-->
     </div>
 
     <!-- 主要内容 -->
@@ -72,9 +72,9 @@
         <div class="card rounded-3xl overflow-hidden shadow-2xl">
             <!-- 照片区域 -->
             <div class="relative h-96">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=face" 
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=face"
                      alt="用户照片" class="w-full h-full object-cover">
-                
+
                 <!-- 用户信息覆盖层 -->
                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/50 to-transparent p-6">
                     <div class="flex items-center justify-between mb-2">
@@ -120,13 +120,13 @@
 
         <!-- 操作按钮 -->
         <div class="flex justify-center items-center space-x-6 mt-8">
-            <button class="pass-btn w-16 h-16 rounded-full flex items-center justify-center text-white">
+            <button class="pass-btn w-16 h-16 rounded-full flex items-center justify-center text-white" onclick="handlePass()">
                 <i class="fas fa-times text-xl"></i>
             </button>
-            <button class="super-like-btn w-12 h-12 rounded-full flex items-center justify-center text-white">
+            <button class="super-like-btn w-12 h-12 rounded-full flex items-center justify-center text-white" onclick="handleSuperLike()">
                 <i class="fas fa-star text-lg"></i>
             </button>
-            <button class="like-btn w-16 h-16 rounded-full flex items-center justify-center text-white">
+            <button class="like-btn w-16 h-16 rounded-full flex items-center justify-center text-white" onclick="handleLike()">
                 <i class="fas fa-heart text-xl"></i>
             </button>
         </div>
@@ -135,7 +135,7 @@
         <div class="mt-6 text-center">
             <div class="inline-flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-full">
                 <i class="fas fa-heart text-pink-300 mr-2"></i>
-                <span class="text-white text-sm">今日剩余匹配次数: 2/3</span>
+                <span class="text-white text-sm match-count">今日剩余匹配次数: 2/3</span>
             </div>
         </div>
     </div>
@@ -143,23 +143,98 @@
     <!-- 底部导航栏 -->
     <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg px-6 py-3">
         <div class="flex justify-around">
-            <button class="flex flex-col items-center text-white">
+            <button class="nav-button flex flex-col items-center text-white" data-page="home">
                 <i class="fas fa-home text-xl mb-1"></i>
                 <span class="text-xs">发现</span>
             </button>
-            <button class="flex flex-col items-center text-white opacity-50">
+            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="chat">
                 <i class="fas fa-comments text-xl mb-1"></i>
                 <span class="text-xs">消息</span>
             </button>
-            <button class="flex flex-col items-center text-white opacity-50">
+            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="moments">
                 <i class="fas fa-camera text-xl mb-1"></i>
                 <span class="text-xs">动态</span>
             </button>
-            <button class="flex flex-col items-center text-white opacity-50">
+            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="profile">
                 <i class="fas fa-user text-xl mb-1"></i>
                 <span class="text-xs">我的</span>
             </button>
         </div>
     </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 处理喜欢操作
+        function handleLike() {
+            showToast('已喜欢！', 'success');
+            updateMatchCount();
+            loadNextProfile();
+        }
+
+        // 处理跳过操作
+        function handlePass() {
+            showToast('已跳过', 'info');
+            loadNextProfile();
+        }
+
+        // 处理超级喜欢操作
+        function handleSuperLike() {
+            showToast('超级喜欢已发送！', 'success');
+            updateMatchCount();
+            loadNextProfile();
+        }
+
+        // 更新匹配次数
+        function updateMatchCount() {
+            const matchCountElement = document.querySelector('.match-count');
+            if (matchCountElement) {
+                const currentCount = parseInt(matchCountElement.textContent.split('/')[0].split(': ')[1]);
+                const newCount = Math.max(0, currentCount - 1);
+                matchCountElement.textContent = `今日剩余匹配次数: ${newCount}/3`;
+            }
+        }
+
+        // 加载下一个用户资料
+        function loadNextProfile() {
+            setTimeout(() => {
+                showToast('正在加载下一个用户...', 'info');
+                // 这里可以添加加载新用户资料的逻辑
+            }, 1000);
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
 </body>
 </html>

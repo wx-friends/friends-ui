@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能测试页面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .test-card {
+            transition: all 0.3s ease;
+        }
+        .test-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <h1 class="text-xl font-bold">功能测试</h1>
+        <div class="flex items-center space-x-4">
+            <button class="w-8 h-8 flex items-center justify-center">
+                <i class="fas fa-refresh text-gray-600"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+        <!-- 导航测试 -->
+        <div class="test-card bg-white rounded-2xl p-4 shadow-sm">
+            <h3 class="font-semibold text-gray-900 mb-3">页面导航测试</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="nav-button bg-blue-500 text-white px-4 py-2 rounded-lg" data-page="home">
+                    <i class="fas fa-home mr-2"></i>发现页面
+                </button>
+                <button class="nav-button bg-green-500 text-white px-4 py-2 rounded-lg" data-page="chat">
+                    <i class="fas fa-comments mr-2"></i>聊天页面
+                </button>
+                <button class="nav-button bg-purple-500 text-white px-4 py-2 rounded-lg" data-page="moments">
+                    <i class="fas fa-camera mr-2"></i>动态页面
+                </button>
+                <button class="nav-button bg-orange-500 text-white px-4 py-2 rounded-lg" data-page="profile">
+                    <i class="fas fa-user mr-2"></i>个人中心
+                </button>
+            </div>
+        </div>
+
+        <!-- 交互功能测试 -->
+        <div class="test-card bg-white rounded-2xl p-4 shadow-sm">
+            <h3 class="font-semibold text-gray-900 mb-3">交互功能测试</h3>
+            <div class="space-y-3">
+                <!-- 匹配操作测试 -->
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">匹配操作按钮</span>
+                    <div class="flex space-x-2">
+                        <button class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white" onclick="testLike()">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <button class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white" onclick="testPass()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white" onclick="testSuperLike()">
+                            <i class="fas fa-star"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 点赞测试 -->
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">动态点赞</span>
+                    <button class="like-btn flex items-center space-x-2 text-gray-500" onclick="testToggleLike(this)">
+                        <i class="far fa-heart text-lg"></i>
+                        <span class="text-sm">0</span>
+                    </button>
+                </div>
+
+                <!-- 聊天测试 -->
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">聊天功能</span>
+                    <button class="bg-green-500 text-white px-4 py-2 rounded-lg" onclick="testChat()">
+                        打开聊天
+                    </button>
+                </div>
+
+                <!-- 个人中心测试 -->
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">个人中心</span>
+                    <button class="bg-orange-500 text-white px-4 py-2 rounded-lg" onclick="testProfile()">
+                        编辑资料
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast 提示测试 -->
+        <div class="test-card bg-white rounded-2xl p-4 shadow-sm">
+            <h3 class="font-semibold text-gray-900 mb-3">提示消息测试</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" onclick="showToast('信息提示', 'info')">
+                    信息提示
+                </button>
+                <button class="bg-green-500 text-white px-4 py-2 rounded-lg" onclick="showToast('成功提示', 'success')">
+                    成功提示
+                </button>
+                <button class="bg-yellow-500 text-white px-4 py-2 rounded-lg" onclick="showToast('警告提示', 'warning')">
+                    警告提示
+                </button>
+                <button class="bg-red-500 text-white px-4 py-2 rounded-lg" onclick="showToast('错误提示', 'error')">
+                    错误提示
+                </button>
+            </div>
+        </div>
+
+        <!-- 功能状态 -->
+        <div class="test-card bg-white rounded-2xl p-4 shadow-sm">
+            <h3 class="font-semibold text-gray-900 mb-3">功能状态</h3>
+            <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">导航系统</span>
+                    <span class="text-green-500 text-sm">✓ 已启用</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">匹配功能</span>
+                    <span class="text-green-500 text-sm">✓ 已启用</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">聊天功能</span>
+                    <span class="text-green-500 text-sm">✓ 已启用</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">动态功能</span>
+                    <span class="text-green-500 text-sm">✓ 已启用</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">个人中心</span>
+                    <span class="text-green-500 text-sm">✓ 已启用</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bg-white border-t border-gray-200 px-6 py-3">
+        <div class="flex justify-around">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="home">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">发现</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="chat">
+                <i class="fas fa-comments text-xl mb-1"></i>
+                <span class="text-xs">消息</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="moments">
+                <i class="fas fa-camera text-xl mb-1"></i>
+                <span class="text-xs">动态</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="profile">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">我的</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+    
+    <!-- 测试脚本 -->
+    <script>
+        // 测试匹配操作
+        function testLike() {
+            showToast('测试喜欢功能', 'success');
+        }
+
+        function testPass() {
+            showToast('测试跳过功能', 'info');
+        }
+
+        function testSuperLike() {
+            showToast('测试超级喜欢功能', 'success');
+        }
+
+        // 测试点赞功能
+        function testToggleLike(button) {
+            const icon = button.querySelector('i');
+            const countSpan = button.querySelector('span');
+            let count = parseInt(countSpan.textContent);
+
+            if (button.classList.contains('liked')) {
+                button.classList.remove('liked');
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                count--;
+                showToast('已取消点赞', 'info');
+            } else {
+                button.classList.add('liked');
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                count++;
+                showToast('已点赞', 'success');
+            }
+
+            countSpan.textContent = count;
+        }
+
+        // 测试聊天功能
+        function testChat() {
+            showToast('正在打开聊天...', 'info');
+        }
+
+        // 测试个人中心功能
+        function testProfile() {
+            showToast('正在跳转到编辑资料...', 'info');
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+            
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+            
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

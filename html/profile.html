@@ -84,7 +84,7 @@
     <div class="flex-1 px-6 py-6 space-y-4">
         <!-- 功能菜单 -->
         <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
-            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer" data-action="edit-profile" onclick="handleProfileAction('edit-profile')">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
                         <i class="fas fa-user-edit text-purple-600"></i>
@@ -93,7 +93,7 @@
                 </div>
                 <i class="fas fa-chevron-right text-gray-400"></i>
             </div>
-            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer" data-action="vip-center" onclick="handleProfileAction('vip-center')">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                         <i class="fas fa-crown text-blue-600"></i>
@@ -200,23 +200,120 @@
     <!-- 底部导航栏 -->
     <div class="bg-white border-t border-gray-200 px-6 py-3">
         <div class="flex justify-around">
-            <button class="flex flex-col items-center text-gray-400">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="home">
                 <i class="fas fa-home text-xl mb-1"></i>
                 <span class="text-xs">发现</span>
             </button>
-            <button class="flex flex-col items-center text-gray-400">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="chat">
                 <i class="fas fa-comments text-xl mb-1"></i>
                 <span class="text-xs">消息</span>
             </button>
-            <button class="flex flex-col items-center text-gray-400">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="moments">
                 <i class="fas fa-camera text-xl mb-1"></i>
                 <span class="text-xs">动态</span>
             </button>
-            <button class="flex flex-col items-center text-purple-600">
+            <button class="nav-button flex flex-col items-center text-purple-600" data-page="profile">
                 <i class="fas fa-user text-xl mb-1"></i>
                 <span class="text-xs">我的</span>
             </button>
         </div>
     </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+    
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 处理个人中心操作
+        function handleProfileAction(action) {
+            const actions = {
+                'edit-profile': () => {
+                    showToast('正在跳转到编辑资料页面...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'edit-profile.html';
+                    }, 1000);
+                },
+                'vip-center': () => {
+                    showToast('正在跳转到会员中心...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'vip.html';
+                    }, 1000);
+                },
+                'liked-me': () => {
+                    showToast('正在加载喜欢我的人...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'liked-me.html';
+                    }, 1000);
+                },
+                'my-favorites': () => {
+                    showToast('正在加载我的收藏...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'favorites.html';
+                    }, 1000);
+                },
+                'settings': () => {
+                    showToast('正在跳转到设置页面...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'settings.html';
+                    }, 1000);
+                },
+                'privacy': () => {
+                    showToast('正在跳转到隐私设置...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'privacy.html';
+                    }, 1000);
+                },
+                'notifications': () => {
+                    showToast('正在跳转到通知设置...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'notifications.html';
+                    }, 1000);
+                },
+                'help': () => {
+                    showToast('正在跳转到帮助页面...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'help.html';
+                    }, 1000);
+                }
+            };
+
+            if (actions[action]) {
+                actions[action]();
+            } else {
+                showToast('功能开发中...', 'info');
+            }
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+            
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+            
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
 </body>
 </html>

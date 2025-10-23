@@ -55,7 +55,7 @@
         <!-- 聊天列表 -->
         <div class="space-y-1">
             <!-- 聊天项 1 -->
-            <div class="chat-item bg-white px-6 py-4 border-b border-gray-50">
+            <div class="chat-item bg-white px-6 py-4 border-b border-gray-50 cursor-pointer" data-chat-id="1" onclick="openChat(1)">
                 <div class="flex items-center space-x-4">
                     <div class="relative">
                         <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face" 
@@ -78,7 +78,7 @@
             </div>
 
             <!-- 聊天项 2 -->
-            <div class="chat-item bg-white px-6 py-4 border-b border-gray-50">
+            <div class="chat-item bg-white px-6 py-4 border-b border-gray-50 cursor-pointer" data-chat-id="2" onclick="openChat(2)">
                 <div class="flex items-center space-x-4">
                     <div class="relative">
                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" 
@@ -181,23 +181,69 @@
     <!-- 底部导航栏 -->
     <div class="bg-white border-t border-gray-200 px-6 py-3">
         <div class="flex justify-around">
-            <button class="flex flex-col items-center text-gray-400">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="home">
                 <i class="fas fa-home text-xl mb-1"></i>
                 <span class="text-xs">发现</span>
             </button>
-            <button class="flex flex-col items-center text-purple-600">
+            <button class="nav-button flex flex-col items-center text-purple-600" data-page="chat">
                 <i class="fas fa-comments text-xl mb-1"></i>
                 <span class="text-xs">消息</span>
             </button>
-            <button class="flex flex-col items-center text-gray-400">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="moments">
                 <i class="fas fa-camera text-xl mb-1"></i>
                 <span class="text-xs">动态</span>
             </button>
-            <button class="flex flex-col items-center text-gray-400">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="profile">
                 <i class="fas fa-user text-xl mb-1"></i>
                 <span class="text-xs">我的</span>
             </button>
         </div>
     </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+    
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 打开聊天
+        function openChat(chatId) {
+            showToast('正在打开聊天...', 'info');
+            setTimeout(() => {
+                // 这里可以跳转到聊天详情页面
+                window.location.href = `chat-detail.html?id=${chatId}`;
+            }, 500);
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+            
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+            
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
 </body>
 </html>

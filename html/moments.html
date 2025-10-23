@@ -86,15 +86,15 @@
             </div>
             
             <div class="flex items-center justify-between pt-3 border-t border-gray-100">
-                <button class="like-btn flex items-center space-x-2 text-gray-500">
+                <button class="like-btn flex items-center space-x-2 text-gray-500" onclick="toggleLike(this)">
                     <i class="far fa-heart text-lg"></i>
                     <span class="text-sm">12</span>
                 </button>
-                <button class="flex items-center space-x-2 text-gray-500">
+                <button class="flex items-center space-x-2 text-gray-500" onclick="showComments(1)">
                     <i class="far fa-comment text-lg"></i>
                     <span class="text-sm">3</span>
                 </button>
-                <button class="flex items-center space-x-2 text-gray-500">
+                <button class="flex items-center space-x-2 text-gray-500" onclick="shareMoment(1)">
                     <i class="far fa-share text-lg"></i>
                     <span class="text-sm">分享</span>
                 </button>
@@ -127,15 +127,15 @@
             </div>
             
             <div class="flex items-center justify-between pt-3 border-t border-gray-100">
-                <button class="like-btn liked flex items-center space-x-2">
+                <button class="like-btn liked flex items-center space-x-2" onclick="toggleLike(this)">
                     <i class="fas fa-heart text-lg"></i>
                     <span class="text-sm">8</span>
                 </button>
-                <button class="flex items-center space-x-2 text-gray-500">
+                <button class="flex items-center space-x-2 text-gray-500" onclick="showComments(2)">
                     <i class="far fa-comment text-lg"></i>
                     <span class="text-sm">5</span>
                 </button>
-                <button class="flex items-center space-x-2 text-gray-500">
+                <button class="flex items-center space-x-2 text-gray-500" onclick="shareMoment(2)">
                     <i class="far fa-share text-lg"></i>
                     <span class="text-sm">分享</span>
                 </button>
@@ -170,15 +170,15 @@
             </div>
             
             <div class="flex items-center justify-between pt-3 border-t border-gray-100">
-                <button class="like-btn flex items-center space-x-2 text-gray-500">
+                <button class="like-btn flex items-center space-x-2 text-gray-500" onclick="toggleLike(this)">
                     <i class="far fa-heart text-lg"></i>
                     <span class="text-sm">15</span>
                 </button>
-                <button class="flex items-center space-x-2 text-gray-500">
+                <button class="flex items-center space-x-2 text-gray-500" onclick="showComments(3)">
                     <i class="far fa-comment text-lg"></i>
                     <span class="text-sm">7</span>
                 </button>
-                <button class="flex items-center space-x-2 text-gray-500">
+                <button class="flex items-center space-x-2 text-gray-500" onclick="shareMoment(3)">
                     <i class="far fa-share text-lg"></i>
                     <span class="text-sm">分享</span>
                 </button>
@@ -189,23 +189,95 @@
     <!-- 底部导航栏 -->
     <div class="bg-white border-t border-gray-200 px-6 py-3">
         <div class="flex justify-around">
-            <button class="flex flex-col items-center text-gray-400">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="home">
                 <i class="fas fa-home text-xl mb-1"></i>
                 <span class="text-xs">发现</span>
             </button>
-            <button class="flex flex-col items-center text-gray-400">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="chat">
                 <i class="fas fa-comments text-xl mb-1"></i>
                 <span class="text-xs">消息</span>
             </button>
-            <button class="flex flex-col items-center text-purple-600">
+            <button class="nav-button flex flex-col items-center text-purple-600" data-page="moments">
                 <i class="fas fa-camera text-xl mb-1"></i>
                 <span class="text-xs">动态</span>
             </button>
-            <button class="flex flex-col items-center text-gray-400">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="profile">
                 <i class="fas fa-user text-xl mb-1"></i>
                 <span class="text-xs">我的</span>
             </button>
         </div>
     </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+    
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 切换点赞状态
+        function toggleLike(button) {
+            const icon = button.querySelector('i');
+            const countSpan = button.querySelector('span');
+            let count = parseInt(countSpan.textContent);
+
+            if (button.classList.contains('liked')) {
+                button.classList.remove('liked');
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                count--;
+                showToast('已取消点赞', 'info');
+            } else {
+                button.classList.add('liked');
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                count++;
+                showToast('已点赞', 'success');
+            }
+
+            countSpan.textContent = count;
+        }
+
+        // 显示评论
+        function showComments(momentId) {
+            showToast('正在加载评论...', 'info');
+            // 这里可以跳转到评论页面或显示评论弹窗
+        }
+
+        // 分享动态
+        function shareMoment(momentId) {
+            showToast('分享功能开发中...', 'info');
+            // 这里可以实现分享功能
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+            
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+            
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
