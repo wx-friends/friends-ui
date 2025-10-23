@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>功能测试页面</title>
+    <title>页面跳转测试</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -34,125 +34,84 @@
 
     <!-- 导航栏 -->
     <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
-        <h1 class="text-xl font-bold">功能测试</h1>
-        <div class="flex items-center space-x-4">
-            <button class="w-8 h-8 flex items-center justify-center">
-                <i class="fas fa-refresh text-gray-600"></i>
-            </button>
-        </div>
+        <h1 class="text-xl font-bold">页面跳转测试</h1>
+        <button class="w-8 h-8 flex items-center justify-center" onclick="goBack()">
+            <i class="fas fa-arrow-left text-gray-600"></i>
+        </button>
     </div>
 
     <!-- 主要内容 -->
     <div class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
-        <!-- 导航测试 -->
-        <div class="test-card bg-white rounded-2xl p-4 shadow-sm">
-            <h3 class="font-semibold text-gray-900 mb-3">页面导航测试</h3>
+        <!-- 主页面测试 -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <h3 class="font-semibold text-gray-900 mb-4">主页面跳转测试</h3>
             <div class="grid grid-cols-2 gap-3">
-                <button class="nav-button bg-blue-500 text-white px-4 py-2 rounded-lg" data-page="home">
-                    <i class="fas fa-home mr-2"></i>发现页面
+                <button class="test-card bg-blue-500 text-white p-3 rounded-xl text-center" onclick="testNavigation('home')">
+                    <i class="fas fa-home text-xl mb-2"></i>
+                    <div class="text-sm">发现页面</div>
                 </button>
-                <button class="nav-button bg-green-500 text-white px-4 py-2 rounded-lg" data-page="chat">
-                    <i class="fas fa-comments mr-2"></i>聊天页面
+                <button class="test-card bg-green-500 text-white p-3 rounded-xl text-center" onclick="testNavigation('chat')">
+                    <i class="fas fa-comments text-xl mb-2"></i>
+                    <div class="text-sm">聊天列表</div>
                 </button>
-                <button class="nav-button bg-purple-500 text-white px-4 py-2 rounded-lg" data-page="moments">
-                    <i class="fas fa-camera mr-2"></i>动态页面
+                <button class="test-card bg-purple-500 text-white p-3 rounded-xl text-center" onclick="testNavigation('moments')">
+                    <i class="fas fa-camera text-xl mb-2"></i>
+                    <div class="text-sm">动态广场</div>
                 </button>
-                <button class="nav-button bg-orange-500 text-white px-4 py-2 rounded-lg" data-page="profile">
-                    <i class="fas fa-user mr-2"></i>个人中心
+                <button class="test-card bg-orange-500 text-white p-3 rounded-xl text-center" onclick="testNavigation('profile')">
+                    <i class="fas fa-user text-xl mb-2"></i>
+                    <div class="text-sm">个人中心</div>
                 </button>
             </div>
         </div>
 
-        <!-- 交互功能测试 -->
-        <div class="test-card bg-white rounded-2xl p-4 shadow-sm">
-            <h3 class="font-semibold text-gray-900 mb-3">交互功能测试</h3>
+        <!-- 子页面测试 -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <h3 class="font-semibold text-gray-900 mb-4">子页面跳转测试</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="test-card bg-indigo-500 text-white p-3 rounded-xl text-center" onclick="testSubPage('filter')">
+                    <i class="fas fa-filter text-xl mb-2"></i>
+                    <div class="text-sm">筛选页面</div>
+                </button>
+                <button class="test-card bg-pink-500 text-white p-3 rounded-xl text-center" onclick="testSubPage('chat-detail', {id: 1})">
+                    <i class="fas fa-comment-dots text-xl mb-2"></i>
+                    <div class="text-sm">聊天详情</div>
+                </button>
+                <button class="test-card bg-teal-500 text-white p-3 rounded-xl text-center" onclick="testSubPage('moment-detail', {id: 1})">
+                    <i class="fas fa-image text-xl mb-2"></i>
+                    <div class="text-sm">动态详情</div>
+                </button>
+                <button class="test-card bg-red-500 text-white p-3 rounded-xl text-center" onclick="testSubPage('edit-profile')">
+                    <i class="fas fa-user-edit text-xl mb-2"></i>
+                    <div class="text-sm">编辑资料</div>
+                </button>
+                <button class="test-card bg-yellow-500 text-white p-3 rounded-xl text-center" onclick="testSubPage('publish-moment')">
+                    <i class="fas fa-plus text-xl mb-2"></i>
+                    <div class="text-sm">发布动态</div>
+                </button>
+                <button class="test-card bg-gray-500 text-white p-3 rounded-xl text-center" onclick="testSubPage('vip')">
+                    <i class="fas fa-crown text-xl mb-2"></i>
+                    <div class="text-sm">会员中心</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 功能测试 -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <h3 class="font-semibold text-gray-900 mb-4">功能测试</h3>
             <div class="space-y-3">
-                <!-- 匹配操作测试 -->
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700">匹配操作按钮</span>
-                    <div class="flex space-x-2">
-                        <button class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white" onclick="testLike()">
-                            <i class="fas fa-heart"></i>
-                        </button>
-                        <button class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white" onclick="testPass()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        <button class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white" onclick="testSuperLike()">
-                            <i class="fas fa-star"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 点赞测试 -->
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700">动态点赞</span>
-                    <button class="like-btn flex items-center space-x-2 text-gray-500" onclick="testToggleLike(this)">
-                        <i class="far fa-heart text-lg"></i>
-                        <span class="text-sm">0</span>
-                    </button>
-                </div>
-
-                <!-- 聊天测试 -->
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700">聊天功能</span>
-                    <button class="bg-green-500 text-white px-4 py-2 rounded-lg" onclick="testChat()">
-                        打开聊天
-                    </button>
-                </div>
-
-                <!-- 个人中心测试 -->
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700">个人中心</span>
-                    <button class="bg-orange-500 text-white px-4 py-2 rounded-lg" onclick="testProfile()">
-                        编辑资料
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Toast 提示测试 -->
-        <div class="test-card bg-white rounded-2xl p-4 shadow-sm">
-            <h3 class="font-semibold text-gray-900 mb-3">提示消息测试</h3>
-            <div class="grid grid-cols-2 gap-3">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" onclick="showToast('信息提示', 'info')">
-                    信息提示
+                <button class="w-full bg-blue-100 text-blue-700 p-3 rounded-xl text-center" onclick="testToast()">
+                    <i class="fas fa-bell mr-2"></i>
+                    测试提示消息
                 </button>
-                <button class="bg-green-500 text-white px-4 py-2 rounded-lg" onclick="showToast('成功提示', 'success')">
-                    成功提示
+                <button class="w-full bg-green-100 text-green-700 p-3 rounded-xl text-center" onclick="testHistory()">
+                    <i class="fas fa-history mr-2"></i>
+                    测试历史记录
                 </button>
-                <button class="bg-yellow-500 text-white px-4 py-2 rounded-lg" onclick="showToast('警告提示', 'warning')">
-                    警告提示
+                <button class="w-full bg-purple-100 text-purple-700 p-3 rounded-xl text-center" onclick="testBackNavigation()">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    测试返回导航
                 </button>
-                <button class="bg-red-500 text-white px-4 py-2 rounded-lg" onclick="showToast('错误提示', 'error')">
-                    错误提示
-                </button>
-            </div>
-        </div>
-
-        <!-- 功能状态 -->
-        <div class="test-card bg-white rounded-2xl p-4 shadow-sm">
-            <h3 class="font-semibold text-gray-900 mb-3">功能状态</h3>
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700">导航系统</span>
-                    <span class="text-green-500 text-sm">✓ 已启用</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700">匹配功能</span>
-                    <span class="text-green-500 text-sm">✓ 已启用</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700">聊天功能</span>
-                    <span class="text-green-500 text-sm">✓ 已启用</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700">动态功能</span>
-                    <span class="text-green-500 text-sm">✓ 已启用</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700">个人中心</span>
-                    <span class="text-green-500 text-sm">✓ 已启用</span>
-                </div>
             </div>
         </div>
     </div>
@@ -181,77 +140,77 @@
 
     <!-- 引入导航脚本 -->
     <script src="js/navigation.js"></script>
-    
+
     <!-- 测试脚本 -->
     <script>
-        // 测试匹配操作
-        function testLike() {
-            showToast('测试喜欢功能', 'success');
-        }
-
-        function testPass() {
-            showToast('测试跳过功能', 'info');
-        }
-
-        function testSuperLike() {
-            showToast('测试超级喜欢功能', 'success');
-        }
-
-        // 测试点赞功能
-        function testToggleLike(button) {
-            const icon = button.querySelector('i');
-            const countSpan = button.querySelector('span');
-            let count = parseInt(countSpan.textContent);
-
-            if (button.classList.contains('liked')) {
-                button.classList.remove('liked');
-                icon.classList.remove('fas');
-                icon.classList.add('far');
-                count--;
-                showToast('已取消点赞', 'info');
+        // 测试主页面导航
+        function testNavigation(pageName) {
+            if (window.navigationManager) {
+                window.navigationManager.navigateToPage(pageName);
             } else {
-                button.classList.add('liked');
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-                count++;
-                showToast('已点赞', 'success');
+                showToast('导航管理器未初始化', 'error');
             }
-
-            countSpan.textContent = count;
         }
 
-        // 测试聊天功能
-        function testChat() {
-            showToast('正在打开聊天...', 'info');
+        // 测试子页面导航
+        function testSubPage(pageName, params = {}) {
+            if (window.navigationManager) {
+                window.navigationManager.navigateToSubPage(pageName, params);
+            } else {
+                showToast('导航管理器未初始化', 'error');
+            }
         }
 
-        // 测试个人中心功能
-        function testProfile() {
-            showToast('正在跳转到编辑资料...', 'info');
+        // 测试提示消息
+        function testToast() {
+            showToast('这是一个测试提示消息！', 'success');
+        }
+
+        // 测试历史记录
+        function testHistory() {
+            showToast(`当前历史记录长度: ${window.history.length}`, 'info');
+        }
+
+        // 测试返回导航
+        function testBackNavigation() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                showToast('导航管理器未初始化', 'error');
+            }
+        }
+
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
         }
 
         // 显示提示消息
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
             toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
-            
+
             const styles = {
                 'info': 'bg-blue-500',
                 'success': 'bg-green-500',
                 'error': 'bg-red-500',
                 'warning': 'bg-yellow-500'
             };
-            
+
             toast.className += ` ${styles[type] || styles['info']}`;
             toast.textContent = message;
-            
+
             document.body.appendChild(toast);
-            
+
             setTimeout(() => {
                 toast.style.opacity = '1';
                 toast.style.transform = 'translate(-50%, 0)';
             }, 100);
-            
+
             setTimeout(() => {
                 toast.style.opacity = '0';
                 toast.style.transform = 'translate(-50%, -20px)';
@@ -260,6 +219,11 @@
                 }, 300);
             }, 2000);
         }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            showToast('页面跳转测试已加载完成', 'success');
+        });
     </script>
 </body>
 </html>

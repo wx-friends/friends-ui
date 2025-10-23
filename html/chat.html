@@ -207,11 +207,14 @@
     <script>
         // 打开聊天
         function openChat(chatId) {
-            showToast('正在打开聊天...', 'info');
-            setTimeout(() => {
-                // 这里可以跳转到聊天详情页面
-                window.location.href = `chat-detail.html?id=${chatId}`;
-            }, 500);
+            if (window.navigationManager) {
+                window.navigationManager.navigateToSubPage('chat-detail', { id: chatId });
+            } else {
+                showToast('正在打开聊天...', 'info');
+                setTimeout(() => {
+                    window.location.href = `chat-detail.html?id=${chatId}`;
+                }, 500);
+            }
         }
 
         // 显示提示消息

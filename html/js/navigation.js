@@ -1,7 +1,7 @@
 // 导航和交互功能
 class NavigationManager {
     constructor() {
-        this.currentPage = 'home';
+        this.currentPage = this.getCurrentPage();
         this.init();
     }
 
@@ -9,6 +9,31 @@ class NavigationManager {
         this.setupBottomNavigation();
         this.setupPageInteractions();
         this.setupMockData();
+        this.setupBackNavigation();
+    }
+
+    // 获取当前页面名称
+    getCurrentPage() {
+        const path = window.location.pathname;
+        const filename = path.split('/').pop().replace('.html', '');
+        
+        const pageMap = {
+            'home': 'home',
+            'chat': 'chat', 
+            'moments': 'moments',
+            'profile': 'profile',
+            'chat-detail': 'chat',
+            'moment-detail': 'moments',
+            'edit-profile': 'profile',
+            'filter': 'home',
+            'publish-moment': 'moments',
+            'vip': 'profile',
+            'settings': 'profile',
+            'verification': 'profile',
+            'payment': 'profile'
+        };
+        
+        return pageMap[filename] || 'home';
     }
 
     // 底部导航栏功能
@@ -35,7 +60,70 @@ class NavigationManager {
         };
 
         if (pages[pageName]) {
-            window.location.href = pages[pageName];
+            this.showToast('正在跳转...', 'info');
+            setTimeout(() => {
+                window.location.href = pages[pageName];
+            }, 300);
+        }
+    }
+
+    // 设置返回导航
+    setupBackNavigation() {
+        // 为所有返回按钮添加事件监听
+        const backButtons = document.querySelectorAll('.back-button, .nav-back');
+        backButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.goBack();
+            });
+        });
+
+        // 监听浏览器返回按钮
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.page) {
+                this.navigateToPage(e.state.page);
+            }
+        });
+    }
+
+    // 返回上一页
+    goBack() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // 如果没有历史记录，返回主页
+            this.navigateToPage('home');
+        }
+    }
+
+    // 跳转到子页面
+    navigateToSubPage(pageName, params = {}) {
+        const subPages = {
+            'filter': 'filter.html',
+            'chat-detail': 'chat-detail.html',
+            'moment-detail': 'moment-detail.html',
+            'edit-profile': 'edit-profile.html',
+            'publish-moment': 'publish-moment.html',
+            'vip': 'vip.html',
+            'settings': 'settings.html',
+            'verification': 'verification.html',
+            'payment': 'payment.html',
+            'match-success': 'match-success.html'
+        };
+
+        if (subPages[pageName]) {
+            // 添加历史记录
+            window.history.pushState({ page: this.currentPage }, '', window.location.href);
+            
+            this.showToast('正在跳转...', 'info');
+            setTimeout(() => {
+                let url = subPages[pageName];
+                if (Object.keys(params).length > 0) {
+                    const queryString = new URLSearchParams(params).toString();
+                    url += `?${queryString}`;
+                }
+                window.location.href = url;
+            }, 300);
         }
     }
 
@@ -105,7 +193,7 @@ class NavigationManager {
             item.addEventListener('click', () => {
                 const chatId = item.dataset.chatId;
                 if (chatId) {
-                    window.location.href = `chat-detail.html?id=${chatId}`;
+                    this.navigateToSubPage('chat-detail', { id: chatId });
                 }
             });
         });
@@ -126,9 +214,22 @@ class NavigationManager {
         const publishBtn = document.querySelector('.publish-btn');
         if (publishBtn) {
             publishBtn.addEventListener('click', () => {
-                window.location.href = 'publish-moment.html';
+                this.navigateToSubPage('publish-moment');
             });
         }
+
+        // 动态卡片点击跳转到详情页
+        const momentCards = document.querySelectorAll('.moment-card');
+        momentCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                // 如果点击的是按钮，不跳转
+                if (e.target.closest('button')) {
+                    return;
+                }
+                const momentId = card.dataset.momentId || '1';
+                this.navigateToSubPage('moment-detail', { id: momentId });
+            });
+        });
     }
 
     // 个人中心交互
@@ -147,14 +248,14 @@ class NavigationManager {
     // 处理个人中心操作
     handleProfileAction(action) {
         const actions = {
-            'edit-profile': () => window.location.href = 'edit-profile.html',
-            'vip-center': () => window.location.href = 'vip.html',
-            'liked-me': () => window.location.href = 'liked-me.html',
-            'my-favorites': () => window.location.href = 'favorites.html',
-            'settings': () => window.location.href = 'settings.html',
-            'privacy': () => window.location.href = 'privacy.html',
-            'notifications': () => window.location.href = 'notifications.html',
-            'help': () => window.location.href = 'help.html'
+            'edit-profile': () => this.navigateToSubPage('edit-profile'),
+            'vip-center': () => this.navigateToSubPage('vip'),
+            'liked-me': () => this.navigateToSubPage('liked-me'),
+            'my-favorites': () => this.navigateToSubPage('favorites'),
+            'settings': () => this.navigateToSubPage('settings'),
+            'privacy': () => this.navigateToSubPage('privacy'),
+            'notifications': () => this.navigateToSubPage('notifications'),
+            'help': () => this.navigateToSubPage('help')
         };
 
         if (actions[action]) {
@@ -313,5 +414,5 @@ class NavigationManager {
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
-    new NavigationManager();
+    window.navigationManager = new NavigationManager();
 });

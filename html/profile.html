@@ -226,61 +226,65 @@
     <script>
         // 处理个人中心操作
         function handleProfileAction(action) {
-            const actions = {
-                'edit-profile': () => {
-                    showToast('正在跳转到编辑资料页面...', 'info');
-                    setTimeout(() => {
-                        window.location.href = 'edit-profile.html';
-                    }, 1000);
-                },
-                'vip-center': () => {
-                    showToast('正在跳转到会员中心...', 'info');
-                    setTimeout(() => {
-                        window.location.href = 'vip.html';
-                    }, 1000);
-                },
-                'liked-me': () => {
-                    showToast('正在加载喜欢我的人...', 'info');
-                    setTimeout(() => {
-                        window.location.href = 'liked-me.html';
-                    }, 1000);
-                },
-                'my-favorites': () => {
-                    showToast('正在加载我的收藏...', 'info');
-                    setTimeout(() => {
-                        window.location.href = 'favorites.html';
-                    }, 1000);
-                },
-                'settings': () => {
-                    showToast('正在跳转到设置页面...', 'info');
-                    setTimeout(() => {
-                        window.location.href = 'settings.html';
-                    }, 1000);
-                },
-                'privacy': () => {
-                    showToast('正在跳转到隐私设置...', 'info');
-                    setTimeout(() => {
-                        window.location.href = 'privacy.html';
-                    }, 1000);
-                },
-                'notifications': () => {
-                    showToast('正在跳转到通知设置...', 'info');
-                    setTimeout(() => {
-                        window.location.href = 'notifications.html';
-                    }, 1000);
-                },
-                'help': () => {
-                    showToast('正在跳转到帮助页面...', 'info');
-                    setTimeout(() => {
-                        window.location.href = 'help.html';
-                    }, 1000);
-                }
-            };
-
-            if (actions[action]) {
-                actions[action]();
+            if (window.navigationManager) {
+                window.navigationManager.handleProfileAction(action);
             } else {
-                showToast('功能开发中...', 'info');
+                const actions = {
+                    'edit-profile': () => {
+                        showToast('正在跳转到编辑资料页面...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'edit-profile.html';
+                        }, 1000);
+                    },
+                    'vip-center': () => {
+                        showToast('正在跳转到会员中心...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'vip.html';
+                        }, 1000);
+                    },
+                    'liked-me': () => {
+                        showToast('正在加载喜欢我的人...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'liked-me.html';
+                        }, 1000);
+                    },
+                    'my-favorites': () => {
+                        showToast('正在加载我的收藏...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'favorites.html';
+                        }, 1000);
+                    },
+                    'settings': () => {
+                        showToast('正在跳转到设置页面...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'settings.html';
+                        }, 1000);
+                    },
+                    'privacy': () => {
+                        showToast('正在跳转到隐私设置...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'privacy.html';
+                        }, 1000);
+                    },
+                    'notifications': () => {
+                        showToast('正在跳转到通知设置...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'notifications.html';
+                        }, 1000);
+                    },
+                    'help': () => {
+                        showToast('正在跳转到帮助页面...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'help.html';
+                        }, 1000);
+                    }
+                };
+
+                if (actions[action]) {
+                    actions[action]();
+                } else {
+                    showToast('功能开发中...', 'info');
+                }
             }
         }
 
