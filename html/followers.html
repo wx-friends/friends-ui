@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关注/粉丝</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .user-card {
+            transition: all 0.3s ease;
+        }
+        .user-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .follow-btn {
+            transition: all 0.3s ease;
+        }
+        .follow-btn:hover {
+            transform: scale(1.05);
+        }
+        .online-indicator {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-white text-sm font-medium bg-gradient-to-r from-purple-600 to-blue-600">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-white rounded-sm">
+                <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-200">
+        <div class="flex items-center space-x-3">
+            <button onclick="goBack()" class="w-8 h-8 flex items-center justify-center">
+                <i class="fas fa-arrow-left text-gray-600"></i>
+            </button>
+            <h1 class="text-xl font-bold text-gray-900">关注/粉丝</h1>
+        </div>
+        <button class="w-8 h-8 flex items-center justify-center" onclick="openSearch()">
+            <i class="fas fa-search text-gray-600"></i>
+        </button>
+    </div>
+
+    <!-- 标签页切换 -->
+    <div class="bg-white px-6 py-4">
+        <div class="flex space-x-2">
+            <button class="tab-button active flex-1 py-3 px-4 rounded-full text-sm font-medium" data-tab="following" onclick="switchTab('following')">
+                关注 <span class="ml-1 bg-white bg-opacity-20 px-2 py-1 rounded-full text-xs">128</span>
+            </button>
+            <button class="tab-button flex-1 py-3 px-4 rounded-full text-sm font-medium bg-gray-100 text-gray-600" data-tab="followers" onclick="switchTab('followers')">
+                粉丝 <span class="ml-1 bg-gray-200 px-2 py-1 rounded-full text-xs">256</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="flex-1 overflow-y-auto">
+        <!-- 关注列表 -->
+        <div id="following-tab" class="tab-content">
+            <div class="px-6 py-4">
+                <div class="space-y-4">
+                    <!-- 用户卡片 1 -->
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face" 
+                                     alt="头像" class="w-12 h-12 rounded-full object-cover">
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white online-indicator"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="font-semibold text-gray-900">小雨</h3>
+                                    <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs"></i>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-500">25岁 · 北京市朝阳区</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">设计师</span>
+                                    <span class="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full">摄影</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <button class="follow-btn bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium" onclick="unfollowUser(this, '小雨')">
+                                    已关注
+                                </button>
+                                <button class="text-gray-400 text-xs" onclick="sendMessage('小雨')">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 用户卡片 2 -->
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" 
+                                     alt="头像" class="w-12 h-12 rounded-full object-cover">
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-gray-400 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="font-semibold text-gray-900">李明</h3>
+                                </div>
+                                <p class="text-sm text-gray-500">28岁 · 上海市浦东新区</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">程序员</span>
+                                    <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">健身</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <button class="follow-btn bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium" onclick="unfollowUser(this, '李明')">
+                                    已关注
+                                </button>
+                                <button class="text-gray-400 text-xs" onclick="sendMessage('李明')">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 用户卡片 3 -->
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" 
+                                     alt="头像" class="w-12 h-12 rounded-full object-cover">
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white online-indicator"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="font-semibold text-gray-900">小芳</h3>
+                                    <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs"></i>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-500">23岁 · 深圳市南山区</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <span class="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">学生</span>
+                                    <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">音乐</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <button class="follow-btn bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium" onclick="unfollowUser(this, '小芳')">
+                                    已关注
+                                </button>
+                                <button class="text-gray-400 text-xs" onclick="sendMessage('小芳')">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 用户卡片 4 -->
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" 
+                                     alt="头像" class="w-12 h-12 rounded-full object-cover">
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-gray-400 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="font-semibold text-gray-900">王强</h3>
+                                </div>
+                                <p class="text-sm text-gray-500">30岁 · 广州市天河区</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <span class="text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full">产品经理</span>
+                                    <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">旅行</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <button class="follow-btn bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium" onclick="unfollowUser(this, '王强')">
+                                    已关注
+                                </button>
+                                <button class="text-gray-400 text-xs" onclick="sendMessage('王强')">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 粉丝列表 -->
+        <div id="followers-tab" class="tab-content hidden">
+            <div class="px-6 py-4">
+                <div class="space-y-4">
+                    <!-- 粉丝卡片 1 -->
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" 
+                                     alt="头像" class="w-12 h-12 rounded-full object-cover">
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white online-indicator"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="font-semibold text-gray-900">小美</h3>
+                                    <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs"></i>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-500">22岁 · 杭州市西湖区</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">模特</span>
+                                    <span class="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full">舞蹈</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <button class="follow-btn bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="followUser(this, '小美')">
+                                    关注
+                                </button>
+                                <button class="text-gray-400 text-xs" onclick="sendMessage('小美')">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 粉丝卡片 2 -->
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face" 
+                                     alt="头像" class="w-12 h-12 rounded-full object-cover">
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-gray-400 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="font-semibold text-gray-900">张伟</h3>
+                                </div>
+                                <p class="text-sm text-gray-500">26岁 · 成都市锦江区</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">工程师</span>
+                                    <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">篮球</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <button class="follow-btn bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="followUser(this, '张伟')">
+                                    关注
+                                </button>
+                                <button class="text-gray-400 text-xs" onclick="sendMessage('张伟')">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 粉丝卡片 3 -->
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" 
+                                     alt="头像" class="w-12 h-12 rounded-full object-cover">
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white online-indicator"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="font-semibold text-gray-900">小丽</h3>
+                                    <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs"></i>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-500">24岁 · 武汉市江汉区</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <span class="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">教师</span>
+                                    <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">阅读</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <button class="follow-btn bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="followUser(this, '小丽')">
+                                    关注
+                                </button>
+                                <button class="text-gray-400 text-xs" onclick="sendMessage('小丽')">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 粉丝卡片 4 -->
+                    <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" 
+                                     alt="头像" class="w-12 h-12 rounded-full object-cover">
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-gray-400 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="font-semibold text-gray-900">陈浩</h3>
+                                </div>
+                                <p class="text-sm text-gray-500">29岁 · 南京市鼓楼区</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <span class="text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full">医生</span>
+                                    <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">跑步</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <button class="follow-btn bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="followUser(this, '陈浩')">
+                                    关注
+                                </button>
+                                <button class="text-gray-400 text-xs" onclick="sendMessage('陈浩')">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bg-white border-t border-gray-200 px-6 py-3">
+        <div class="flex justify-around">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="home">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">发现</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="chat">
+                <i class="fas fa-comments text-xl mb-1"></i>
+                <span class="text-xs">消息</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="moments">
+                <i class="fas fa-camera text-xl mb-1"></i>
+                <span class="text-xs">动态</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-purple-600" data-page="profile">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">我的</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+    
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 切换标签页
+        function switchTab(tabName) {
+            // 更新按钮状态
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('bg-gray-100', 'text-gray-600');
+            });
+            
+            const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
+            activeBtn.classList.add('active');
+            activeBtn.classList.remove('bg-gray-100', 'text-gray-600');
+            
+            // 切换内容
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+        }
+
+        // 关注用户
+        function followUser(button, userName) {
+            button.innerHTML = '已关注';
+            button.className = 'follow-btn bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium';
+            button.onclick = () => unfollowUser(button, userName);
+            showToast(`已关注 ${userName}`, 'success');
+        }
+
+        // 取消关注
+        function unfollowUser(button, userName) {
+            button.innerHTML = '关注';
+            button.className = 'follow-btn bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-medium';
+            button.onclick = () => followUser(button, userName);
+            showToast(`已取消关注 ${userName}`, 'info');
+        }
+
+        // 发送消息
+        function sendMessage(userName) {
+            showToast(`正在打开与 ${userName} 的聊天...`, 'info');
+            setTimeout(() => {
+                if (window.navigationManager) {
+                    window.navigationManager.navigateToSubPage('chat-detail');
+                } else {
+                    window.location.href = 'chat-detail.html';
+                }
+            }, 1000);
+        }
+
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
+        }
+
+        // 打开搜索
+        function openSearch() {
+            showToast('搜索功能开发中...', 'info');
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+            
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+            
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
