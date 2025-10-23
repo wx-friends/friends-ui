@@ -30,7 +30,10 @@ class NavigationManager {
             'vip': 'profile',
             'settings': 'profile',
             'verification': 'profile',
-            'payment': 'profile'
+            'payment': 'profile',
+            'followers': 'profile',
+            'profile-detail': 'profile',
+            'search-users': 'profile'
         };
         
         return pageMap[filename] || 'home';
@@ -108,7 +111,10 @@ class NavigationManager {
             'settings': 'settings.html',
             'verification': 'verification.html',
             'payment': 'payment.html',
-            'match-success': 'match-success.html'
+            'match-success': 'match-success.html',
+            'followers': 'followers.html',
+            'profile-detail': 'profile-detail.html',
+            'search-users': 'search-users.html'
         };
 
         if (subPages[pageName]) {
@@ -232,18 +238,101 @@ class NavigationManager {
         });
     }
 
-    // 个人中心交互
-    setupProfileInteractions() {
-        const menuItems = document.querySelectorAll('.menu-item');
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const action = item.dataset.action;
-                if (action) {
-                    this.handleProfileAction(action);
-                }
+        // 个人中心交互
+        setupProfileInteractions() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const action = item.dataset.action;
+                    if (action) {
+                        this.handleProfileAction(action);
+                    }
+                });
             });
-        });
-    }
+
+            // 关注/粉丝页面交互
+            this.setupFollowersInteractions();
+        }
+
+        // 关注/粉丝页面交互
+        setupFollowersInteractions() {
+            // 用户卡片点击跳转到个人资料
+            const userCards = document.querySelectorAll('.user-card');
+            userCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // 如果点击的是按钮，不跳转
+                    if (e.target.closest('button')) {
+                        return;
+                    }
+                    const userName = card.querySelector('h3').textContent;
+                    this.showToast(`正在查看 ${userName} 的资料...`, 'info');
+                    setTimeout(() => {
+                        this.navigateToSubPage('profile-detail', { user: userName });
+                    }, 1000);
+                });
+            });
+
+            // 关注/取消关注按钮
+            const followButtons = document.querySelectorAll('.follow-btn');
+            followButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const userName = btn.closest('.user-card').querySelector('h3').textContent;
+                    if (btn.textContent.includes('关注')) {
+                        this.handleFollowUser(btn, userName);
+                    } else {
+                        this.handleUnfollowUser(btn, userName);
+                    }
+                });
+            });
+
+            // 私聊按钮
+            const messageButtons = document.querySelectorAll('.message-btn');
+            messageButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const userName = btn.closest('.user-card').querySelector('h3').textContent;
+                    this.handleSendMessage(userName);
+                });
+            });
+        }
+
+        // 处理关注用户
+        handleFollowUser(button, userName) {
+            button.innerHTML = '已关注';
+            button.className = 'follow-btn bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium';
+            this.showToast(`已关注 ${userName}`, 'success');
+            this.updateFollowCount('following', 1);
+        }
+
+        // 处理取消关注
+        handleUnfollowUser(button, userName) {
+            button.innerHTML = '关注';
+            button.className = 'follow-btn bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-medium';
+            this.showToast(`已取消关注 ${userName}`, 'info');
+            this.updateFollowCount('following', -1);
+        }
+
+        // 处理发送消息
+        handleSendMessage(userName) {
+            this.showToast(`正在打开与 ${userName} 的聊天...`, 'info');
+            setTimeout(() => {
+                this.navigateToSubPage('chat-detail', { user: userName });
+            }, 1000);
+        }
+
+        // 更新关注/粉丝数量
+        updateFollowCount(type, change) {
+            const tabButton = document.querySelector(`[data-tab="${type}"]`);
+            if (tabButton) {
+                const countSpan = tabButton.querySelector('span');
+                if (countSpan) {
+                    const currentCount = parseInt(countSpan.textContent);
+                    const newCount = Math.max(0, currentCount + change);
+                    countSpan.textContent = newCount;
+                }
+            }
+        }
 
     // 处理个人中心操作
     handleProfileAction(action) {
@@ -252,6 +341,9 @@ class NavigationManager {
             'vip-center': () => this.navigateToSubPage('vip'),
             'liked-me': () => this.navigateToSubPage('liked-me'),
             'my-favorites': () => this.navigateToSubPage('favorites'),
+            'followers': () => this.navigateToSubPage('followers'),
+            'following': () => this.navigateToSubPage('followers', { tab: 'following' }),
+            'my-followers': () => this.navigateToSubPage('followers', { tab: 'followers' }),
             'settings': () => this.navigateToSubPage('settings'),
             'privacy': () => this.navigateToSubPage('privacy'),
             'notifications': () => this.navigateToSubPage('notifications'),
