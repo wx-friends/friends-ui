@@ -1,2 +1,1 @@
-java demo
-https://gitee.com/kevin1906/demo
+https://github.com/wx-friends/wxmini-friends 服务端仓库
