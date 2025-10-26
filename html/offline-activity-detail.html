@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活动详情</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .activity-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .register-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            transition: all 0.3s ease;
+        }
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        .official-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #8b5a00;
+        }
+        .info-item {
+            transition: all 0.3s ease;
+        }
+        .info-item:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-white text-sm font-medium activity-header">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-white rounded-sm">
+                <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="activity-header px-6 py-4 flex items-center justify-between">
+        <button class="w-8 h-8 flex items-center justify-center" onclick="goBack()">
+            <i class="fas fa-chevron-left text-white"></i>
+        </button>
+        <h1 class="text-lg font-semibold text-white">活动详情</h1>
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-share text-white"></i>
+        </button>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 overflow-y-auto">
+        <!-- 活动封面 -->
+        <div class="relative h-64">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&h=300&fit=crop"
+                 alt="活动封面" class="w-full h-full object-cover">
+            <div class="absolute top-4 right-4 flex space-x-2">
+                <span class="official-badge text-xs px-3 py-1 rounded-full font-medium">官方</span>
+                <span class="bg-green-500 text-white text-xs px-3 py-1 rounded-full">报名中</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4">
+                <div class="bg-black bg-opacity-50 rounded-xl p-4">
+                    <h2 class="text-xl font-bold text-white mb-2">摄影兴趣派对</h2>
+                    <div class="flex items-center space-x-4 text-white text-sm">
+                        <span><i class="fas fa-calendar mr-1"></i>12月25日 14:00</span>
+                        <span><i class="fas fa-map-marker-alt mr-1"></i>798艺术区</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 活动信息 -->
+        <div class="px-6 py-6 space-y-6">
+            <!-- 基本信息 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">活动信息</h3>
+                <div class="space-y-4">
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-tag text-purple-600"></i>
+                            <span class="text-gray-700">活动类型</span>
+                        </div>
+                        <span class="text-gray-900 font-medium">兴趣派对</span>
+                    </div>
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-users text-blue-600"></i>
+                            <span class="text-gray-700">参与人数</span>
+                        </div>
+                        <span class="text-gray-900 font-medium">15/30人</span>
+                    </div>
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-green-600"></i>
+                            <span class="text-gray-700">活动时长</span>
+                        </div>
+                        <span class="text-gray-900 font-medium">约3小时</span>
+                    </div>
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-dollar-sign text-yellow-600"></i>
+                            <span class="text-gray-700">费用</span>
+                        </div>
+                        <span class="text-gray-900 font-medium">免费</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动描述 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">活动描述</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    本次摄影兴趣派对由专业摄影师指导，将为大家分享摄影技巧、构图方法、后期处理等专业知识。活动现场提供专业摄影设备供大家体验，还有模特拍摄环节，让大家在实践中学习。无论你是摄影新手还是有一定基础的爱好者，都能在这里找到属于自己的学习内容。
+                </p>
+            </div>
+
+            <!-- 活动流程 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">活动流程</h3>
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">1</div>
+                        <div class="flex-1">
+                            <div class="font-medium text-gray-900">14:00-14:30</div>
+                            <div class="text-sm text-gray-600">签到、自我介绍</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">2</div>
+                        <div class="flex-1">
+                            <div class="font-medium text-gray-900">14:30-15:30</div>
+                            <div class="text-sm text-gray-600">摄影技巧分享</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">3</div>
+                        <div class="flex-1">
+                            <div class="font-medium text-gray-900">15:30-16:30</div>
+                            <div class="text-sm text-gray-600">实践拍摄环节</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">4</div>
+                        <div class="flex-1">
+                            <div class="font-medium text-gray-900">16:30-17:00</div>
+                            <div class="text-sm text-gray-600">作品分享、交流</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主办方信息 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">主办方</h3>
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-crown text-white text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <h4 class="font-semibold text-gray-900">碰碰官方</h4>
+                            <span class="official-badge text-xs px-2 py-1 rounded-full font-medium">官方认证</span>
+                        </div>
+                        <p class="text-sm text-gray-600">专业的社交平台，致力于为用户提供优质的线下活动体验</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 参与成员 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">参与成员 (15/30)</h3>
+                    <span class="text-sm text-gray-500">还差15人</span>
+                </div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face"
+                             alt="成员1" class="w-10 h-10 rounded-full object-cover border-2 border-white">
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                    </div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face"
+                             alt="成员2" class="w-10 h-10 rounded-full object-cover border-2 border-white">
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                    </div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face"
+                             alt="成员3" class="w-10 h-10 rounded-full object-cover border-2 border-white">
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fas fa-plus text-gray-400"></i>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fas fa-plus text-gray-400"></i>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fas fa-plus text-gray-400"></i>
+                    </div>
+                </div>
+                <button class="text-purple-600 text-sm font-medium">查看全部成员</button>
+            </div>
+
+            <!-- 注意事项 -->
+            <div class="bg-yellow-50 rounded-2xl p-6">
+                <div class="flex items-start space-x-3">
+                    <i class="fas fa-exclamation-triangle text-yellow-500 mt-0.5"></i>
+                    <div class="text-sm text-yellow-800">
+                        <p class="font-medium mb-2">注意事项</p>
+                        <ul class="space-y-1 text-xs">
+                            <li>• 请提前15分钟到达活动现场</li>
+                            <li>• 可自带相机，现场也提供设备</li>
+                            <li>• 活动期间请保持安静，尊重他人</li>
+                            <li>• 如有疑问请联系主办方</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="bg-white border-t border-gray-200 px-6 py-4">
+        <div class="flex space-x-4">
+            <button class="flex-1 py-4 bg-gray-200 text-gray-700 rounded-2xl font-semibold">
+                收藏活动
+            </button>
+            <button class="flex-1 register-btn py-4 text-white rounded-2xl font-semibold" onclick="registerActivity()">
+                立即报名
+            </button>
+        </div>
+    </div>
+
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
+        }
+
+        // 报名活动
+        function registerActivity() {
+            showToast('正在报名活动...', 'info');
+            setTimeout(() => {
+                showToast('报名成功！', 'success');
+                // 这里可以添加报名逻辑
+            }, 1000);
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

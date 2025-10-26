@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>报名活动</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .activity-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .register-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            transition: all 0.3s ease;
+        }
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        .info-item {
+            transition: all 0.3s ease;
+        }
+        .info-item:hover {
+            background-color: #f8fafc;
+        }
+        .checkbox-item {
+            transition: all 0.3s ease;
+        }
+        .checkbox-item:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-white text-sm font-medium activity-header">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-white rounded-sm">
+                <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="activity-header px-6 py-4 flex items-center justify-between">
+        <button class="w-8 h-8 flex items-center justify-center" onclick="goBack()">
+            <i class="fas fa-chevron-left text-white"></i>
+        </button>
+        <h1 class="text-lg font-semibold text-white">报名活动</h1>
+        <div class="w-8"></div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 overflow-y-auto">
+        <!-- 活动信息卡片 -->
+        <div class="bg-white mx-6 mt-6 rounded-2xl p-6 shadow-sm">
+            <div class="flex items-start space-x-4">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&h=80&fit=crop"
+                     alt="活动图片" class="w-20 h-20 rounded-xl object-cover">
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-900 mb-2">周末爬山活动</h3>
+                    <div class="flex items-center space-x-4 text-sm text-gray-500 mb-2">
+                        <span><i class="fas fa-calendar mr-1"></i>12月21日 09:00</span>
+                        <span><i class="fas fa-map-marker-alt mr-1"></i>香山公园</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">运动健身</span>
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">3/6人</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 报名信息 -->
+        <div class="px-6 py-6 space-y-6">
+            <!-- 个人信息 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">个人信息</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face"
+                             alt="头像" class="w-15 h-15 rounded-full object-cover">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-gray-900">小雨</h4>
+                            <p class="text-sm text-gray-600">25岁 · 设计师 · 距离发起人1.2km</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">联系方式</label>
+                        <input type="text" placeholder="请输入手机号或微信号" 
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                               value="138****8888">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">报名留言</label>
+                        <textarea placeholder="请简单介绍一下自己，为什么想参加这个活动" rows="3"
+                                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 resize-none">你好！我是小雨，平时喜欢户外运动，希望能和大家一起享受爬山的乐趣。我有一定的爬山经验，会注意安全，听从组织者安排。</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动要求确认 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">活动要求</h3>
+                <div class="space-y-3">
+                    <div class="checkbox-item flex items-start space-x-3 p-3 rounded-xl">
+                        <input type="checkbox" class="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500" checked>
+                        <div class="text-sm text-gray-700">
+                            <span class="font-medium">装备要求：</span>穿着舒适的运动鞋和服装
+                        </div>
+                    </div>
+                    <div class="checkbox-item flex items-start space-x-3 p-3 rounded-xl">
+                        <input type="checkbox" class="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500" checked>
+                        <div class="text-sm text-gray-700">
+                            <span class="font-medium">自备物品：</span>自备水和简单食物
+                        </div>
+                    </div>
+                    <div class="checkbox-item flex items-start space-x-3 p-3 rounded-xl">
+                        <input type="checkbox" class="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500" checked>
+                        <div class="text-sm text-gray-700">
+                            <span class="font-medium">安全要求：</span>注意安全，听从组织者安排
+                        </div>
+                    </div>
+                    <div class="checkbox-item flex items-start space-x-3 p-3 rounded-xl">
+                        <input type="checkbox" class="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500" checked>
+                        <div class="text-sm text-gray-700">
+                            <span class="font-medium">天气要求：</span>如遇恶劣天气，活动可能取消
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 费用说明 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">费用说明</h3>
+                <div class="space-y-3">
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <span class="text-gray-700">费用类型</span>
+                        <span class="text-gray-900 font-medium">AA制</span>
+                    </div>
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <span class="text-gray-700">费用详情</span>
+                        <span class="text-gray-900 font-medium">门票自理，午餐AA</span>
+                    </div>
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <span class="text-gray-700">预计费用</span>
+                        <span class="text-gray-900 font-medium">约50-100元/人</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 发起人信息 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">发起人信息</h3>
+                <div class="flex items-center space-x-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
+                         alt="发起人" class="w-15 h-15 rounded-full object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <h4 class="font-semibold text-gray-900">李明</h4>
+                            <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">28岁 · 设计师 · 距离你2.3km</p>
+                        <div class="flex space-x-2 mt-2">
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">摄影</span>
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">旅行</span>
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">运动</span>
+                        </div>
+                    </div>
+                    <button class="bg-purple-500 text-white px-4 py-2 rounded-xl text-sm font-medium">
+                        私聊
+                    </button>
+                </div>
+            </div>
+
+            <!-- 报名须知 -->
+            <div class="bg-yellow-50 rounded-2xl p-6">
+                <div class="flex items-start space-x-3">
+                    <i class="fas fa-exclamation-triangle text-yellow-500 mt-0.5"></i>
+                    <div class="text-sm text-yellow-800">
+                        <p class="font-medium mb-2">报名须知</p>
+                        <ul class="space-y-1 text-xs">
+                            <li>• 报名后请及时关注活动动态</li>
+                            <li>• 如有变动，发起人会提前通知</li>
+                            <li>• 请准时参加活动，如有特殊情况请提前联系发起人</li>
+                            <li>• 活动过程中请遵守相关规则，注意安全</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部按钮 -->
+    <div class="bg-white border-t border-gray-200 px-6 py-4">
+        <div class="flex space-x-4">
+            <button class="flex-1 py-4 bg-gray-200 text-gray-700 rounded-2xl font-semibold" onclick="goBack()">
+                取消
+            </button>
+            <button class="flex-1 register-btn py-4 text-white rounded-2xl font-semibold" onclick="submitRegistration()">
+                确认报名
+            </button>
+        </div>
+    </div>
+
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
+        }
+
+        // 提交报名
+        function submitRegistration() {
+            showToast('正在提交报名...', 'info');
+            setTimeout(() => {
+                showToast('报名成功！', 'success');
+                setTimeout(() => {
+                    if (window.navigationManager) {
+                        window.navigationManager.navigateToSubPage('buddy-activity-detail');
+                    } else {
+                        window.location.href = 'buddy-activity-detail.html';
+                    }
+                }, 1500);
+            }, 1000);
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

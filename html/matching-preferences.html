@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>匹配设置</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.8) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .preference-btn {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .preference-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+        .preference-btn:hover {
+            transform: scale(1.02);
+        }
+        .match-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        .match-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        .match-btn:active {
+            transform: translateY(0);
+        }
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-white text-sm font-medium">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-white rounded-sm">
+                <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="px-6 py-4 flex items-center justify-between">
+        <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center" onclick="goBack()">
+            <i class="fas fa-arrow-left text-white"></i>
+        </button>
+        <h1 class="text-xl font-bold text-white">匹配设置</h1>
+        <div class="w-10"></div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 px-6 pb-6 overflow-y-auto">
+        <!-- 匹配模式选择 -->
+        <div class="card rounded-2xl p-6 mb-6">
+            <h2 class="text-lg font-bold text-gray-800 mb-4">选择匹配模式</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <button class="mode-selector preference-btn p-4 rounded-xl text-center" data-mode="dating" onclick="selectMode('dating')">
+                    <i class="fas fa-heart text-2xl mb-2 text-pink-500"></i>
+                    <div class="font-semibold text-gray-800">恋爱交友</div>
+                    <div class="text-sm text-gray-500 mt-1">寻找人生伴侣</div>
+                </button>
+                <button class="mode-selector preference-btn p-4 rounded-xl text-center" data-mode="buddy" onclick="selectMode('buddy')">
+                    <i class="fas fa-handshake text-2xl mb-2 text-blue-500"></i>
+                    <div class="font-semibold text-gray-800">搭子匹配</div>
+                    <div class="text-sm text-gray-500 mt-1">寻找活动伙伴</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 恋爱交友偏好设置 -->
+        <div id="dating-preferences" class="card rounded-2xl p-6 mb-6">
+            <h2 class="text-lg font-bold text-gray-800 mb-4">恋爱交友偏好</h2>
+            
+            <!-- 年龄范围 -->
+            <div class="mb-6">
+                <h3 class="font-semibold text-gray-700 mb-3">年龄范围</h3>
+                <div class="flex items-center space-x-4">
+                    <div class="flex-1">
+                        <label class="text-sm text-gray-600">最小年龄</label>
+                        <input type="range" min="18" max="50" value="22" class="w-full" id="minAge" onchange="updateAgeRange()">
+                        <div class="text-center text-sm text-gray-600" id="minAgeValue">22岁</div>
+                    </div>
+                    <div class="flex-1">
+                        <label class="text-sm text-gray-600">最大年龄</label>
+                        <input type="range" min="18" max="50" value="30" class="w-full" id="maxAge" onchange="updateAgeRange()">
+                        <div class="text-center text-sm text-gray-600" id="maxAgeValue">30岁</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 距离范围 -->
+            <div class="mb-6">
+                <h3 class="font-semibold text-gray-700 mb-3">距离范围</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button class="distance-btn preference-btn px-4 py-2 rounded-full text-sm" data-distance="5" onclick="selectDistance('5')">5km内</button>
+                    <button class="distance-btn preference-btn px-4 py-2 rounded-full text-sm" data-distance="10" onclick="selectDistance('10')">10km内</button>
+                    <button class="distance-btn preference-btn px-4 py-2 rounded-full text-sm active" data-distance="20" onclick="selectDistance('20')">20km内</button>
+                    <button class="distance-btn preference-btn px-4 py-2 rounded-full text-sm" data-distance="50" onclick="selectDistance('50')">50km内</button>
+                    <button class="distance-btn preference-btn px-4 py-2 rounded-full text-sm" data-distance="100" onclick="selectDistance('100')">100km内</button>
+                </div>
+            </div>
+
+            <!-- 身高要求 -->
+            <div class="mb-6">
+                <h3 class="font-semibold text-gray-700 mb-3">身高要求</h3>
+                <div class="flex items-center space-x-4">
+                    <div class="flex-1">
+                        <label class="text-sm text-gray-600">最低身高</label>
+                        <input type="range" min="150" max="200" value="160" class="w-full" id="minHeight" onchange="updateHeightRange()">
+                        <div class="text-center text-sm text-gray-600" id="minHeightValue">160cm</div>
+                    </div>
+                    <div class="flex-1">
+                        <label class="text-sm text-gray-600">最高身高</label>
+                        <input type="range" min="150" max="200" value="180" class="w-full" id="maxHeight" onchange="updateHeightRange()">
+                        <div class="text-center text-sm text-gray-600" id="maxHeightValue">180cm</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 学历要求 -->
+            <div class="mb-6">
+                <h3 class="font-semibold text-gray-700 mb-3">学历要求</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button class="education-btn preference-btn px-4 py-2 rounded-full text-sm" data-education="high-school" onclick="selectEducation('high-school')">高中</button>
+                    <button class="education-btn preference-btn px-4 py-2 rounded-full text-sm" data-education="college" onclick="selectEducation('college')">大专</button>
+                    <button class="education-btn preference-btn px-4 py-2 rounded-full text-sm active" data-education="bachelor" onclick="selectEducation('bachelor')">本科</button>
+                    <button class="education-btn preference-btn px-4 py-2 rounded-full text-sm" data-education="master" onclick="selectEducation('master')">硕士</button>
+                    <button class="education-btn preference-btn px-4 py-2 rounded-full text-sm" data-education="phd" onclick="selectEducation('phd')">博士</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 搭子匹配偏好设置 -->
+        <div id="buddy-preferences" class="card rounded-2xl p-6 mb-6 hidden">
+            <h2 class="text-lg font-bold text-gray-800 mb-4">搭子匹配偏好</h2>
+            
+            <!-- 搭子类型 -->
+            <div class="mb-6">
+                <h3 class="font-semibold text-gray-700 mb-3">搭子类型</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button class="buddy-type-btn preference-btn px-4 py-2 rounded-full text-sm" data-type="sport" onclick="selectBuddyType('sport')">运动</button>
+                    <button class="buddy-type-btn preference-btn px-4 py-2 rounded-full text-sm" data-type="study" onclick="selectBuddyType('study')">学习</button>
+                    <button class="buddy-type-btn preference-btn px-4 py-2 rounded-full text-sm" data-type="travel" onclick="selectBuddyType('travel')">旅行</button>
+                    <button class="buddy-type-btn preference-btn px-4 py-2 rounded-full text-sm" data-type="workout" onclick="selectBuddyType('workout')">健身</button>
+                    <button class="buddy-type-btn preference-btn px-4 py-2 rounded-full text-sm" data-type="hobby" onclick="selectBuddyType('hobby')">爱好</button>
+                    <button class="buddy-type-btn preference-btn px-4 py-2 rounded-full text-sm" data-type="food" onclick="selectBuddyType('food')">美食</button>
+                    <button class="buddy-type-btn preference-btn px-4 py-2 rounded-full text-sm" data-type="movie" onclick="selectBuddyType('movie')">电影</button>
+                    <button class="buddy-type-btn preference-btn px-4 py-2 rounded-full text-sm" data-type="music" onclick="selectBuddyType('music')">音乐</button>
+                </div>
+            </div>
+
+            <!-- 活动时间 -->
+            <div class="mb-6">
+                <h3 class="font-semibold text-gray-700 mb-3">活动时间偏好</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button class="time-btn preference-btn px-4 py-2 rounded-full text-sm" data-time="weekday" onclick="selectTime('weekday')">工作日</button>
+                    <button class="time-btn preference-btn px-4 py-2 rounded-full text-sm" data-time="weekend" onclick="selectTime('weekend')">周末</button>
+                    <button class="time-btn preference-btn px-4 py-2 rounded-full text-sm" data-time="morning" onclick="selectTime('morning')">早上</button>
+                    <button class="time-btn preference-btn px-4 py-2 rounded-full text-sm" data-time="afternoon" onclick="selectTime('afternoon')">下午</button>
+                    <button class="time-btn preference-btn px-4 py-2 rounded-full text-sm" data-time="evening" onclick="selectTime('evening')">晚上</button>
+                </div>
+            </div>
+
+            <!-- 距离范围 -->
+            <div class="mb-6">
+                <h3 class="font-semibold text-gray-700 mb-3">距离范围</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button class="buddy-distance-btn preference-btn px-4 py-2 rounded-full text-sm" data-distance="5" onclick="selectBuddyDistance('5')">5km内</button>
+                    <button class="buddy-distance-btn preference-btn px-4 py-2 rounded-full text-sm" data-distance="10" onclick="selectBuddyDistance('10')">10km内</button>
+                    <button class="buddy-distance-btn preference-btn px-4 py-2 rounded-full text-sm active" data-distance="20" onclick="selectBuddyDistance('20')">20km内</button>
+                    <button class="buddy-distance-btn preference-btn px-4 py-2 rounded-full text-sm" data-distance="50" onclick="selectBuddyDistance('50')">50km内</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 匹配按钮 -->
+        <div class="text-center">
+            <button id="matchBtn" class="match-btn w-full py-4 rounded-2xl text-white font-bold text-lg" onclick="startMatching()">
+                <i class="fas fa-search mr-2"></i>
+                开始匹配
+            </button>
+        </div>
+
+        <!-- 匹配进度提示 -->
+        <div id="matchingProgress" class="card rounded-2xl p-6 mt-6 hidden">
+            <div class="text-center">
+                <div class="loading-spinner w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full mx-auto mb-4"></div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">正在寻找匹配...</h3>
+                <p class="text-gray-600 text-sm mb-4">根据您的偏好，正在为您寻找合适的对象</p>
+                <div class="bg-purple-100 rounded-full h-2 mb-4">
+                    <div id="progressBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <p class="text-sm text-gray-500" id="progressText">正在分析您的偏好...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg px-6 py-3">
+        <div class="flex justify-around">
+            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="home">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">发现</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="chat">
+                <i class="fas fa-comments text-xl mb-1"></i>
+                <span class="text-xs">消息</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-white" data-page="matching-preferences">
+                <i class="fas fa-cog text-xl mb-1"></i>
+                <span class="text-xs">匹配</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="moments">
+                <i class="fas fa-camera text-xl mb-1"></i>
+                <span class="text-xs">动态</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="profile">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">我的</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+
+    <!-- 页面特定交互脚本 -->
+    <script>
+        let currentMode = 'dating';
+        let selectedPreferences = {
+            dating: {
+                ageRange: { min: 22, max: 30 },
+                distance: 20,
+                heightRange: { min: 160, max: 180 },
+                education: 'bachelor'
+            },
+            buddy: {
+                types: [],
+                timePreferences: [],
+                distance: 20
+            }
+        };
+
+        // 选择匹配模式
+        function selectMode(mode) {
+            currentMode = mode;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.mode-selector').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.mode-selector').classList.add('active');
+            
+            // 显示对应的偏好设置
+            if (mode === 'dating') {
+                document.getElementById('dating-preferences').classList.remove('hidden');
+                document.getElementById('buddy-preferences').classList.add('hidden');
+            } else {
+                document.getElementById('dating-preferences').classList.add('hidden');
+                document.getElementById('buddy-preferences').classList.remove('hidden');
+            }
+            
+            showToast(`已选择${mode === 'dating' ? '恋爱交友' : '搭子匹配'}模式`, 'info');
+        }
+
+        // 更新年龄范围
+        function updateAgeRange() {
+            const minAge = document.getElementById('minAge').value;
+            const maxAge = document.getElementById('maxAge').value;
+            
+            document.getElementById('minAgeValue').textContent = minAge + '岁';
+            document.getElementById('maxAgeValue').textContent = maxAge + '岁';
+            
+            selectedPreferences.dating.ageRange = { min: parseInt(minAge), max: parseInt(maxAge) };
+        }
+
+        // 更新身高范围
+        function updateHeightRange() {
+            const minHeight = document.getElementById('minHeight').value;
+            const maxHeight = document.getElementById('maxHeight').value;
+            
+            document.getElementById('minHeightValue').textContent = minHeight + 'cm';
+            document.getElementById('maxHeightValue').textContent = maxHeight + 'cm';
+            
+            selectedPreferences.dating.heightRange = { min: parseInt(minHeight), max: parseInt(maxHeight) };
+        }
+
+        // 选择距离
+        function selectDistance(distance) {
+            document.querySelectorAll('.distance-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            selectedPreferences.dating.distance = parseInt(distance);
+            showToast(`已设置距离范围：${distance}km内`, 'info');
+        }
+
+        // 选择学历
+        function selectEducation(education) {
+            document.querySelectorAll('.education-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            selectedPreferences.dating.education = education;
+            showToast('已设置学历要求', 'info');
+        }
+
+        // 选择搭子类型
+        function selectBuddyType(type) {
+            const btn = event.target;
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                selectedPreferences.buddy.types = selectedPreferences.buddy.types.filter(t => t !== type);
+            } else {
+                btn.classList.add('active');
+                selectedPreferences.buddy.types.push(type);
+            }
+            showToast(`已${btn.classList.contains('active') ? '添加' : '移除'}${type}类型`, 'info');
+        }
+
+        // 选择时间偏好
+        function selectTime(time) {
+            const btn = event.target;
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                selectedPreferences.buddy.timePreferences = selectedPreferences.buddy.timePreferences.filter(t => t !== time);
+            } else {
+                btn.classList.add('active');
+                selectedPreferences.buddy.timePreferences.push(time);
+            }
+            showToast(`已${btn.classList.contains('active') ? '添加' : '移除'}${time}时间偏好`, 'info');
+        }
+
+        // 选择搭子距离
+        function selectBuddyDistance(distance) {
+            document.querySelectorAll('.buddy-distance-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            selectedPreferences.buddy.distance = parseInt(distance);
+            showToast(`已设置距离范围：${distance}km内`, 'info');
+        }
+
+        // 开始匹配
+        function startMatching() {
+            const matchBtn = document.getElementById('matchBtn');
+            const progressDiv = document.getElementById('matchingProgress');
+            
+            // 隐藏匹配按钮，显示进度
+            matchBtn.style.display = 'none';
+            progressDiv.classList.remove('hidden');
+            
+            // 开始进度动画
+            let progress = 0;
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            const progressSteps = [
+                '正在分析您的偏好...',
+                '正在筛选合适的对象...',
+                '正在计算匹配度...',
+                '正在生成推荐结果...',
+                '匹配完成！'
+            ];
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                
+                const stepIndex = Math.floor((progress / 100) * progressSteps.length);
+                if (stepIndex < progressSteps.length) {
+                    progressText.textContent = progressSteps[stepIndex];
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        // 跳转到匹配结果页面
+                        if (currentMode === 'dating') {
+                            window.location.href = 'home.html';
+                        } else {
+                            window.location.href = 'buddy-matching.html';
+                        }
+                    }, 1000);
+                }
+            }, 200);
+        }
+
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+            
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+            
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 默认选择恋爱交友模式
+            document.querySelector('[data-mode="dating"]').classList.add('active');
+        });
+    </script>
+</body>
+</html>

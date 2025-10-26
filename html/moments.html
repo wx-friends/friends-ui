@@ -54,10 +54,34 @@
         </div>
     </div>
 
+    <!-- 动态分类筛选 -->
+    <div class="bg-white px-6 py-4 border-b border-gray-100">
+        <div class="flex space-x-2 overflow-x-auto">
+            <button class="moment-filter-btn active px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-medium whitespace-nowrap" onclick="filterMoments('all')">
+                全部
+            </button>
+            <button class="moment-filter-btn px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap" onclick="filterMoments('personal')">
+                个人动态
+            </button>
+            <button class="moment-filter-btn px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap" onclick="filterMoments('buddy')">
+                搭子活动
+            </button>
+            <button class="moment-filter-btn px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap" onclick="filterMoments('activity')">
+                线下活动
+            </button>
+            <button class="moment-filter-btn px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap" onclick="filterMoments('sport')">
+                运动
+            </button>
+            <button class="moment-filter-btn px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap" onclick="filterMoments('study')">
+                学习
+            </button>
+        </div>
+    </div>
+
     <!-- 主要内容 -->
     <div class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
         <!-- 动态 1 -->
-        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm">
+        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm" data-category="personal">
             <div class="flex items-center space-x-3 mb-4">
                 <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=50&h=50&fit=crop&crop=face"
                      alt="头像" class="w-10 h-10 rounded-full object-cover">
@@ -67,6 +91,7 @@
                         <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
                             <i class="fas fa-check text-white text-xs"></i>
                         </div>
+                        <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">个人动态</span>
                     </div>
                     <p class="text-xs text-gray-500">2小时前 · 距离你 1.2km</p>
                 </div>
@@ -184,6 +209,107 @@
                 </button>
             </div>
         </div>
+
+        <!-- 搭子活动动态 -->
+        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm" data-category="buddy">
+            <div class="flex items-center space-x-3 mb-4">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face"
+                     alt="头像" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-2">
+                        <h3 class="font-semibold text-gray-900">阿明</h3>
+                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                        <span class="px-2 py-1 bg-green-100 text-green-600 rounded-full text-xs">搭子活动</span>
+                    </div>
+                    <p class="text-xs text-gray-500">4小时前 · 距离你 2.1km</p>
+                </div>
+            </div>
+
+            <p class="text-gray-800 mb-4 leading-relaxed">
+                寻找羽毛球搭子！周末想找人一起打羽毛球，技术一般，主要是想运动运动，有感兴趣的朋友吗？🏸
+            </p>
+
+            <div class="bg-blue-50 rounded-xl p-3 mb-4">
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fas fa-calendar text-blue-600"></i>
+                    <span class="text-sm font-medium text-blue-800">活动时间</span>
+                </div>
+                <p class="text-sm text-blue-700">本周六 14:00-16:00</p>
+                <div class="flex items-center space-x-2 mt-2">
+                    <i class="fas fa-map-marker-alt text-blue-600"></i>
+                    <span class="text-sm text-blue-700">市体育馆羽毛球馆</span>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                <button class="like-btn flex items-center space-x-2 text-gray-500" onclick="toggleLike(this)">
+                    <i class="far fa-heart text-lg"></i>
+                    <span class="text-sm">8</span>
+                </button>
+                <button class="flex items-center space-x-2 text-gray-500" onclick="showComments(4)">
+                    <i class="far fa-comment text-lg"></i>
+                    <span class="text-sm">5</span>
+                </button>
+                <button class="flex items-center space-x-2 text-gray-500" onclick="joinBuddyActivity(4)">
+                    <i class="fas fa-handshake text-lg"></i>
+                    <span class="text-sm">参与</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 线下活动动态 -->
+        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm" data-category="activity">
+            <div class="flex items-center space-x-3 mb-4">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face"
+                     alt="头像" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-2">
+                        <h3 class="font-semibold text-gray-900">小美</h3>
+                        <div class="w-4 h-4 bg-purple-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                        <span class="px-2 py-1 bg-purple-100 text-purple-600 rounded-full text-xs">线下活动</span>
+                    </div>
+                    <p class="text-xs text-gray-500">6小时前 · 距离你 3.5km</p>
+                </div>
+            </div>
+
+            <p class="text-gray-800 mb-4 leading-relaxed">
+                周末爬山活动圆满结束！感谢大家的参与，下次活动预告：摄影技巧分享会 📸
+            </p>
+
+            <div class="grid grid-cols-2 gap-2 mb-4">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop"
+                     alt="活动照片1" class="w-full h-24 object-cover rounded-xl">
+                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200&h=200&fit=crop"
+                     alt="活动照片2" class="w-full h-24 object-cover rounded-xl">
+            </div>
+
+            <div class="bg-purple-50 rounded-xl p-3 mb-4">
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fas fa-users text-purple-600"></i>
+                    <span class="text-sm font-medium text-purple-800">参与人数</span>
+                </div>
+                <p class="text-sm text-purple-700">12人参与，平均评分 4.8分</p>
+            </div>
+
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                <button class="like-btn flex items-center space-x-2 text-gray-500" onclick="toggleLike(this)">
+                    <i class="far fa-heart text-lg"></i>
+                    <span class="text-sm">23</span>
+                </button>
+                <button class="flex items-center space-x-2 text-gray-500" onclick="showComments(5)">
+                    <i class="far fa-comment text-lg"></i>
+                    <span class="text-sm">12</span>
+                </button>
+                <button class="flex items-center space-x-2 text-gray-500" onclick="viewActivityDetails(5)">
+                    <i class="fas fa-info-circle text-lg"></i>
+                    <span class="text-sm">详情</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- 底部导航栏 -->
@@ -246,6 +372,44 @@
         function shareMoment(momentId) {
             showToast('分享功能开发中...', 'info');
             // 这里可以实现分享功能
+        }
+
+        // 动态筛选功能
+        function filterMoments(category) {
+            // 移除所有按钮的激活状态
+            document.querySelectorAll('.moment-filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-blue-100', 'text-blue-600');
+                btn.classList.add('bg-gray-100', 'text-gray-600');
+            });
+            
+            // 激活当前按钮
+            event.target.classList.add('active', 'bg-blue-100', 'text-blue-600');
+            event.target.classList.remove('bg-gray-100', 'text-gray-600');
+            
+            // 筛选动态卡片
+            const momentCards = document.querySelectorAll('.moment-card');
+            momentCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                if (category === 'all' || cardCategory === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            showToast(`已筛选${event.target.textContent}动态`, 'info');
+        }
+
+        // 参与搭子活动
+        function joinBuddyActivity(activityId) {
+            showToast('正在加入搭子活动...', 'info');
+            // 这里可以添加加入搭子活动的逻辑
+        }
+
+        // 查看活动详情
+        function viewActivityDetails(activityId) {
+            showToast('正在查看活动详情...', 'info');
+            // 这里可以跳转到活动详情页面
         }
 
         // 打开发布动态页面

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的收藏</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .favorite-item {
+            transition: all 0.3s ease;
+        }
+        .favorite-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .favorite-btn {
+            transition: all 0.3s ease;
+        }
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+        .favorite-btn.favorited {
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button class="w-8 h-8 flex items-center justify-center" onclick="goBack()">
+            <i class="fas fa-chevron-left text-gray-600"></i>
+        </button>
+        <h1 class="text-xl font-bold">我的收藏</h1>
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-search text-gray-600"></i>
+        </button>
+    </div>
+
+    <!-- 标签页 -->
+    <div class="bg-white px-6 py-4 border-b border-gray-100">
+        <div class="flex space-x-3">
+            <button class="tab-btn active px-4 py-2 rounded-full text-sm font-medium" onclick="switchTab('users')">
+                用户
+            </button>
+            <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600" onclick="switchTab('activities')">
+                活动
+            </button>
+            <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600" onclick="switchTab('moments')">
+                动态
+            </button>
+        </div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+        <!-- 用户收藏 -->
+        <div id="users-tab" class="space-y-4">
+            <!-- 用户卡片 1 -->
+            <div class="favorite-item bg-white rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
+                             alt="用户头像" class="w-15 h-15 rounded-full object-cover">
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <h3 class="font-semibold text-gray-900">李明</h3>
+                            <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">28岁 · 设计师 · 距离你2.3km</p>
+                        <div class="flex space-x-2 mb-2">
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">摄影</span>
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">旅行</span>
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">运动</span>
+                        </div>
+                        <p class="text-xs text-gray-500">收藏于 2天前</p>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <button class="favorite-btn favorited w-10 h-10 rounded-full flex items-center justify-center text-red-500" onclick="toggleFavorite('user', 1)">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <button class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white" onclick="openChat(1)">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 用户卡片 2 -->
+            <div class="favorite-item bg-white rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face"
+                             alt="用户头像" class="w-15 h-15 rounded-full object-cover">
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <h3 class="font-semibold text-gray-900">小雅</h3>
+                            <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">26岁 · 教师 · 距离你1.8km</p>
+                        <div class="flex space-x-2 mb-2">
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">读书</span>
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">音乐</span>
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">电影</span>
+                        </div>
+                        <p class="text-xs text-gray-500">收藏于 3天前</p>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <button class="favorite-btn favorited w-10 h-10 rounded-full flex items-center justify-center text-red-500" onclick="toggleFavorite('user', 2)">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <button class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white" onclick="openChat(2)">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 活动收藏 -->
+        <div id="activities-tab" class="space-y-4 hidden">
+            <!-- 活动卡片 1 -->
+            <div class="favorite-item bg-white rounded-2xl p-4 shadow-sm">
+                <div class="flex items-start space-x-4">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&h=80&fit=crop"
+                         alt="活动图片" class="w-20 h-20 rounded-xl object-cover">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">运动健身</span>
+                            <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">进行中</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-1">周末爬山活动</h3>
+                        <p class="text-sm text-gray-600 mb-2">香山一日游，寻找志同道合的爬山伙伴</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <div class="flex items-center space-x-4">
+                                <span><i class="fas fa-calendar mr-1"></i>12月21日</span>
+                                <span><i class="fas fa-map-marker-alt mr-1"></i>香山公园</span>
+                            </div>
+                            <span>3/6人</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">收藏于 1天前</p>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <button class="favorite-btn favorited w-10 h-10 rounded-full flex items-center justify-center text-red-500" onclick="toggleFavorite('activity', 1)">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <button class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white" onclick="openActivity(1)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 动态收藏 -->
+        <div id="moments-tab" class="space-y-4 hidden">
+            <!-- 动态卡片 1 -->
+            <div class="favorite-item bg-white rounded-2xl p-4 shadow-sm">
+                <div class="flex items-start space-x-3 mb-4">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=50&h=50&fit=crop&crop=face"
+                         alt="头像" class="w-10 h-10 rounded-full object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2">
+                            <h3 class="font-semibold text-gray-900">小雨</h3>
+                            <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500">2小时前 · 距离你 1.2km</p>
+                    </div>
+                </div>
+
+                <p class="text-gray-800 mb-4 leading-relaxed">
+                    今天的夕阳特别美，分享给大家～希望每个人都能找到属于自己的那份美好 ✨
+                </p>
+
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop"
+                         alt="照片1" class="w-full h-24 object-cover rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200&h=200&fit=crop"
+                         alt="照片2" class="w-full h-24 object-cover rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=200&fit=crop"
+                         alt="照片3" class="w-full h-24 object-cover rounded-xl">
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                    <div class="flex items-center space-x-4">
+                        <button class="favorite-btn favorited flex items-center space-x-2 text-red-500" onclick="toggleFavorite('moment', 1)">
+                            <i class="fas fa-heart"></i>
+                            <span class="text-sm">12</span>
+                        </button>
+                        <button class="flex items-center space-x-2 text-gray-500">
+                            <i class="far fa-comment"></i>
+                            <span class="text-sm">3</span>
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-500">收藏于 1天前</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bg-white border-t border-gray-200 px-6 py-3">
+        <div class="flex justify-around">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="home">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">发现</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="chat">
+                <i class="fas fa-comments text-xl mb-1"></i>
+                <span class="text-xs">消息</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="buddy-activity">
+                <i class="fas fa-users text-xl mb-1"></i>
+                <span class="text-xs">搭子</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="moments">
+                <i class="fas fa-camera text-xl mb-1"></i>
+                <span class="text-xs">动态</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-purple-600" data-page="profile">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">我的</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
+        }
+
+        // 切换标签页
+        function switchTab(tab) {
+            // 隐藏所有标签页
+            document.getElementById('users-tab').classList.add('hidden');
+            document.getElementById('activities-tab').classList.add('hidden');
+            document.getElementById('moments-tab').classList.add('hidden');
+
+            // 显示选中的标签页
+            document.getElementById(tab + '-tab').classList.remove('hidden');
+
+            // 更新标签按钮状态
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('bg-gray-100', 'text-gray-600');
+            });
+
+            event.target.classList.add('active');
+            event.target.classList.remove('bg-gray-100', 'text-gray-600');
+
+            showToast(`已切换到${event.target.textContent}`, 'info');
+        }
+
+        // 切换收藏状态
+        function toggleFavorite(type, id) {
+            const btn = event.target.closest('.favorite-btn');
+            if (btn.classList.contains('favorited')) {
+                btn.classList.remove('favorited');
+                btn.classList.add('text-gray-400');
+                showToast('已取消收藏', 'info');
+            } else {
+                btn.classList.add('favorited');
+                btn.classList.remove('text-gray-400');
+                showToast('已收藏', 'success');
+            }
+        }
+
+        // 打开聊天
+        function openChat(userId) {
+            showToast('正在打开聊天...', 'info');
+            // 这里可以添加打开聊天的逻辑
+        }
+
+        // 打开活动
+        function openActivity(activityId) {
+            showToast('正在打开活动详情...', 'info');
+            // 这里可以添加打开活动的逻辑
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

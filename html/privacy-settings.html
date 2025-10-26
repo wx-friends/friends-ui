@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隐私设置</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .setting-item {
+            transition: all 0.3s ease;
+        }
+        .setting-item:hover {
+            background-color: #f8fafc;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 30px;
+            background-color: #e5e7eb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .toggle-switch.active {
+            background-color: #667eea;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <div class="flex items-center">
+            <button onclick="history.back()" class="mr-4">
+                <i class="fas fa-arrow-left text-gray-600"></i>
+            </button>
+            <h1 class="text-xl font-bold">隐私设置</h1>
+        </div>
+    </div>
+
+    <!-- 设置内容 -->
+    <div class="flex-1 overflow-y-auto">
+        <!-- 位置信息 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">位置信息</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">允许位置访问</h3>
+                    <p class="text-sm text-gray-500">用于匹配附近的人</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">显示距离</h3>
+                    <p class="text-sm text-gray-500">在个人资料中显示距离</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">精确位置</h3>
+                    <p class="text-sm text-gray-500">显示精确位置信息</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+
+        <!-- 个人资料可见性 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">个人资料可见性</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">年龄显示</h3>
+                    <p class="text-sm text-gray-500">在个人资料中显示年龄</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">职业显示</h3>
+                    <p class="text-sm text-gray-500">在个人资料中显示职业</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">学校显示</h3>
+                    <p class="text-sm text-gray-500">在个人资料中显示学校</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">动态可见</h3>
+                    <p class="text-sm text-gray-500">允许他人查看我的动态</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+
+        <!-- 匹配设置 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">匹配设置</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">仅匹配认证用户</h3>
+                    <p class="text-sm text-gray-500">只与已认证用户匹配</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">隐藏在线状态</h3>
+                    <p class="text-sm text-gray-500">不显示在线状态</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">允许陌生人消息</h3>
+                    <p class="text-sm text-gray-500">允许未匹配用户发送消息</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+
+        <!-- 数据隐私 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">数据隐私</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">数据收集</h3>
+                    <p class="text-sm text-gray-500">允许收集使用数据</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">个性化推荐</h3>
+                    <p class="text-sm text-gray-500">基于行为数据推荐</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">第三方分享</h3>
+                    <p class="text-sm text-gray-500">与第三方分享数据</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+
+        <!-- 账户安全 -->
+        <div class="bg-white mt-4 mb-6">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">账户安全</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">两步验证</h3>
+                    <p class="text-sm text-gray-500">增强账户安全性</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">登录通知</h3>
+                    <p class="text-sm text-gray-500">新设备登录时通知</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">账户注销</h3>
+                    <p class="text-sm text-gray-500">永久删除账户数据</p>
+                </div>
+                <button class="text-red-500 font-medium">注销账户</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

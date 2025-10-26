@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活动参与记录</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .activity-card {
+            transition: all 0.3s ease;
+        }
+        .activity-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-upcoming {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .status-ongoing {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        .status-completed {
+            background-color: #e0e7ff;
+            color: #3730a3;
+        }
+        .status-cancelled {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        .rating-stars {
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <div class="flex items-center">
+            <button onclick="history.back()" class="mr-4">
+                <i class="fas fa-arrow-left text-gray-600"></i>
+            </button>
+            <h1 class="text-xl font-bold">活动参与记录</h1>
+        </div>
+        <button class="text-blue-600 font-medium">
+            <i class="fas fa-filter mr-1"></i>
+            筛选
+        </button>
+    </div>
+
+    <!-- 统计信息 -->
+    <div class="bg-white mt-4">
+        <div class="px-6 py-4">
+            <div class="grid grid-cols-4 gap-4">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-blue-600">18</div>
+                    <div class="text-sm text-gray-500">总参与</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-green-600">15</div>
+                    <div class="text-sm text-gray-500">已完成</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-orange-600">2</div>
+                    <div class="text-sm text-gray-500">进行中</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-yellow-600">4.8</div>
+                    <div class="text-sm text-gray-500">平均评分</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 筛选标签 -->
+    <div class="bg-white mt-4">
+        <div class="px-6 py-4">
+            <div class="flex space-x-2 overflow-x-auto">
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium whitespace-nowrap">
+                    全部
+                </button>
+                <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap">
+                    即将开始
+                </button>
+                <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap">
+                    进行中
+                </button>
+                <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap">
+                    已完成
+                </button>
+                <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap">
+                    已取消
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 活动记录列表 -->
+    <div class="flex-1 overflow-y-auto">
+        <!-- 即将开始的活动 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">即将开始</h2>
+            </div>
+            
+            <!-- 活动项目 1 -->
+            <div class="activity-card px-6 py-4 border-b border-gray-100">
+                <div class="flex items-start space-x-4">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop" 
+                         alt="活动图片" class="w-16 h-16 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-gray-800">周末羽毛球比赛</h3>
+                            <span class="status-badge status-upcoming">即将开始</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">运动 · 羽毛球</p>
+                        <p class="text-sm text-gray-500 mb-2">时间：2024-01-20 14:00-16:00</p>
+                        <p class="text-sm text-gray-500 mb-2">地点：市体育馆</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">参与人数：8/12</span>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
+                                    查看详情
+                                </button>
+                                <button class="px-3 py-1 bg-red-100 text-red-600 rounded-full text-xs">
+                                    取消报名
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动项目 2 -->
+            <div class="activity-card px-6 py-4">
+                <div class="flex items-start space-x-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" 
+                         alt="活动图片" class="w-16 h-16 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-gray-800">编程学习小组</h3>
+                            <span class="status-badge status-upcoming">即将开始</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">学习 · 编程</p>
+                        <p class="text-sm text-gray-500 mb-2">时间：2024-01-21 19:00-21:00</p>
+                        <p class="text-sm text-gray-500 mb-2">地点：咖啡厅</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">参与人数：5/8</span>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
+                                    查看详情
+                                </button>
+                                <button class="px-3 py-1 bg-red-100 text-red-600 rounded-full text-xs">
+                                    取消报名
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 进行中的活动 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">进行中</h2>
+            </div>
+            
+            <!-- 活动项目 1 -->
+            <div class="activity-card px-6 py-4 border-b border-gray-100">
+                <div class="flex items-start space-x-4">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop" 
+                         alt="活动图片" class="w-16 h-16 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-gray-800">晨跑俱乐部</h3>
+                            <span class="status-badge status-ongoing">进行中</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">运动 · 跑步</p>
+                        <p class="text-sm text-gray-500 mb-2">时间：每周一、三、五 06:30-07:30</p>
+                        <p class="text-sm text-gray-500 mb-2">地点：公园</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">已参与 3 次</span>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
+                                    查看详情
+                                </button>
+                                <button class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs">
+                                    签到
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动项目 2 -->
+            <div class="activity-card px-6 py-4">
+                <div class="flex items-start space-x-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" 
+                         alt="活动图片" class="w-16 h-16 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-gray-800">英语口语练习</h3>
+                            <span class="status-badge status-ongoing">进行中</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">学习 · 英语</p>
+                        <p class="text-sm text-gray-500 mb-2">时间：每周二、四 20:00-21:00</p>
+                        <p class="text-sm text-gray-500 mb-2">地点：线上</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">已参与 2 次</span>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
+                                    查看详情
+                                </button>
+                                <button class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs">
+                                    加入会议
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 已完成的活动 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">已完成</h2>
+            </div>
+            
+            <!-- 活动项目 1 -->
+            <div class="activity-card px-6 py-4 border-b border-gray-100">
+                <div class="flex items-start space-x-4">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop" 
+                         alt="活动图片" class="w-16 h-16 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-gray-800">周末爬山活动</h3>
+                            <span class="status-badge status-completed">已完成</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">运动 · 爬山</p>
+                        <p class="text-sm text-gray-500 mb-2">完成时间：2024-01-14 16:00</p>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-500">参与人数：12人</span>
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="text-sm text-gray-500 ml-1">5.0</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
+                                查看详情
+                            </button>
+                            <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
+                                再次参与
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动项目 2 -->
+            <div class="activity-card px-6 py-4 border-b border-gray-100">
+                <div class="flex items-start space-x-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" 
+                         alt="活动图片" class="w-16 h-16 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-gray-800">摄影技巧分享会</h3>
+                            <span class="status-badge status-completed">已完成</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">学习 · 摄影</p>
+                        <p class="text-sm text-gray-500 mb-2">完成时间：2024-01-12 21:00</p>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-500">参与人数：15人</span>
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="text-sm text-gray-500 ml-1">4.0</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
+                                查看详情
+                            </button>
+                            <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
+                                再次参与
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动项目 3 -->
+            <div class="activity-card px-6 py-4">
+                <div class="flex items-start space-x-4">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop" 
+                         alt="活动图片" class="w-16 h-16 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-gray-800">读书分享会</h3>
+                            <span class="status-badge status-completed">已完成</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">学习 · 读书</p>
+                        <p class="text-sm text-gray-500 mb-2">完成时间：2024-01-10 19:30</p>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-500">参与人数：8人</span>
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="text-sm text-gray-500 ml-1">5.0</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
+                                查看详情
+                            </button>
+                            <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
+                                再次参与
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 已取消的活动 -->
+        <div class="bg-white mt-4 mb-6">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">已取消</h2>
+            </div>
+            
+            <!-- 活动项目 1 -->
+            <div class="activity-card px-6 py-4 border-b border-gray-100">
+                <div class="flex items-start space-x-4">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop" 
+                         alt="活动图片" class="w-16 h-16 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-gray-800">瑜伽课程</h3>
+                            <span class="status-badge status-cancelled">已取消</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">运动 · 瑜伽</p>
+                        <p class="text-sm text-gray-500 mb-2">取消时间：2024-01-08 18:00</p>
+                        <p class="text-sm text-gray-500 mb-2">取消原因：人数不足</p>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
+                                查看详情
+                            </button>
+                            <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
+                                重新报名
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动项目 2 -->
+            <div class="activity-card px-6 py-4">
+                <div class="flex items-start space-x-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" 
+                         alt="活动图片" class="w-16 h-16 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-gray-800">烹饪课程</h3>
+                            <span class="status-badge status-cancelled">已取消</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">生活 · 烹饪</p>
+                        <p class="text-sm text-gray-500 mb-2">取消时间：2024-01-06 20:00</p>
+                        <p class="text-sm text-gray-500 mb-2">取消原因：个人原因</p>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
+                                查看详情
+                            </button>
+                            <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
+                                重新报名
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 筛选功能
+        document.querySelectorAll('.flex button').forEach(button => {
+            button.addEventListener('click', function() {
+                // 移除所有按钮的激活状态
+                document.querySelectorAll('.flex button').forEach(btn => {
+                    btn.classList.remove('bg-blue-600', 'text-white');
+                    btn.classList.add('bg-gray-100', 'text-gray-600');
+                });
+                // 激活当前按钮
+                this.classList.remove('bg-gray-100', 'text-gray-600');
+                this.classList.add('bg-blue-600', 'text-white');
+            });
+        });
+    </script>
+</body>
+</html>

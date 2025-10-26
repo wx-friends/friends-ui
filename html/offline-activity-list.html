@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>官方活动</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .activity-card {
+            transition: all 0.3s ease;
+        }
+        .activity-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .official-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #8b5a00;
+        }
+        .status-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-chevron-left text-gray-600"></i>
+        </button>
+        <h1 class="text-xl font-bold">官方活动</h1>
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-search text-gray-600"></i>
+        </button>
+    </div>
+
+    <!-- 筛选标签 -->
+    <div class="bg-white px-6 py-4 border-b border-gray-100">
+        <div class="flex space-x-3 overflow-x-auto">
+            <button class="filter-btn active px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">
+                全部
+            </button>
+            <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-100 text-gray-600">
+                兴趣派对
+            </button>
+            <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-100 text-gray-600">
+                主题聚会
+            </button>
+            <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-100 text-gray-600">
+                技能分享
+            </button>
+            <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-100 text-gray-600">
+                户外活动
+            </button>
+        </div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+        <!-- 活动卡片 1 -->
+        <div class="activity-card bg-white rounded-2xl p-4 shadow-sm" onclick="openActivityDetail(1)">
+            <div class="flex items-start space-x-4">
+                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=80&h=80&fit=crop"
+                     alt="活动图片" class="w-20 h-20 rounded-xl object-cover">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <span class="official-badge text-xs px-2 py-1 rounded-full font-medium">官方</span>
+                        <span class="status-badge text-white text-xs px-2 py-1 rounded-full">报名中</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">摄影兴趣派对</h3>
+                    <p class="text-sm text-gray-600 mb-2">专业摄影师指导，学习摄影技巧，结交摄影爱好者</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                        <div class="flex items-center space-x-4">
+                            <span><i class="fas fa-calendar mr-1"></i>12月25日</span>
+                            <span><i class="fas fa-map-marker-alt mr-1"></i>798艺术区</span>
+                        </div>
+                        <span>15/30人</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-crown text-yellow-500"></i>
+                    <span class="text-sm text-gray-600">官方主办</span>
+                </div>
+                <button class="bg-purple-500 text-white px-4 py-2 rounded-xl text-sm font-medium">
+                    立即报名
+                </button>
+            </div>
+        </div>
+
+        <!-- 活动卡片 2 -->
+        <div class="activity-card bg-white rounded-2xl p-4 shadow-sm" onclick="openActivityDetail(2)">
+            <div class="flex items-start space-x-4">
+                <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=80&h=80&fit=crop"
+                     alt="活动图片" class="w-20 h-20 rounded-xl object-cover">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <span class="official-badge text-xs px-2 py-1 rounded-full font-medium">官方</span>
+                        <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">即将开始</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">咖啡品鉴会</h3>
+                    <p class="text-sm text-gray-600 mb-2">专业咖啡师分享咖啡知识，品尝不同产地咖啡</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                        <div class="flex items-center space-x-4">
+                            <span><i class="fas fa-calendar mr-1"></i>12月28日</span>
+                            <span><i class="fas fa-map-marker-alt mr-1"></i>三里屯</span>
+                        </div>
+                        <span>8/20人</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-crown text-yellow-500"></i>
+                    <span class="text-sm text-gray-600">官方主办</span>
+                </div>
+                <button class="bg-purple-500 text-white px-4 py-2 rounded-xl text-sm font-medium">
+                    立即报名
+                </button>
+            </div>
+        </div>
+
+        <!-- 活动卡片 3 -->
+        <div class="activity-card bg-white rounded-2xl p-4 shadow-sm" onclick="openActivityDetail(3)">
+            <div class="flex items-start space-x-4">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&h=80&fit=crop"
+                     alt="活动图片" class="w-20 h-20 rounded-xl object-cover">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <span class="official-badge text-xs px-2 py-1 rounded-full font-medium">官方</span>
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">进行中</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">户外徒步活动</h3>
+                    <p class="text-sm text-gray-600 mb-2">专业领队带队，探索北京周边美景，锻炼身体</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                        <div class="flex items-center space-x-4">
+                            <span><i class="fas fa-calendar mr-1"></i>12月22日</span>
+                            <span><i class="fas fa-map-marker-alt mr-1"></i>香山公园</span>
+                        </div>
+                        <span>12/25人</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-crown text-yellow-500"></i>
+                    <span class="text-sm text-gray-600">官方主办</span>
+                </div>
+                <button class="bg-gray-300 text-gray-500 px-4 py-2 rounded-xl text-sm font-medium" disabled>
+                    已开始
+                </button>
+            </div>
+        </div>
+
+        <!-- 活动卡片 4 -->
+        <div class="activity-card bg-white rounded-2xl p-4 shadow-sm" onclick="openActivityDetail(4)">
+            <div class="flex items-start space-x-4">
+                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=80&h=80&fit=crop"
+                     alt="活动图片" class="w-20 h-20 rounded-xl object-cover">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <span class="official-badge text-xs px-2 py-1 rounded-full font-medium">官方</span>
+                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">已结束</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">编程技能分享会</h3>
+                    <p class="text-sm text-gray-600 mb-2">技术大牛分享编程经验，学习最新技术趋势</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                        <div class="flex items-center space-x-4">
+                            <span><i class="fas fa-calendar mr-1"></i>12月15日</span>
+                            <span><i class="fas fa-map-marker-alt mr-1"></i>中关村</span>
+                        </div>
+                        <span>25/25人</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-crown text-yellow-500"></i>
+                    <span class="text-sm text-gray-600">官方主办</span>
+                </div>
+                <button class="bg-gray-300 text-gray-500 px-4 py-2 rounded-xl text-sm font-medium" disabled>
+                    已结束
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bg-white border-t border-gray-200 px-6 py-3">
+        <div class="flex justify-around">
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="home">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">发现</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="chat">
+                <i class="fas fa-comments text-xl mb-1"></i>
+                <span class="text-xs">消息</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="buddy-activity">
+                <i class="fas fa-users text-xl mb-1"></i>
+                <span class="text-xs">搭子</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-purple-600" data-page="offline-activity">
+                <i class="fas fa-calendar-alt text-xl mb-1"></i>
+                <span class="text-xs">活动</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-gray-400" data-page="profile">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">我的</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 筛选标签切换
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.add('bg-gray-100', 'text-gray-600');
+                });
+                this.classList.add('active');
+                this.classList.remove('bg-gray-100', 'text-gray-600');
+                showToast(`已切换到${this.textContent}`, 'info');
+            });
+        });
+
+        // 打开活动详情
+        function openActivityDetail(activityId) {
+            showToast('正在打开活动详情...', 'info');
+            setTimeout(() => {
+                if (window.navigationManager) {
+                    window.navigationManager.navigateToSubPage('offline-activity-detail', { id: activityId });
+                } else {
+                    window.location.href = `offline-activity-detail.html?id=${activityId}`;
+                }
+            }, 500);
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

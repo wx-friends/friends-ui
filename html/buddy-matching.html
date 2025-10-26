@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>主页</title>
+    <title>搭子匹配</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -32,11 +32,11 @@
             transform: scale(1.1);
             box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
         }
-        .super-like-btn {
+        .buddy-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             transition: all 0.3s ease;
         }
-        .super-like-btn:hover {
+        .buddy-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
@@ -57,53 +57,13 @@
 
     <!-- 导航栏 -->
     <div class="px-6 py-4 flex items-center justify-between">
-        <h1 class="text-xl font-bold text-white">发现</h1>
-        <div class="flex items-center space-x-3">
-            <!-- 模式切换 -->
-            <div class="bg-white bg-opacity-20 rounded-full p-1">
-                <button class="mode-btn active px-4 py-2 rounded-full text-white text-sm font-medium" onclick="switchMode('dating')">
-                    恋爱交友
-                </button>
-                <button class="mode-btn px-4 py-2 rounded-full text-white text-sm font-medium opacity-70" onclick="switchMode('buddy')">
-                    搭子匹配
-                </button>
-            </div>
-            <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center" onclick="openFilter()">
-                <i class="fas fa-filter text-white"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- 搭子匹配筛选条件 -->
-    <div id="buddy-filters" class="px-6 pb-4 hidden">
-        <div class="card rounded-2xl p-4">
-            <div class="flex items-center justify-between mb-3">
-                <h3 class="font-semibold text-gray-800">搭子类型</h3>
-                <button onclick="toggleBuddyFilters()" class="text-gray-500">
-                    <i class="fas fa-chevron-up"></i>
-                </button>
-            </div>
-            <div class="flex flex-wrap gap-2">
-                <button class="buddy-filter-btn active px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm" data-type="all" onclick="filterBuddyType('all')">
-                    全部
-                </button>
-                <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="sport" onclick="filterBuddyType('sport')">
-                    运动
-                </button>
-                <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="study" onclick="filterBuddyType('study')">
-                    学习
-                </button>
-                <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="travel" onclick="filterBuddyType('travel')">
-                    旅行
-                </button>
-                <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="workout" onclick="filterBuddyType('workout')">
-                    健身
-                </button>
-                <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="hobby" onclick="filterBuddyType('hobby')">
-                    爱好
-                </button>
-            </div>
-        </div>
+        <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center" onclick="goBack()">
+            <i class="fas fa-arrow-left text-white"></i>
+        </button>
+        <h1 class="text-xl font-bold text-white">匹配结果</h1>
+        <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center" onclick="openFilter()">
+            <i class="fas fa-filter text-white"></i>
+        </button>
     </div>
 
     <!-- 主要内容 -->
@@ -152,9 +112,20 @@
                         <div class="text-sm text-gray-500">学历</div>
                     </div>
                 </div>
-                <p class="text-gray-600 text-sm leading-relaxed">
+                <p class="text-gray-600 text-sm leading-relaxed mb-4">
                     热爱生活，喜欢摄影和旅行。希望能找到一个志同道合的人，一起探索这个世界的美好。
                 </p>
+                
+                <!-- 搭子偏好 -->
+                <div class="bg-purple-50 rounded-xl p-4">
+                    <h4 class="font-semibold text-gray-900 mb-2">搭子偏好</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">爬山</span>
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">摄影</span>
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">美食</span>
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">电影</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -163,30 +134,19 @@
             <button class="pass-btn w-16 h-16 rounded-full flex items-center justify-center text-white" onclick="handlePass()">
                 <i class="fas fa-times text-xl"></i>
             </button>
-            <button class="super-like-btn w-12 h-12 rounded-full flex items-center justify-center text-white" onclick="handleSuperLike()">
-                <i class="fas fa-star text-lg"></i>
+            <button class="buddy-btn w-16 h-16 rounded-full flex items-center justify-center text-white" onclick="handleBuddy()">
+                <i class="fas fa-handshake text-xl"></i>
             </button>
             <button class="like-btn w-16 h-16 rounded-full flex items-center justify-center text-white" onclick="handleLike()">
                 <i class="fas fa-heart text-xl"></i>
             </button>
         </div>
 
-        <!-- 匹配设置和次数 -->
-        <div class="mt-6 space-y-3">
-            <!-- 匹配设置按钮 -->
-            <div class="text-center">
-                <button class="bg-white bg-opacity-20 px-6 py-3 rounded-full text-white text-sm font-medium" onclick="openMatchingPreferences()">
-                    <i class="fas fa-cog mr-2"></i>
-                    调整匹配偏好
-                </button>
-            </div>
-            
-            <!-- 今日匹配次数 -->
-            <div class="text-center">
-                <div class="inline-flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-full">
-                    <i class="fas fa-heart text-pink-300 mr-2"></i>
-                    <span class="text-white text-sm match-count">今日剩余匹配次数: 2/3</span>
-                </div>
+        <!-- 今日匹配次数 -->
+        <div class="mt-6 text-center">
+            <div class="inline-flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-full">
+                <i class="fas fa-handshake text-purple-300 mr-2"></i>
+                <span class="text-white text-sm match-count">今日剩余搭子匹配次数: 2/3</span>
             </div>
         </div>
     </div>
@@ -194,13 +154,17 @@
     <!-- 底部导航栏 -->
     <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg px-6 py-3">
         <div class="flex justify-around">
-            <button class="nav-button flex flex-col items-center text-white" data-page="home">
+            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="home">
                 <i class="fas fa-home text-xl mb-1"></i>
                 <span class="text-xs">发现</span>
             </button>
             <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="chat">
                 <i class="fas fa-comments text-xl mb-1"></i>
                 <span class="text-xs">消息</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-white" data-page="buddy-matching">
+                <i class="fas fa-handshake text-xl mb-1"></i>
+                <span class="text-xs">搭子</span>
             </button>
             <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="moments">
                 <i class="fas fa-camera text-xl mb-1"></i>
@@ -218,6 +182,13 @@
 
     <!-- 页面特定交互脚本 -->
     <script>
+        // 处理搭子匹配操作
+        function handleBuddy() {
+            showToast('已发送搭子邀请！', 'success');
+            updateMatchCount();
+            loadNextProfile();
+        }
+
         // 处理喜欢操作
         function handleLike() {
             showToast('已喜欢！', 'success');
@@ -231,20 +202,13 @@
             loadNextProfile();
         }
 
-        // 处理超级喜欢操作
-        function handleSuperLike() {
-            showToast('超级喜欢已发送！', 'success');
-            updateMatchCount();
-            loadNextProfile();
-        }
-
         // 更新匹配次数
         function updateMatchCount() {
             const matchCountElement = document.querySelector('.match-count');
             if (matchCountElement) {
                 const currentCount = parseInt(matchCountElement.textContent.split('/')[0].split(': ')[1]);
                 const newCount = Math.max(0, currentCount - 1);
-                matchCountElement.textContent = `今日剩余匹配次数: ${newCount}/3`;
+                matchCountElement.textContent = `今日剩余搭子匹配次数: ${newCount}/3`;
             }
         }
 
@@ -256,108 +220,6 @@
             }, 1000);
         }
 
-        // 切换模式
-        function switchMode(mode) {
-            document.querySelectorAll('.mode-btn').forEach(btn => {
-                btn.classList.remove('active');
-                btn.classList.add('opacity-70');
-            });
-            event.target.classList.add('active');
-            event.target.classList.remove('opacity-70');
-            
-            if (mode === 'buddy') {
-                showToast('已切换到搭子匹配模式', 'info');
-                // 显示搭子筛选条件
-                document.getElementById('buddy-filters').classList.remove('hidden');
-                // 更新用户卡片显示搭子相关信息
-                updateCardForBuddyMode();
-            } else {
-                showToast('已切换到恋爱交友模式', 'info');
-                // 隐藏搭子筛选条件
-                document.getElementById('buddy-filters').classList.add('hidden');
-                // 恢复恋爱交友模式
-                updateCardForDatingMode();
-            }
-        }
-
-        // 更新卡片为搭子匹配模式
-        function updateCardForBuddyMode() {
-            // 更新用户信息显示搭子相关内容
-            const userInfo = document.querySelector('.absolute.bottom-0.left-0.right-0');
-            if (userInfo) {
-                const tags = userInfo.querySelector('.flex.flex-wrap.gap-2');
-                if (tags) {
-                    tags.innerHTML = `
-                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-white text-sm">运动搭子</span>
-                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-white text-sm">羽毛球</span>
-                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-white text-sm">周末</span>
-                    `;
-                }
-            }
-        }
-
-        // 更新卡片为恋爱交友模式
-        function updateCardForDatingMode() {
-            // 恢复恋爱交友模式的内容
-            const userInfo = document.querySelector('.absolute.bottom-0.left-0.right-0');
-            if (userInfo) {
-                const tags = userInfo.querySelector('.flex.flex-wrap.gap-2');
-                if (tags) {
-                    tags.innerHTML = `
-                    <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-white text-sm">设计师</span>
-                    <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-white text-sm">摄影</span>
-                    <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-white text-sm">旅行</span>
-                `;
-            }
-        }
-
-        // 切换搭子筛选条件显示
-        function toggleBuddyFilters() {
-            const filters = document.getElementById('buddy-filters');
-            const button = event.target.closest('button');
-            const icon = button.querySelector('i');
-            
-            if (filters.classList.contains('hidden')) {
-                filters.classList.remove('hidden');
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-up');
-            } else {
-                filters.classList.add('hidden');
-                icon.classList.remove('fa-chevron-up');
-                icon.classList.add('fa-chevron-down');
-            }
-        }
-
-        // 搭子类型筛选
-        function filterBuddyType(type) {
-            // 移除所有按钮的激活状态
-            document.querySelectorAll('.buddy-filter-btn').forEach(btn => {
-                btn.classList.remove('active', 'bg-blue-100', 'text-blue-600');
-                btn.classList.add('bg-gray-100', 'text-gray-600');
-            });
-            
-            // 激活当前按钮
-            event.target.classList.add('active', 'bg-blue-100', 'text-blue-600');
-            event.target.classList.remove('bg-gray-100', 'text-gray-600');
-            
-            showToast(`已筛选${event.target.textContent}类型的搭子`, 'info');
-            
-            // 这里可以添加实际的筛选逻辑
-            // 根据type参数筛选用户
-        }
-
-        // 打开匹配设置页面
-        function openMatchingPreferences() {
-            if (window.navigationManager) {
-                window.navigationManager.navigateToSubPage('matching-preferences');
-            } else {
-                showToast('正在跳转到匹配设置页面...', 'info');
-                setTimeout(() => {
-                    window.location.href = 'matching-preferences.html';
-                }, 500);
-            }
-        }
-
         // 打开筛选页面
         function openFilter() {
             if (window.navigationManager) {
@@ -367,6 +229,15 @@
                 setTimeout(() => {
                     window.location.href = 'filter.html';
                 }, 500);
+            }
+        }
+
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
             }
         }
 

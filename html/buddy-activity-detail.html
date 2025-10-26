@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活动详情</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .activity-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .register-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            transition: all 0.3s ease;
+        }
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        .participant-avatar {
+            border: 2px solid white;
+        }
+        .info-item {
+            transition: all 0.3s ease;
+        }
+        .info-item:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-white text-sm font-medium activity-header">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-white rounded-sm">
+                <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="activity-header px-6 py-4 flex items-center justify-between">
+        <button class="w-8 h-8 flex items-center justify-center" onclick="goBack()">
+            <i class="fas fa-chevron-left text-white"></i>
+        </button>
+        <h1 class="text-lg font-semibold text-white">活动详情</h1>
+        <button class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-share text-white"></i>
+        </button>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 overflow-y-auto">
+        <!-- 活动封面 -->
+        <div class="relative h-64">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop"
+                 alt="活动封面" class="w-full h-full object-cover">
+            <div class="absolute top-4 right-4">
+                <span class="bg-green-500 text-white text-xs px-3 py-1 rounded-full">进行中</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4">
+                <div class="bg-black bg-opacity-50 rounded-xl p-4">
+                    <h2 class="text-xl font-bold text-white mb-2">周末爬山活动</h2>
+                    <div class="flex items-center space-x-4 text-white text-sm">
+                        <span><i class="fas fa-calendar mr-1"></i>12月21日 09:00</span>
+                        <span><i class="fas fa-map-marker-alt mr-1"></i>香山公园</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 活动信息 -->
+        <div class="px-6 py-6 space-y-6">
+            <!-- 基本信息 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">活动信息</h3>
+                <div class="space-y-4">
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-tag text-purple-600"></i>
+                            <span class="text-gray-700">活动类型</span>
+                        </div>
+                        <span class="text-gray-900 font-medium">运动健身</span>
+                    </div>
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-users text-blue-600"></i>
+                            <span class="text-gray-700">参与人数</span>
+                        </div>
+                        <span class="text-gray-900 font-medium">3/6人</span>
+                    </div>
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-green-600"></i>
+                            <span class="text-gray-700">活动时长</span>
+                        </div>
+                        <span class="text-gray-900 font-medium">约6小时</span>
+                    </div>
+                    <div class="info-item flex items-center justify-between p-3 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-dollar-sign text-yellow-600"></i>
+                            <span class="text-gray-700">费用</span>
+                        </div>
+                        <span class="text-gray-900 font-medium">AA制</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动描述 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">活动描述</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    周末天气不错，想找几个志同道合的朋友一起去香山爬山。我们计划早上9点集合，一起爬山、拍照、聊天，享受大自然的美好。中午在山顶野餐，下午下山。希望找到喜欢户外运动、性格开朗的朋友一起参与。
+                </p>
+            </div>
+
+            <!-- 发起人信息 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">发起人</h3>
+                <div class="flex items-center space-x-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
+                         alt="发起人" class="w-15 h-15 rounded-full object-cover">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <h4 class="font-semibold text-gray-900">李明</h4>
+                            <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">28岁 · 设计师 · 距离你2.3km</p>
+                        <div class="flex space-x-2 mt-2">
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">摄影</span>
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">旅行</span>
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">运动</span>
+                        </div>
+                    </div>
+                    <button class="bg-purple-500 text-white px-4 py-2 rounded-xl text-sm font-medium">
+                        私聊
+                    </button>
+                </div>
+            </div>
+
+            <!-- 参与成员 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">参与成员 (3/6)</h3>
+                    <span class="text-sm text-gray-500">还差3人</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face"
+                             alt="成员1" class="w-10 h-10 rounded-full object-cover participant-avatar">
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                    </div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face"
+                             alt="成员2" class="w-10 h-10 rounded-full object-cover participant-avatar">
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                    </div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face"
+                             alt="成员3" class="w-10 h-10 rounded-full object-cover participant-avatar">
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fas fa-plus text-gray-400"></i>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fas fa-plus text-gray-400"></i>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fas fa-plus text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 注意事项 -->
+            <div class="bg-yellow-50 rounded-2xl p-6">
+                <div class="flex items-start space-x-3">
+                    <i class="fas fa-exclamation-triangle text-yellow-500 mt-0.5"></i>
+                    <div class="text-sm text-yellow-800">
+                        <p class="font-medium mb-2">注意事项</p>
+                        <ul class="space-y-1 text-xs">
+                            <li>• 请穿着舒适的运动鞋和服装</li>
+                            <li>• 自备水和简单食物</li>
+                            <li>• 注意安全，听从组织者安排</li>
+                            <li>• 如遇恶劣天气，活动可能取消</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="bg-white border-t border-gray-200 px-6 py-4">
+        <div class="flex space-x-4">
+            <button class="flex-1 py-4 bg-gray-200 text-gray-700 rounded-2xl font-semibold">
+                收藏活动
+            </button>
+            <button class="flex-1 register-btn py-4 text-white rounded-2xl font-semibold" onclick="registerActivity()">
+                立即报名
+            </button>
+        </div>
+    </div>
+
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
+        }
+
+        // 报名活动
+        function registerActivity() {
+            showToast('正在报名活动...', 'info');
+            setTimeout(() => {
+                showToast('报名成功！', 'success');
+                // 这里可以添加报名逻辑
+            }, 1000);
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

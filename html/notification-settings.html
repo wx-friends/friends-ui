@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通知设置</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .setting-item {
+            transition: all 0.3s ease;
+        }
+        .setting-item:hover {
+            background-color: #f8fafc;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 30px;
+            background-color: #e5e7eb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .toggle-switch.active {
+            background-color: #667eea;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+        .time-picker {
+            background-color: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <div class="flex items-center">
+            <button onclick="history.back()" class="mr-4">
+                <i class="fas fa-arrow-left text-gray-600"></i>
+            </button>
+            <h1 class="text-xl font-bold">通知设置</h1>
+        </div>
+    </div>
+
+    <!-- 设置内容 -->
+    <div class="flex-1 overflow-y-auto">
+        <!-- 推送通知 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">推送通知</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">允许推送通知</h3>
+                    <p class="text-sm text-gray-500">接收应用推送通知</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">声音提醒</h3>
+                    <p class="text-sm text-gray-500">通知时播放声音</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">震动提醒</h3>
+                    <p class="text-sm text-gray-500">通知时震动提醒</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+
+        <!-- 匹配通知 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">匹配通知</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">新匹配通知</h3>
+                    <p class="text-sm text-gray-500">有人喜欢我时通知</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">超级喜欢通知</h3>
+                    <p class="text-sm text-gray-500">收到超级喜欢时通知</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">搭子匹配通知</h3>
+                    <p class="text-sm text-gray-500">搭子匹配成功时通知</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">匹配提醒</h3>
+                    <p class="text-sm text-gray-500">定期提醒查看匹配</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+
+        <!-- 消息通知 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">消息通知</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">新消息通知</h3>
+                    <p class="text-sm text-gray-500">收到新消息时通知</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">消息预览</h3>
+                    <p class="text-sm text-gray-500">在通知中显示消息内容</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">群聊通知</h3>
+                    <p class="text-sm text-gray-500">群聊消息通知</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">搭子聊天通知</h3>
+                    <p class="text-sm text-gray-500">搭子相关聊天通知</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+
+        <!-- 活动通知 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">活动通知</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">活动推荐</h3>
+                    <p class="text-sm text-gray-500">推荐相关活动</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">活动提醒</h3>
+                    <p class="text-sm text-gray-500">参与活动前提醒</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">活动更新</h3>
+                    <p class="text-sm text-gray-500">活动信息变更通知</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">搭子活动通知</h3>
+                    <p class="text-sm text-gray-500">搭子相关活动通知</p>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+
+        <!-- 免打扰时间 -->
+        <div class="bg-white mt-4">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">免打扰时间</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">启用免打扰</h3>
+                    <p class="text-sm text-gray-500">在指定时间内不接收通知</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">开始时间</h3>
+                    <p class="text-sm text-gray-500">免打扰开始时间</p>
+                </div>
+                <input type="time" value="22:00" class="time-picker">
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">结束时间</h3>
+                    <p class="text-sm text-gray-500">免打扰结束时间</p>
+                </div>
+                <input type="time" value="08:00" class="time-picker">
+            </div>
+        </div>
+
+        <!-- 通知频率 -->
+        <div class="bg-white mt-4 mb-6">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">通知频率</h2>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">每日摘要</h3>
+                    <p class="text-sm text-gray-500">每日发送一次通知摘要</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <div>
+                    <h3 class="font-medium text-gray-800">周报通知</h3>
+                    <p class="text-sm text-gray-500">每周发送活动周报</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium text-gray-800">营销通知</h3>
+                    <p class="text-sm text-gray-500">接收产品推广信息</p>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

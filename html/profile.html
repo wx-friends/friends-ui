@@ -64,7 +64,7 @@
         </div>
 
         <!-- 统计数据 -->
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-4 gap-4">
             <div class="text-center cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition-all duration-300" onclick="navigateToFollowers('following')">
                 <div class="text-2xl font-bold text-white">128</div>
                 <div class="text-white opacity-80 text-sm">关注</div>
@@ -73,9 +73,13 @@
                 <div class="text-2xl font-bold text-white">256</div>
                 <div class="text-white opacity-80 text-sm">粉丝</div>
             </div>
-            <div class="text-center">
-                <div class="text-2xl font-bold text-white">42</div>
-                <div class="text-white opacity-80 text-sm">动态</div>
+            <div class="text-center cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition-all duration-300" onclick="navigateToBuddyHistory()">
+                <div class="text-2xl font-bold text-white">12</div>
+                <div class="text-white opacity-80 text-sm">搭子匹配</div>
+            </div>
+            <div class="text-center cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition-all duration-300" onclick="navigateToActivityHistory()">
+                <div class="text-2xl font-bold text-white">18</div>
+                <div class="text-white opacity-80 text-sm">活动参与</div>
             </div>
         </div>
     </div>
@@ -117,12 +121,61 @@
                     <i class="fas fa-chevron-right text-gray-400"></i>
                 </div>
             </div>
-            <div class="menu-item flex items-center justify-between p-4">
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer" data-action="my-favorites" onclick="handleProfileAction('my-favorites')">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
                         <i class="fas fa-star text-yellow-600"></i>
                     </div>
                     <span class="font-medium text-gray-900">我的收藏</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="menu-item flex items-center justify-between p-4 cursor-pointer" data-action="buddy-activities" onclick="handleProfileAction('buddy-activities')">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-users text-indigo-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">我的搭子活动</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- 搭子活动菜单 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer" data-action="buddy-activity-list" onclick="handleProfileAction('buddy-activity-list')">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-calendar-alt text-purple-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">搭子活动</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer" data-action="buddy-history" onclick="handleProfileAction('buddy-history')">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-cyan-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-handshake text-cyan-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">搭子匹配历史</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer" data-action="offline-activities" onclick="handleProfileAction('offline-activities')">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-calendar-check text-orange-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">官方活动</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="menu-item flex items-center justify-between p-4 cursor-pointer" data-action="activity-history" onclick="handleProfileAction('activity-history')">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-history text-teal-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">活动记录</span>
                 </div>
                 <i class="fas fa-chevron-right text-gray-400"></i>
             </div>
@@ -263,7 +316,31 @@
                     'my-favorites': () => {
                         showToast('正在加载我的收藏...', 'info');
                         setTimeout(() => {
-                            window.location.href = 'favorites.html';
+                            window.location.href = 'my-favorites.html';
+                        }, 1000);
+                    },
+                    'buddy-activities': () => {
+                        showToast('正在加载我的搭子活动...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'buddy-activity-list.html';
+                        }, 1000);
+                    },
+                    'buddy-activity-list': () => {
+                        showToast('正在跳转到搭子活动...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'buddy-activity-list.html';
+                        }, 1000);
+                    },
+                    'offline-activities': () => {
+                        showToast('正在跳转到官方活动...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'offline-activity-list.html';
+                        }, 1000);
+                    },
+                    'activity-history': () => {
+                        showToast('正在加载活动记录...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'activity-history.html';
                         }, 1000);
                     },
                     'settings': () => {
@@ -289,6 +366,18 @@
                         setTimeout(() => {
                             window.location.href = 'help.html';
                         }, 1000);
+                    },
+                    'buddy-history': () => {
+                        showToast('正在跳转到搭子匹配历史...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'buddy-history.html';
+                        }, 1000);
+                    },
+                    'activity-history': () => {
+                        showToast('正在跳转到活动参与记录...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'activity-history.html';
+                        }, 1000);
                     }
                 };
 
@@ -298,6 +387,22 @@
                     showToast('功能开发中...', 'info');
                 }
             }
+        }
+
+        // 导航到搭子匹配历史
+        function navigateToBuddyHistory() {
+            showToast('正在跳转到搭子匹配历史...', 'info');
+            setTimeout(() => {
+                window.location.href = 'buddy-history.html';
+            }, 1000);
+        }
+
+        // 导航到活动参与记录
+        function navigateToActivityHistory() {
+            showToast('正在跳转到活动参与记录...', 'info');
+            setTimeout(() => {
+                window.location.href = 'activity-history.html';
+            }, 1000);
         }
 
         // 显示提示消息

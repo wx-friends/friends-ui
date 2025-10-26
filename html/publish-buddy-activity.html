@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布活动</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .category-item {
+            transition: all 0.3s ease;
+        }
+        .category-item:hover {
+            background-color: #f8fafc;
+        }
+        .category-item.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            border-color: #667eea;
+            background-color: #f8fafc;
+        }
+        .upload-area.dragover {
+            border-color: #667eea;
+            background-color: #f0f4ff;
+        }
+        .publish-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        .publish-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-black rounded-sm">
+                <div class="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button class="w-8 h-8 flex items-center justify-center" onclick="goBack()">
+            <i class="fas fa-chevron-left text-gray-600"></i>
+        </button>
+        <h1 class="text-lg font-semibold">发布活动</h1>
+        <button class="text-purple-600 font-medium" onclick="saveDraft()">保存草稿</button>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+        <!-- 活动封面 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">活动封面</h3>
+            <div class="upload-area p-8 rounded-xl text-center">
+                <i class="fas fa-camera text-4xl text-gray-400 mb-4"></i>
+                <p class="text-gray-600 mb-2">点击上传活动封面</p>
+                <p class="text-sm text-gray-500">支持JPG、PNG格式，建议尺寸16:9</p>
+                <button class="mt-4 bg-purple-500 text-white px-4 py-2 rounded-xl text-sm font-medium">
+                    选择图片
+                </button>
+            </div>
+        </div>
+
+        <!-- 基本信息 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">基本信息</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">活动标题 *</label>
+                    <input type="text" placeholder="请输入活动标题" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                           value="周末爬山活动">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">活动描述 *</label>
+                    <textarea placeholder="请详细描述活动内容、要求等" rows="4"
+                              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 resize-none">周末天气不错，想找几个志同道合的朋友一起去香山爬山。我们计划早上9点集合，一起爬山、拍照、聊天，享受大自然的美好。</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 活动分类 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">活动分类 *</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="category-item selected px-4 py-3 rounded-xl border border-purple-200 text-center">
+                    运动健身
+                </button>
+                <button class="category-item px-4 py-3 rounded-xl border border-gray-200 text-center">
+                    美食探店
+                </button>
+                <button class="category-item px-4 py-3 rounded-xl border border-gray-200 text-center">
+                    旅游出行
+                </button>
+                <button class="category-item px-4 py-3 rounded-xl border border-gray-200 text-center">
+                    学习交流
+                </button>
+                <button class="category-item px-4 py-3 rounded-xl border border-gray-200 text-center">
+                    娱乐休闲
+                </button>
+                <button class="category-item px-4 py-3 rounded-xl border border-gray-200 text-center">
+                    其他
+                </button>
+            </div>
+        </div>
+
+        <!-- 时间地点 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">时间地点</h3>
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">活动日期 *</label>
+                        <input type="date" 
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                               value="2024-12-21">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">活动时间 *</label>
+                        <input type="time" 
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                               value="09:00">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">活动地点 *</label>
+                    <input type="text" placeholder="请输入活动地点" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                           value="香山公园">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">详细地址</label>
+                    <input type="text" placeholder="请输入详细地址" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                           value="北京市海淀区香山公园东门">
+                </div>
+            </div>
+        </div>
+
+        <!-- 参与设置 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">参与设置</h3>
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">参与人数 *</label>
+                        <input type="number" placeholder="最少人数" min="2" max="20"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                               value="3">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">最多人数 *</label>
+                        <input type="number" placeholder="最多人数" min="2" max="20"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                               value="6">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">费用说明</label>
+                    <select class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500">
+                        <option>免费</option>
+                        <option selected>AA制</option>
+                        <option>我请客</option>
+                        <option>其他</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">费用金额</label>
+                    <input type="text" placeholder="请输入费用金额（如：50元/人）" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500"
+                           value="门票自理，午餐AA">
+                </div>
+            </div>
+        </div>
+
+        <!-- 注意事项 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">注意事项</h3>
+            <textarea placeholder="请填写活动注意事项，如装备要求、安全提醒等" rows="3"
+                      class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 resize-none">请穿着舒适的运动鞋和服装，自备水和简单食物，注意安全，听从组织者安排。如遇恶劣天气，活动可能取消。</textarea>
+        </div>
+
+        <!-- 发布设置 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">发布设置</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="font-medium text-gray-900">需要审核</div>
+                        <div class="text-sm text-gray-500">发布前需要平台审核</div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer" checked>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="font-medium text-gray-900">允许评论</div>
+                        <div class="text-sm text-gray-500">其他用户可以评论活动</div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer" checked>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部按钮 -->
+    <div class="bg-white border-t border-gray-200 px-6 py-4">
+        <div class="flex space-x-4">
+            <button class="flex-1 py-4 bg-gray-200 text-gray-700 rounded-2xl font-semibold" onclick="saveDraft()">
+                保存草稿
+            </button>
+            <button class="flex-1 publish-btn py-4 text-white rounded-2xl font-semibold" onclick="publishActivity()">
+                发布活动
+            </button>
+        </div>
+    </div>
+
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 分类选择
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.category-item').forEach(c => {
+                    c.classList.remove('selected');
+                    c.classList.add('border-gray-200');
+                    c.classList.remove('border-purple-200');
+                });
+                this.classList.add('selected');
+                this.classList.remove('border-gray-200');
+                this.classList.add('border-purple-200');
+            });
+        });
+
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
+        }
+
+        // 保存草稿
+        function saveDraft() {
+            showToast('草稿已保存', 'success');
+        }
+
+        // 发布活动
+        function publishActivity() {
+            showToast('正在发布活动...', 'info');
+            setTimeout(() => {
+                showToast('活动发布成功！', 'success');
+                setTimeout(() => {
+                    if (window.navigationManager) {
+                        window.navigationManager.navigateToSubPage('buddy-activity-list');
+                    } else {
+                        window.location.href = 'buddy-activity-list.html';
+                    }
+                }, 1500);
+            }, 1000);
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
