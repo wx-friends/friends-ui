@@ -40,6 +40,226 @@
             transform: scale(1.1);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
+        
+        /* 全屏匹配动效样式 */
+        .matching-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .matching-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .matching-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .matching-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.3s forwards;
+        }
+        
+        .matching-animation {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 3rem;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+        }
+        
+        .matching-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff6b6b;
+            transform: rotate(45deg);
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff6b6b;
+            border-radius: 50%;
+        }
+        
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        
+        .heart:after {
+            top: 0;
+            left: -10px;
+        }
+        
+        .heart:nth-child(1) {
+            top: 20%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .heart:nth-child(2) {
+            top: 30%;
+            right: 20%;
+            animation-delay: 0.3s;
+        }
+        
+        .heart:nth-child(3) {
+            bottom: 30%;
+            left: 30%;
+            animation-delay: 0.6s;
+        }
+        
+        .heart:nth-child(4) {
+            bottom: 20%;
+            right: 30%;
+            animation-delay: 0.9s;
+        }
+        
+        .heart:nth-child(5) {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            animation-delay: 1.2s;
+        }
+        
+        .matching-progress {
+            width: 300px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.9s forwards;
+        }
+        
+        .matching-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+            border-radius: 2px;
+            width: 0%;
+            animation: progressFill 3s ease-out forwards;
+        }
+        
+        .matching-result {
+            display: none;
+            text-align: center;
+            color: white;
+        }
+        
+        .result-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounceIn 0.8s ease-out;
+        }
+        
+        .result-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .result-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .result-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .result-btn {
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .result-btn.primary {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        }
+        
+        .result-btn.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .result-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1) rotate(45deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(45deg);
+            }
+        }
+        
+        @keyframes progressFill {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body class="h-screen flex flex-col">
@@ -213,6 +433,38 @@
         </div>
     </div>
 
+    <!-- 全屏匹配动效 -->
+    <div id="matchingOverlay" class="matching-overlay">
+        <div class="matching-content">
+            <h2 class="matching-title">正在寻找匹配...</h2>
+            <p class="matching-subtitle">为你找到最合适的人</p>
+            
+            <div class="matching-animation">
+                <div class="matching-hearts">
+                    <div class="heart"></div>
+                    <div class="heart"></div>
+                    <div class="heart"></div>
+                    <div class="heart"></div>
+                    <div class="heart"></div>
+                </div>
+            </div>
+            
+            <div class="matching-progress">
+                <div class="matching-progress-bar"></div>
+            </div>
+        </div>
+        
+        <div class="matching-result">
+            <div class="result-icon">💕</div>
+            <h3 class="result-title">匹配成功！</h3>
+            <p class="result-subtitle">你们互相喜欢，开始聊天吧！</p>
+            <div class="result-actions">
+                <button class="result-btn primary" onclick="startChat()">开始聊天</button>
+                <button class="result-btn secondary" onclick="closeMatching()">继续匹配</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 引入导航脚本 -->
     <script src="js/navigation.js"></script>
 
@@ -220,9 +472,8 @@
     <script>
         // 处理喜欢操作
         function handleLike() {
-            showToast('已喜欢！', 'success');
-            updateMatchCount();
-            loadNextProfile();
+            // 显示全屏匹配动效
+            showMatchingAnimation();
         }
 
         // 处理跳过操作
@@ -233,9 +484,8 @@
 
         // 处理超级喜欢操作
         function handleSuperLike() {
-            showToast('超级喜欢已发送！', 'success');
-            updateMatchCount();
-            loadNextProfile();
+            // 显示全屏匹配动效
+            showMatchingAnimation();
         }
 
         // 更新匹配次数
@@ -370,6 +620,49 @@
             }
         }
 
+        // 显示全屏匹配动效
+        function showMatchingAnimation() {
+            const overlay = document.getElementById('matchingOverlay');
+            const matchingContent = overlay.querySelector('.matching-content');
+            const matchingResult = overlay.querySelector('.matching-result');
+            
+            // 显示匹配动效
+            overlay.style.display = 'flex';
+            matchingContent.style.display = 'block';
+            matchingResult.style.display = 'none';
+            
+            // 模拟匹配过程
+            setTimeout(() => {
+                // 隐藏匹配过程，显示结果
+                matchingContent.style.display = 'none';
+                matchingResult.style.display = 'block';
+                
+                // 更新匹配次数
+                updateMatchCount();
+            }, 3000);
+        }
+        
+        // 开始聊天
+        function startChat() {
+            showToast('正在跳转到聊天页面...', 'success');
+            setTimeout(() => {
+                if (window.navigationManager) {
+                    window.navigationManager.navigateToPage('chat');
+                } else {
+                    window.location.href = 'chat.html';
+                }
+            }, 1000);
+        }
+        
+        // 关闭匹配动效，继续匹配
+        function closeMatching() {
+            const overlay = document.getElementById('matchingOverlay');
+            overlay.style.display = 'none';
+            
+            // 加载下一个用户资料
+            loadNextProfile();
+        }
+        
         // 显示提示消息
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
