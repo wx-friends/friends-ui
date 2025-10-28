@@ -1,0 +1,27 @@
+{
+  "name": "friends",
+  "version": "1.0.0",
+  "description": "这是一个基于智能匹配算法的社交交友应用，具有完整的页面交互功能。",
+  "main": "generate_screenshot.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kevin1906721262/Friends.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Kevin1906721262/Friends/issues"
+  },
+  "homepage": "https://github.com/Kevin1906721262/Friends#readme",
+  "dependencies": {
+    "playwright": "^1.56.1"
+  }
+}
