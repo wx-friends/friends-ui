@@ -72,15 +72,20 @@
 
     <!-- 导航栏 -->
     <div class="px-6 py-4 flex items-center justify-between">
-        <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center" onclick="goBack()">
-            <i class="fas fa-arrow-left text-white"></i>
-        </button>
-        <h1 class="text-xl font-bold text-white">匹配设置</h1>
         <div class="w-10"></div>
+        <h1 class="text-xl font-bold text-white">匹配设置</h1>
+        <div class="flex items-center space-x-3">
+<!--            <button class="text-white text-sm font-medium px-3 py-1.5 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-all" onclick="skipSettings()">-->
+<!--                跳过-->
+<!--            </button>-->
+            <button class="text-white text-sm font-medium px-3 py-1.5 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-all" onclick="goToBrowse()">
+                先逛逛
+            </button>
+        </div>
     </div>
 
     <!-- 主要内容 -->
-    <div class="flex-1 px-6 pb-6 overflow-y-auto">
+    <div class="flex-1 px-6 pb-8 overflow-y-auto">
         <!-- 匹配模式选择 -->
         <div class="card rounded-2xl p-6 mb-6">
             <h2 class="text-lg font-bold text-gray-800 mb-4">选择匹配模式</h2>
@@ -101,7 +106,7 @@
         <!-- 恋爱交友偏好设置 -->
         <div id="dating-preferences" class="card rounded-2xl p-6 mb-6">
             <h2 class="text-lg font-bold text-gray-800 mb-4">恋爱交友偏好</h2>
-            
+
             <!-- 年龄范围 -->
             <div class="mb-6">
                 <h3 class="font-semibold text-gray-700 mb-3">年龄范围</h3>
@@ -164,7 +169,7 @@
         <!-- 搭子匹配偏好设置 -->
         <div id="buddy-preferences" class="card rounded-2xl p-6 mb-6 hidden">
             <h2 class="text-lg font-bold text-gray-800 mb-4">搭子匹配偏好</h2>
-            
+
             <!-- 搭子类型 -->
             <div class="mb-6">
                 <h3 class="font-semibold text-gray-700 mb-3">搭子类型</h3>
@@ -226,35 +231,6 @@
         </div>
     </div>
 
-    <!-- 底部导航栏 -->
-    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg px-6 py-3">
-        <div class="flex justify-around">
-            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="home">
-                <i class="fas fa-home text-xl mb-1"></i>
-                <span class="text-xs">发现</span>
-            </button>
-            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="chat">
-                <i class="fas fa-comments text-xl mb-1"></i>
-                <span class="text-xs">消息</span>
-            </button>
-            <button class="nav-button flex flex-col items-center text-white" data-page="matching-preferences">
-                <i class="fas fa-cog text-xl mb-1"></i>
-                <span class="text-xs">匹配</span>
-            </button>
-            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="moments">
-                <i class="fas fa-camera text-xl mb-1"></i>
-                <span class="text-xs">动态</span>
-            </button>
-            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="profile">
-                <i class="fas fa-user text-xl mb-1"></i>
-                <span class="text-xs">我的</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- 引入导航脚本 -->
-    <script src="js/navigation.js"></script>
-
     <!-- 页面特定交互脚本 -->
     <script>
         let currentMode = 'dating';
@@ -275,13 +251,13 @@
         // 选择匹配模式
         function selectMode(mode) {
             currentMode = mode;
-            
+
             // 更新按钮状态
             document.querySelectorAll('.mode-selector').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.closest('.mode-selector').classList.add('active');
-            
+
             // 显示对应的偏好设置
             if (mode === 'dating') {
                 document.getElementById('dating-preferences').classList.remove('hidden');
@@ -290,7 +266,7 @@
                 document.getElementById('dating-preferences').classList.add('hidden');
                 document.getElementById('buddy-preferences').classList.remove('hidden');
             }
-            
+
             showToast(`已选择${mode === 'dating' ? '恋爱交友' : '搭子匹配'}模式`, 'info');
         }
 
@@ -298,10 +274,10 @@
         function updateAgeRange() {
             const minAge = document.getElementById('minAge').value;
             const maxAge = document.getElementById('maxAge').value;
-            
+
             document.getElementById('minAgeValue').textContent = minAge + '岁';
             document.getElementById('maxAgeValue').textContent = maxAge + '岁';
-            
+
             selectedPreferences.dating.ageRange = { min: parseInt(minAge), max: parseInt(maxAge) };
         }
 
@@ -309,10 +285,10 @@
         function updateHeightRange() {
             const minHeight = document.getElementById('minHeight').value;
             const maxHeight = document.getElementById('maxHeight').value;
-            
+
             document.getElementById('minHeightValue').textContent = minHeight + 'cm';
             document.getElementById('maxHeightValue').textContent = maxHeight + 'cm';
-            
+
             selectedPreferences.dating.heightRange = { min: parseInt(minHeight), max: parseInt(maxHeight) };
         }
 
@@ -322,7 +298,7 @@
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
-            
+
             selectedPreferences.dating.distance = parseInt(distance);
             showToast(`已设置距离范围：${distance}km内`, 'info');
         }
@@ -333,7 +309,7 @@
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
-            
+
             selectedPreferences.dating.education = education;
             showToast('已设置学历要求', 'info');
         }
@@ -370,7 +346,7 @@
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
-            
+
             selectedPreferences.buddy.distance = parseInt(distance);
             showToast(`已设置距离范围：${distance}km内`, 'info');
         }
@@ -379,16 +355,16 @@
         function startMatching() {
             const matchBtn = document.getElementById('matchBtn');
             const progressDiv = document.getElementById('matchingProgress');
-            
+
             // 隐藏匹配按钮，显示进度
             matchBtn.style.display = 'none';
             progressDiv.classList.remove('hidden');
-            
+
             // 开始进度动画
             let progress = 0;
             const progressBar = document.getElementById('progressBar');
             const progressText = document.getElementById('progressText');
-            
+
             const progressSteps = [
                 '正在分析您的偏好...',
                 '正在筛选合适的对象...',
@@ -396,18 +372,18 @@
                 '正在生成推荐结果...',
                 '匹配完成！'
             ];
-            
+
             const interval = setInterval(() => {
                 progress += Math.random() * 15;
                 if (progress > 100) progress = 100;
-                
+
                 progressBar.style.width = progress + '%';
-                
+
                 const stepIndex = Math.floor((progress / 100) * progressSteps.length);
                 if (stepIndex < progressSteps.length) {
                     progressText.textContent = progressSteps[stepIndex];
                 }
-                
+
                 if (progress >= 100) {
                     clearInterval(interval);
                     setTimeout(() => {
@@ -422,12 +398,29 @@
             }, 200);
         }
 
-        // 返回上一页
-        function goBack() {
-            if (window.navigationManager) {
-                window.navigationManager.goBack();
+        // 跳过设置
+        function skipSettings() {
+            // 跳转到主页
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'navigation',
+                    page: 'home.html'
+                }, '*');
             } else {
-                window.history.back();
+                window.location.href = 'home.html';
+            }
+        }
+
+        // 随便逛逛
+        function goToBrowse() {
+            // 跳转到动态广场
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'navigation',
+                    page: 'moments.html'
+                }, '*');
+            } else {
+                window.location.href = 'moments.html';
             }
         }
 
@@ -435,24 +428,24 @@
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
             toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
-            
+
             const styles = {
                 'info': 'bg-blue-500',
                 'success': 'bg-green-500',
                 'error': 'bg-red-500',
                 'warning': 'bg-yellow-500'
             };
-            
+
             toast.className += ` ${styles[type] || styles['info']}`;
             toast.textContent = message;
-            
+
             document.body.appendChild(toast);
-            
+
             setTimeout(() => {
                 toast.style.opacity = '1';
                 toast.style.transform = 'translate(-50%, 0)';
             }, 100);
-            
+
             setTimeout(() => {
                 toast.style.opacity = '0';
                 toast.style.transform = 'translate(-50%, -20px)';
