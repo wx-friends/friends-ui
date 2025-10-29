@@ -191,8 +191,8 @@
         .feature-buttons {
             padding: 0 24px 24px;
             display: flex;
-            flex-direction: column;
-            gap: 16px;
+            flex-direction: row;
+            gap: 12px;
         }
         
         /* 功能卡片按钮 */
@@ -201,13 +201,17 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 20px;
+            padding: 16px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 16px;
+            justify-content: center;
+            gap: 12px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            flex: 1;
+            text-align: center;
         }
         
         .feature-card:active {
@@ -239,18 +243,22 @@
         
         .feature-content {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .feature-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #1f2937;
             margin-bottom: 4px;
         }
         
         .feature-desc {
-            font-size: 13px;
+            font-size: 12px;
             color: #6b7280;
+            line-height: 1.4;
         }
         
         /* 底部导航栏 */
@@ -330,13 +338,13 @@
                     </div>
                 </div>
 
-                <!-- 同城搭子 -->
+                <!-- 兴趣搭子 -->
                 <div class="feature-card" onclick="navigateToCityBuddy()">
                     <div class="feature-icon">
                         <i class="fas fa-comments text-white text-2xl"></i>
                     </div>
                     <div class="feature-content">
-                        <div class="feature-title">同城搭子</div>
+                        <div class="feature-title">兴趣搭子</div>
                         <div class="feature-desc">邂逅同城此刻的Ta</div>
                     </div>
                 </div>
