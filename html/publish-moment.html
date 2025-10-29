@@ -87,17 +87,211 @@
             </div>
         </div>
 
-        <!-- 文字输入区域 -->
+        <!-- 发布类型选择 -->
         <div class="bg-white rounded-2xl p-4 shadow-sm">
-            <textarea placeholder="分享你的想法、感受或者有趣的事情..." 
+            <h3 class="font-semibold text-gray-900 mb-4">选择发布类型</h3>
+            <div class="grid grid-cols-3 gap-3">
+                <button class="publish-type-btn active p-4 rounded-xl border-2 border-blue-500 bg-blue-50 text-center transition-all duration-300" data-type="buddy" onclick="selectPublishType('buddy')">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-user-friends text-white text-lg"></i>
+                    </div>
+                    <div class="text-sm font-medium text-blue-700">搭子</div>
+                    <div class="text-xs text-blue-600 mt-1">寻找搭子伙伴</div>
+                </button>
+                <button class="publish-type-btn p-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-center transition-all duration-300" data-type="love" onclick="selectPublishType('love')">
+                    <div class="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-heart text-white text-lg"></i>
+                    </div>
+                    <div class="text-sm font-medium text-gray-700">恋爱</div>
+                    <div class="text-xs text-gray-600 mt-1">寻找恋爱对象</div>
+                </button>
+                <button class="publish-type-btn p-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-center transition-all duration-300" data-type="buddy-activity" onclick="selectPublishType('buddy-activity')">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-handshake text-white text-lg"></i>
+                    </div>
+                    <div class="text-sm font-medium text-gray-700">搭子活动</div>
+                    <div class="text-xs text-gray-600 mt-1">发布搭子活动</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 搭子类型内容 -->
+        <div id="buddy-content" class="publish-content">
+            <!-- 搭子类型选择 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm mb-6">
+                <h3 class="font-semibold text-gray-900 mb-4">搭子类型</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="buddy-type-btn active px-4 py-3 rounded-xl border-2 border-blue-500 bg-blue-50 text-center" data-type="study" onclick="selectBuddyType('study')">
+                        <i class="fas fa-book text-blue-600 text-lg mb-1"></i>
+                        <div class="text-sm font-medium text-blue-700">学习搭子</div>
+                    </button>
+                    <button class="buddy-type-btn px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 text-center" data-type="food" onclick="selectBuddyType('food')">
+                        <i class="fas fa-utensils text-gray-600 text-lg mb-1"></i>
+                        <div class="text-sm font-medium text-gray-700">饭搭子</div>
+                    </button>
+                    <button class="buddy-type-btn px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 text-center" data-type="sport" onclick="selectBuddyType('sport')">
+                        <i class="fas fa-dumbbell text-gray-600 text-lg mb-1"></i>
+                        <div class="text-sm font-medium text-gray-700">运动搭子</div>
+                    </button>
+                    <button class="buddy-type-btn px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 text-center" data-type="travel" onclick="selectBuddyType('travel')">
+                        <i class="fas fa-plane text-gray-600 text-lg mb-1"></i>
+                        <div class="text-sm font-medium text-gray-700">旅游搭子</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 搭子信息填写 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm mb-6">
+                <h3 class="font-semibold text-gray-900 mb-4">搭子信息</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">活动时间</label>
+                        <input type="text" placeholder="例如：本周六 14:00-16:00" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">活动地点</label>
+                        <input type="text" placeholder="例如：市图书馆" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">需要人数</label>
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option>1-2人</option>
+                            <option>2-3人</option>
+                            <option>3-5人</option>
+                            <option>5人以上</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 搭子描述 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm">
+                <h3 class="font-semibold text-gray-900 mb-4">搭子描述</h3>
+                <textarea placeholder="描述你寻找的搭子类型、活动内容等..." 
+                          class="w-full h-32 resize-none border-none outline-none text-gray-800 placeholder-gray-400 text-base leading-relaxed"
+                          maxlength="200"></textarea>
+                <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-100">
+                    <div class="text-xs text-gray-500">
+                        <span class="char-counter">0</span>/200
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 恋爱类型内容 -->
+        <div id="love-content" class="publish-content hidden">
+            <!-- 个人信息填写 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm mb-6">
+                <h3 class="font-semibold text-gray-900 mb-4">个人信息</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">年龄</label>
+                        <input type="number" placeholder="28" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">身高</label>
+                        <input type="text" placeholder="175cm" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">职业</label>
+                        <input type="text" placeholder="设计师" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">学历</label>
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent">
+                            <option>本科</option>
+                            <option>硕士</option>
+                            <option>博士</option>
+                            <option>其他</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 恋爱描述 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm">
+                <h3 class="font-semibold text-gray-900 mb-4">自我介绍</h3>
+                <textarea placeholder="介绍一下自己，你的兴趣爱好、性格特点等..." 
                       class="w-full h-32 resize-none border-none outline-none text-gray-800 placeholder-gray-400 text-base leading-relaxed"
                       maxlength="200"></textarea>
             <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-100">
                 <div class="text-xs text-gray-500">
                     <span class="char-counter">0</span>/200
                 </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 搭子活动类型内容 -->
+        <div id="buddy-activity-content" class="publish-content hidden">
+            <!-- 活动基本信息 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm mb-6">
+                <h3 class="font-semibold text-gray-900 mb-4">活动信息</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">活动标题</label>
+                        <input type="text" placeholder="例如：周末羽毛球活动" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">活动时间</label>
+                            <input type="datetime-local" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">活动时长</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <option>1小时</option>
+                                <option>2小时</option>
+                                <option>3小时</option>
+                                <option>半天</option>
+                                <option>全天</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">活动地点</label>
+                        <input type="text" placeholder="例如：市体育馆羽毛球馆" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">参与人数</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <option>2-4人</option>
+                                <option>4-6人</option>
+                                <option>6-8人</option>
+                                <option>8-10人</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">费用类型</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <option>AA制</option>
+                                <option>免费</option>
+                                <option>我请客</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动描述 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm">
+                <h3 class="font-semibold text-gray-900 mb-4">活动描述</h3>
+                <textarea placeholder="详细描述活动内容、要求、注意事项等..." 
+                          class="w-full h-32 resize-none border-none outline-none text-gray-800 placeholder-gray-400 text-base leading-relaxed"
+                          maxlength="200"></textarea>
+                <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-100">
                 <div class="text-xs text-gray-500">
-                    今日剩余: 2/3 条
+                        <span class="char-counter">0</span>/200
+                    </div>
                 </div>
             </div>
         </div>
@@ -197,5 +391,93 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript -->
+    <script>
+        let currentPublishType = 'buddy';
+        let currentBuddyType = 'study';
+
+        // 选择发布类型
+        function selectPublishType(type) {
+            // 更新按钮状态
+            document.querySelectorAll('.publish-type-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-blue-500', 'bg-blue-50', 'border-pink-500', 'bg-pink-50', 'border-green-500', 'bg-green-50');
+                btn.classList.add('border-gray-200', 'bg-gray-50');
+            });
+            
+            const activeBtn = document.querySelector(`[data-type="${type}"]`);
+            if (type === 'buddy') {
+                activeBtn.classList.add('active', 'border-blue-500', 'bg-blue-50');
+            } else if (type === 'love') {
+                activeBtn.classList.add('active', 'border-pink-500', 'bg-pink-50');
+            } else if (type === 'buddy-activity') {
+                activeBtn.classList.add('active', 'border-green-500', 'bg-green-50');
+            }
+            activeBtn.classList.remove('border-gray-200', 'bg-gray-50');
+
+            // 显示对应内容
+            document.querySelectorAll('.publish-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`${type}-content`).classList.remove('hidden');
+
+            currentPublishType = type;
+        }
+
+        // 选择搭子类型
+        function selectBuddyType(type) {
+            document.querySelectorAll('.buddy-type-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-blue-500', 'bg-blue-50');
+                btn.classList.add('border-gray-200', 'bg-gray-50');
+            });
+            
+            const activeBtn = document.querySelector(`[data-type="${type}"]`);
+            activeBtn.classList.add('active', 'border-blue-500', 'bg-blue-50');
+            activeBtn.classList.remove('border-gray-200', 'bg-gray-50');
+
+            currentBuddyType = type;
+        }
+
+        // 字符计数
+        document.addEventListener('DOMContentLoaded', function() {
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                const counter = textarea.parentElement.querySelector('.char-counter');
+                if (counter) {
+                    textarea.addEventListener('input', function() {
+                        const count = this.value.length;
+                        counter.textContent = count;
+                        
+                        if (count > 180) {
+                            counter.classList.add('error');
+                        } else if (count > 150) {
+                            counter.classList.add('warning');
+                        } else {
+                            counter.classList.remove('warning', 'error');
+                        }
+                    });
+                }
+            });
+        });
+
+        // 照片上传功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadArea = document.querySelector('.photo-upload-area');
+            if (uploadArea) {
+                uploadArea.addEventListener('click', function() {
+                    // 这里可以添加文件选择逻辑
+                    console.log('选择照片');
+                });
+            }
+
+            // 删除照片功能
+            document.querySelectorAll('.remove-photo').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.parentElement.remove();
+                });
+            });
+        });
+    </script>
 </body>
 </html>
