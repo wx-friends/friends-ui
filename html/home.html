@@ -7,38 +7,264 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
+        
+        /* 应用容器 */
+        .app-container {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 可滚动内容区域 */
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            min-height: 0;
+        }
+        
+        /* 自定义滚动条样式 */
+        .scrollable-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .scrollable-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+        
+        .scrollable-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        /* iOS风格状态栏优化 */
+        .status-bar {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        
+        /* 卡片优化 - iOS风格 */
         .card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.8) 100%);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
+            background: #ffffff;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 0.5px solid rgba(0, 0, 0, 0.04);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+        
+        /* 按钮优化 - iOS风格 */
         .like-btn {
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-            transition: all 0.3s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(255, 107, 107, 0.35);
+        }
+        .like-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
         }
         .like-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.45);
         }
+        
         .pass-btn {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(108, 117, 125, 0.35);
+        }
+        .pass-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(108, 117, 125, 0.4);
         }
         .pass-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.45);
         }
+        
         .super-like-btn {
             background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
-            transition: all 0.3s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(255, 182, 193, 0.35);
+        }
+        .super-like-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(255, 182, 193, 0.4);
         }
         .super-like-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.4);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 182, 193, 0.45);
+        }
+        
+        /* 模式切换按钮优化 */
+        .mode-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mode-btn.active {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1e40af;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .mode-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* 导航栏优化 */
+        .nav-header {
+            background: rgba(30, 64, 175, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 底部导航栏优化 */
+        .bottom-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-button {
+            transition: all 0.2s ease;
+        }
+        .nav-button.active {
+            color: #1e40af;
+            opacity: 1;
+        }
+        .nav-button:active {
+            transform: scale(0.9);
+        }
+        
+        /* 用户卡片信息优化 */
+        .user-info-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.65) 50%, transparent 100%);
+        }
+        
+        /* 标签优化 */
+        .tag {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 0.5px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+        .tag:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+        
+        /* 认证标识优化 */
+        .verified-badge {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* 操作按钮容器优化 */
+        .action-buttons {
+            padding: 20px 0;
+        }
+        
+        /* 设置按钮优化 */
+        .settings-btn {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 0.5px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+        .settings-btn:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.35);
+        }
+        
+        /* 匹配次数显示优化 */
+        .match-count-badge {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 0.5px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 图片加载优化 */
+        img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* 用户卡片图片容器 */
+        .user-photo-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .user-photo-container img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 按钮点击波纹效果 */
+        button {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button:active::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            animation: ripple 0.6s ease-out;
+        }
+        
+        @keyframes ripple {
+            to {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+            }
+        }
+        
+        /* 文字阴影优化 */
+        .text-shadow {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 平滑滚动 */
+        .scrollable-content {
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
         }
         
         /* 全屏匹配动效样式 */
@@ -263,72 +489,76 @@
         }
     </style>
 </head>
-<body class="h-screen flex flex-col">
-    <!-- 状态栏 -->
-    <div class="flex justify-between items-center px-6 py-2 text-white text-sm font-medium">
-        <span>9:41</span>
-        <div class="flex items-center space-x-1">
-            <i class="fas fa-signal text-xs"></i>
-            <i class="fas fa-wifi text-xs"></i>
-            <div class="w-6 h-3 border border-white rounded-sm">
-                <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+<body>
+    <!-- 应用容器 -->
+    <div class="app-container">
+            <!-- 状态栏 -->
+            <div class="status-bar flex justify-between items-center px-6 py-2.5 text-white text-xs font-semibold flex-shrink-0">
+                <span class="text-shadow">9:41</span>
+                <div class="flex items-center space-x-1.5">
+                    <i class="fas fa-signal text-[10px]"></i>
+                    <i class="fas fa-wifi text-[10px]"></i>
+                    <div class="w-5 h-2.5 border border-white rounded-sm">
+                        <div class="w-3.5 h-1.5 bg-white rounded-sm m-0.5"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <!-- 导航栏 -->
-    <div class="px-6 py-4 flex items-center justify-between">
-        <h1 class="text-xl font-bold text-white">发现</h1>
-        <div class="flex items-center space-x-3">
-            <!-- 模式切换 -->
-            <div class="bg-white bg-opacity-20 rounded-full p-1">
-                <button class="mode-btn active px-4 py-2 rounded-full text-white text-sm font-medium" onclick="switchMode('dating')">
-                    恋爱交友
-                </button>
-                <button class="mode-btn px-4 py-2 rounded-full text-white text-sm font-medium opacity-70" onclick="switchMode('buddy')">
-                    搭子匹配
-                </button>
+            <!-- 导航栏 -->
+            <div class="nav-header px-6 py-4 flex items-center justify-between flex-shrink-0">
+                <h1 class="text-xl font-bold text-white text-shadow">发现</h1>
+                <div class="flex items-center space-x-3">
+                    <!-- 模式切换 -->
+                    <div class="bg-white bg-opacity-20 rounded-full p-1 backdrop-blur-sm">
+                        <button class="mode-btn active px-4 py-2 rounded-full text-white text-sm font-medium" onclick="switchMode('dating')">
+                            恋爱交友
+                        </button>
+                        <button class="mode-btn px-4 py-2 rounded-full text-white text-sm font-medium opacity-70" onclick="switchMode('buddy')">
+                            搭子匹配
+                        </button>
+                    </div>
+                    <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:bg-opacity-30 active:scale-95" onclick="openFilter()">
+                        <i class="fas fa-filter text-white text-sm"></i>
+                    </button>
+                </div>
             </div>
-            <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center" onclick="openFilter()">
-                <i class="fas fa-filter text-white"></i>
-            </button>
-        </div>
-    </div>
 
-    <!-- 搭子匹配筛选条件 -->
-    <div id="buddy-filters" class="px-6 pb-4 hidden">
-        <div class="card rounded-2xl p-4">
-            <div class="flex items-center justify-between mb-3">
-                <h3 class="font-semibold text-gray-800">搭子类型</h3>
-                <button onclick="toggleBuddyFilters()" class="text-gray-500">
-                    <i class="fas fa-chevron-up"></i>
-                </button>
-            </div>
-            <div class="flex flex-wrap gap-2">
-                <button class="buddy-filter-btn active px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm" data-type="all" onclick="filterBuddyType('all')">
-                    全部
-                </button>
-                <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="sport" onclick="filterBuddyType('sport')">
-                    运动
-                </button>
-                <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="study" onclick="filterBuddyType('study')">
-                    学习
-                </button>
-                <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="travel" onclick="filterBuddyType('travel')">
-                    旅行
-                </button>
-                <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="workout" onclick="filterBuddyType('workout')">
-                    健身
-                </button>
-                <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="hobby" onclick="filterBuddyType('hobby')">
-                    爱好
-                </button>
-            </div>
-        </div>
-    </div>
+            <!-- 可滚动内容区域 -->
+            <div class="scrollable-content">
+                <!-- 搭子匹配筛选条件 -->
+                <div id="buddy-filters" class="px-6 pb-4 hidden">
+                    <div class="card rounded-2xl p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-semibold text-gray-800">搭子类型</h3>
+                            <button onclick="toggleBuddyFilters()" class="text-gray-500">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="buddy-filter-btn active px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm" data-type="all" onclick="filterBuddyType('all')">
+                                全部
+                            </button>
+                            <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="sport" onclick="filterBuddyType('sport')">
+                                运动
+                            </button>
+                            <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="study" onclick="filterBuddyType('study')">
+                                学习
+                            </button>
+                            <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="travel" onclick="filterBuddyType('travel')">
+                                旅行
+                            </button>
+                            <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="workout" onclick="filterBuddyType('workout')">
+                                健身
+                            </button>
+                            <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="hobby" onclick="filterBuddyType('hobby')">
+                                爱好
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- 主要内容 -->
-    <div class="flex-1 px-6 pb-6">
+                <!-- 主要内容 -->
+                <div class="px-6 pb-6">
         <!-- 用户卡片 -->
         <div class="card rounded-3xl overflow-hidden shadow-2xl">
             <!-- 照片区域 -->
@@ -337,25 +567,25 @@
                      alt="用户照片" class="w-full h-full object-cover">
 
                 <!-- 用户信息覆盖层 -->
-                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/50 to-transparent p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-2xl font-bold text-white">李明</h3>
-                        <span class="text-lg text-white">28岁</span>
+                <div class="user-info-overlay absolute bottom-0 left-0 right-0 p-6">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <h3 class="text-2xl font-bold text-white text-shadow">李明</h3>
+                        <span class="text-lg text-white text-shadow font-semibold">28岁</span>
                     </div>
-                    <div class="flex items-center text-white opacity-90 mb-2">
-                        <i class="fas fa-map-marker-alt mr-2"></i>
-                        <span>距离你 2.3km</span>
+                    <div class="flex items-center text-white opacity-95 mb-3 text-shadow">
+                        <i class="fas fa-map-marker-alt mr-2 text-sm"></i>
+                        <span class="text-sm">距离你 2.3km</span>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-white text-sm">设计师</span>
-                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-white text-sm">摄影</span>
-                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-white text-sm">旅行</span>
+                        <span class="tag px-3 py-1.5 rounded-full text-white text-sm font-medium">设计师</span>
+                        <span class="tag px-3 py-1.5 rounded-full text-white text-sm font-medium">摄影</span>
+                        <span class="tag px-3 py-1.5 rounded-full text-white text-sm font-medium">旅行</span>
                     </div>
                 </div>
 
                 <!-- 认证标识 -->
                 <div class="absolute top-4 right-4 flex space-x-2">
-                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                    <div class="verified-badge w-9 h-9 rounded-full flex items-center justify-center">
                         <i class="fas fa-check text-white text-sm"></i>
                     </div>
                 </div>
@@ -363,76 +593,77 @@
 
             <!-- 详细信息 -->
             <div class="p-6">
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-gray-800">175cm</div>
-                        <div class="text-sm text-gray-500">身高</div>
+                <div class="grid grid-cols-2 gap-4 mb-5">
+                    <div class="text-center py-2">
+                        <div class="text-2xl font-bold text-gray-900 mb-1">175cm</div>
+                        <div class="text-xs text-gray-500 font-medium">身高</div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-gray-800">本科</div>
-                        <div class="text-sm text-gray-500">学历</div>
+                    <div class="text-center py-2">
+                        <div class="text-2xl font-bold text-gray-900 mb-1">本科</div>
+                        <div class="text-xs text-gray-500 font-medium">学历</div>
                     </div>
                 </div>
-                <p class="text-gray-600 text-sm leading-relaxed">
+                <p class="text-gray-700 text-sm leading-relaxed font-normal">
                     热爱生活，喜欢摄影和旅行。希望能找到一个志同道合的人，一起探索这个世界的美好。
                 </p>
             </div>
         </div>
 
-        <!-- 操作按钮 -->
-        <div class="flex justify-center items-center space-x-6 mt-8">
-            <button class="pass-btn w-16 h-16 rounded-full flex items-center justify-center text-white" onclick="handlePass()">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <button class="super-like-btn w-12 h-12 rounded-full flex items-center justify-center text-white" onclick="handleSuperLike()">
-                <i class="fas fa-star text-lg"></i>
-            </button>
-            <button class="like-btn w-16 h-16 rounded-full flex items-center justify-center text-white" onclick="handleLike()">
-                <i class="fas fa-heart text-xl"></i>
-            </button>
-        </div>
+                <!-- 操作按钮 -->
+                <div class="action-buttons flex justify-center items-center space-x-6 mt-8">
+                    <button class="pass-btn w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg" onclick="handlePass()">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                    <button class="super-like-btn w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg" onclick="handleSuperLike()">
+                        <i class="fas fa-star text-lg"></i>
+                    </button>
+                    <button class="like-btn w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg" onclick="handleLike()">
+                        <i class="fas fa-heart text-xl"></i>
+                    </button>
+                </div>
 
-        <!-- 匹配设置和次数 -->
-        <div class="mt-6 space-y-3">
-            <!-- 匹配设置按钮 -->
-            <div class="text-center">
-                <button class="bg-white bg-opacity-20 px-6 py-3 rounded-full text-white text-sm font-medium" onclick="openMatchingPreferences()">
-                    <i class="fas fa-cog mr-2"></i>
-                    调整匹配偏好
-                </button>
+                <!-- 匹配设置和次数 -->
+                <div class="mt-6 space-y-3 pb-6">
+                    <!-- 匹配设置按钮 -->
+                    <div class="text-center">
+                        <button class="settings-btn px-6 py-3 rounded-full text-white text-sm font-medium" onclick="openMatchingPreferences()">
+                            <i class="fas fa-cog mr-2"></i>
+                            调整匹配偏好
+                        </button>
+                    </div>
+                    
+                    <!-- 今日匹配次数 -->
+                    <div class="text-center">
+                        <div class="match-count-badge inline-flex items-center px-4 py-2 rounded-full">
+                            <i class="fas fa-heart text-pink-300 mr-2 text-sm"></i>
+                            <span class="text-white text-sm match-count font-medium">今日剩余匹配次数: 2/3</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <!-- 今日匹配次数 -->
-            <div class="text-center">
-                <div class="inline-flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-full">
-                    <i class="fas fa-heart text-pink-300 mr-2"></i>
-                    <span class="text-white text-sm match-count">今日剩余匹配次数: 2/3</span>
+            <!-- 底部导航栏 -->
+            <div class="bottom-nav px-6 py-3 flex-shrink-0">
+                <div class="flex justify-around">
+                    <button class="nav-button active flex flex-col items-center text-blue-600" data-page="home">
+                        <i class="fas fa-home text-xl mb-1"></i>
+                        <span class="text-xs font-medium">发现</span>
+                    </button>
+                    <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="chat">
+                        <i class="fas fa-comments text-xl mb-1"></i>
+                        <span class="text-xs font-medium">消息</span>
+                    </button>
+                    <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="moments">
+                        <i class="fas fa-camera text-xl mb-1"></i>
+                        <span class="text-xs font-medium">动态</span>
+                    </button>
+                    <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="profile">
+                        <i class="fas fa-user text-xl mb-1"></i>
+                        <span class="text-xs font-medium">我的</span>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- 底部导航栏 -->
-    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg px-6 py-3">
-        <div class="flex justify-around">
-            <button class="nav-button flex flex-col items-center text-white" data-page="home">
-                <i class="fas fa-home text-xl mb-1"></i>
-                <span class="text-xs">发现</span>
-            </button>
-            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="chat">
-                <i class="fas fa-comments text-xl mb-1"></i>
-                <span class="text-xs">消息</span>
-            </button>
-            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="moments">
-                <i class="fas fa-camera text-xl mb-1"></i>
-                <span class="text-xs">动态</span>
-            </button>
-            <button class="nav-button flex flex-col items-center text-white opacity-50" data-page="profile">
-                <i class="fas fa-user text-xl mb-1"></i>
-                <span class="text-xs">我的</span>
-            </button>
-        </div>
-    </div>
 
     <!-- 全屏匹配动效 -->
     <div id="matchingOverlay" class="matching-overlay">
@@ -471,6 +702,94 @@
 
     <!-- 页面特定交互脚本 -->
     <script>
+        // 处理喜欢操作
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 0;
+            let yOffset = 0;
+
+            // 拖动手柄事件
+            dragHandle.addEventListener('mousedown', dragStart);
+            dragHandle.addEventListener('touchstart', dragStart);
+            
+            // 也可以在手机边框上拖动（但不是屏幕内容区域）
+            phoneContainer.addEventListener('mousedown', function(e) {
+                // 如果点击的是拖动手柄，不重复处理
+                if (e.target === dragHandle || dragHandle.contains(e.target)) {
+                    return;
+                }
+                // 如果点击的是屏幕内容区域，不触发拖动
+                if (e.target.closest('.phone-screen')) {
+                    return;
+                }
+                // 如果点击的是按钮等交互元素，不触发拖动
+                if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input')) {
+                    return;
+                }
+                // 点击边框区域可以拖动
+                dragStart(e);
+            });
+            
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag);
+            
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchend', dragEnd);
+
+            function dragStart(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (e.type === "touchstart") {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+
+                isDragging = true;
+                phoneContainer.classList.add('dragging');
+            }
+
+            function drag(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    
+                    if (e.type === "touchmove") {
+                        currentX = e.touches[0].clientX - initialX;
+                        currentY = e.touches[0].clientY - initialY;
+                    } else {
+                        currentX = e.clientX - initialX;
+                        currentY = e.clientY - initialY;
+                    }
+
+                    xOffset = currentX;
+                    yOffset = currentY;
+
+                    setTranslate(currentX, currentY, phoneContainer);
+                }
+            }
+
+            function dragEnd(e) {
+                if (isDragging) {
+                    initialX = currentX;
+                    initialY = currentY;
+                    isDragging = false;
+                    phoneContainer.classList.remove('dragging');
+                }
+            }
+
+            function setTranslate(xPos, yPos, el) {
+                el.style.transform = `translate(calc(-50% + ${xPos}px), calc(-50% + ${yPos}px))`;
+            }
+
+            // 初始化位置
+            setTranslate(0, 0, phoneContainer);
+        })();
+
         // 处理喜欢操作
         function handleLike() {
             // 显示全屏匹配动效
@@ -667,7 +986,7 @@
         // 显示提示消息
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
-            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+            toast.className = `px-6 py-3 rounded-full text-white text-sm font-medium z-[10000] transition-all duration-300`;
 
             const styles = {
                 'info': 'bg-blue-500',
@@ -678,6 +997,10 @@
 
             toast.className += ` ${styles[type] || styles['info']}`;
             toast.textContent = message;
+            toast.style.position = 'fixed';
+            toast.style.top = '100px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
 
             document.body.appendChild(toast);
 
@@ -688,12 +1011,15 @@
 
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translate(-50%, -20px)';
+                toast.style.transform = 'translateX(-50%) translateY(-20px)';
                 setTimeout(() => {
-                    document.body.removeChild(toast);
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
                 }, 300);
             }, 2000);
         }
     </script>
+    </div>
 </body>
 </html>
