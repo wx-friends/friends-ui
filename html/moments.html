@@ -34,6 +34,37 @@
             color: white;
             transform: scale(1.05);
         }
+        .filter-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            align-items: flex-end;
+        }
+        .filter-content {
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 24px;
+            width: 100%;
+            max-height: 60vh;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .filter-modal.show .filter-content {
+            transform: translateY(0);
+        }
+        .buddy-type-option {
+            transition: all 0.3s ease;
+        }
+        .buddy-type-option.selected {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-color: #3b82f6;
+        }
     </style>
 </head>
 <body class="h-screen bg-gray-50 flex flex-col">
@@ -53,7 +84,7 @@
     <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
         <h1 class="text-xl font-bold">遇见</h1>
         <div class="flex items-center space-x-4">
-<!--            <button class="w-8 h-8 flex items-center justify-center">-->
+<!--            <button class="w-8 h-8 flex items-center justify-center" onclick="openSearch()">-->
 <!--                <i class="fas fa-search text-gray-600"></i>-->
 <!--            </button>-->
             <button class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center" onclick="openPublishMoment()">
@@ -61,6 +92,8 @@
             </button>
         </div>
     </div>
+
+
 
     <!-- 动态分类筛选 -->
     <div class="bg-white px-6 py-4 border-b border-gray-100">
@@ -80,6 +113,25 @@
             <button class="moment-filter-btn px-5 py-2.5 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap" onclick="filterMoments('official-activity')" data-category="official-activity">
                 <i class="fas fa-star mr-1"></i>官方活动
             </button>
+        </div>
+    </div>
+
+    <!-- 搜索和筛选栏 -->
+    <div class="bg-white px-6 py-4 border-b border-gray-100">
+        <div class="flex items-center space-x-3">
+            <!-- 筛选按钮 -->
+            <button class="flex items-center space-x-2 px-4 py-3 bg-gray-100 rounded-xl text-gray-700 font-medium" onclick="toggleFilterModal()">
+                <i class="fas fa-filter text-sm"></i>
+                <span class="text-sm">筛选</span>
+                <span id="filterCount" class="hidden bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+            </button>
+            <!-- 搜索框 -->
+            <div class="flex-1 relative">
+                <input type="text" placeholder=""
+                       class="w-full pl-10 pr-4 py-3 bg-gray-100 rounded-xl border-none outline-none text-gray-800 placeholder-gray-500"
+                       id="searchInput">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
         </div>
     </div>
 
@@ -293,7 +345,7 @@
                     </div>
                     <p class="text-xs text-gray-500">5小时前 · 官方发布</p>
                 </div>
-            </div>
+                        </div>
 
             <div class="mb-4 relative">
                 <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&h=250&fit=crop"
@@ -414,6 +466,93 @@
                 <i class="fas fa-user text-xl mb-1"></i>
                 <span class="text-xs">我的</span>
             </button>
+        </div>
+    </div>
+
+    <!-- 筛选浮窗 -->
+    <div id="filterModal" class="filter-modal">
+        <div class="filter-content">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-900">筛选搭子类型</h3>
+                <button onclick="closeFilterModal()" class="w-8 h-8 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <p class="text-sm text-gray-600 mb-4">选择你感兴趣的搭子类型（可多选）</p>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="buddy-type-option flex items-center space-x-3 p-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-left" data-type="study" onclick="toggleBuddyType('study')">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-book text-blue-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">学习搭子</div>
+                            <div class="text-xs text-gray-500">一起学习进步</div>
+                        </div>
+                    </button>
+
+                    <button class="buddy-type-option flex items-center space-x-3 p-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-left" data-type="food" onclick="toggleBuddyType('food')">
+                        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-utensils text-orange-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">饭搭子</div>
+                            <div class="text-xs text-gray-500">一起品尝美食</div>
+                        </div>
+                    </button>
+
+                    <button class="buddy-type-option flex items-center space-x-3 p-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-left" data-type="sport" onclick="toggleBuddyType('sport')">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-green-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">运动搭子</div>
+                            <div class="text-xs text-gray-500">一起运动健身</div>
+                        </div>
+                    </button>
+
+                    <button class="buddy-type-option flex items-center space-x-3 p-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-left" data-type="travel" onclick="toggleBuddyType('travel')">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-plane text-purple-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">旅游搭子</div>
+                            <div class="text-xs text-gray-500">一起探索世界</div>
+                        </div>
+                    </button>
+
+                    <button class="buddy-type-option flex items-center space-x-3 p-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-left" data-type="movie" onclick="toggleBuddyType('movie')">
+                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-film text-red-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">电影搭子</div>
+                            <div class="text-xs text-gray-500">一起观影讨论</div>
+                        </div>
+                    </button>
+
+                    <button class="buddy-type-option flex items-center space-x-3 p-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-left" data-type="game" onclick="toggleBuddyType('game')">
+                        <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-gamepad text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-900">游戏搭子</div>
+                            <div class="text-xs text-gray-500">一起游戏娱乐</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex space-x-3 mt-8">
+                <button onclick="clearFilter()" class="flex-1 py-3 px-4 bg-gray-100 text-gray-700 rounded-xl font-medium">
+                    清空
+                </button>
+                <button onclick="applyFilter()" class="flex-1 py-3 px-4 bg-blue-500 text-white rounded-xl font-medium">
+                    确定
+                </button>
+            </div>
         </div>
     </div>
 
@@ -539,6 +678,141 @@
                     window.location.href = 'publish-moment.html';
                 }, 500);
             }
+        }
+
+        // 搜索功能
+        function openSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.focus();
+            showToast('请输入搜索关键词', 'info');
+        }
+
+        // 筛选相关变量
+        let selectedBuddyTypes = [];
+        let originalCards = [];
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 保存原始卡片数据
+            originalCards = Array.from(document.querySelectorAll('.moment-card'));
+
+            // 搜索功能
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                filterCards();
+            });
+        });
+
+        // 切换筛选浮窗
+        function toggleFilterModal() {
+            const modal = document.getElementById('filterModal');
+            modal.classList.toggle('show');
+            if (modal.classList.contains('show')) {
+                modal.style.display = 'flex';
+            } else {
+                modal.style.display = 'none';
+            }
+        }
+
+        // 关闭筛选浮窗
+        function closeFilterModal() {
+            const modal = document.getElementById('filterModal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // 切换搭子类型选择
+        function toggleBuddyType(type) {
+            const option = document.querySelector(`[data-type="${type}"]`);
+            const index = selectedBuddyTypes.indexOf(type);
+
+            if (index > -1) {
+                selectedBuddyTypes.splice(index, 1);
+                option.classList.remove('selected');
+            } else {
+                selectedBuddyTypes.push(type);
+                option.classList.add('selected');
+            }
+
+            updateFilterCount();
+        }
+
+        // 更新筛选计数
+        function updateFilterCount() {
+            const countElement = document.getElementById('filterCount');
+            if (selectedBuddyTypes.length > 0) {
+                countElement.textContent = selectedBuddyTypes.length;
+                countElement.classList.remove('hidden');
+            } else {
+                countElement.classList.add('hidden');
+            }
+        }
+
+        // 清空筛选
+        function clearFilter() {
+            selectedBuddyTypes = [];
+            document.querySelectorAll('.buddy-type-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            updateFilterCount();
+            filterCards();
+        }
+
+        // 应用筛选
+        function applyFilter() {
+            filterCards();
+            closeFilterModal();
+            showToast(`已筛选 ${selectedBuddyTypes.length} 种搭子类型`, 'success');
+        }
+
+        // 筛选卡片
+        function filterCards() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            originalCards.forEach(card => {
+                let shouldShow = true;
+
+                // 搜索筛选
+                if (searchTerm) {
+                    const cardText = card.textContent.toLowerCase();
+                    if (!cardText.includes(searchTerm)) {
+                        shouldShow = false;
+                    }
+                }
+
+                // 搭子类型筛选
+                if (selectedBuddyTypes.length > 0) {
+                    const cardCategory = card.getAttribute('data-category');
+                    if (cardCategory === 'buddy') {
+                        const buddyTypeSpan = card.querySelector('span[class*="bg-blue-100"]');
+                        if (buddyTypeSpan) {
+                            const buddyTypeText = buddyTypeSpan.textContent.trim();
+                            const typeMapping = {
+                                '学习搭子': 'study',
+                                '饭搭子': 'food',
+                                '运动搭子': 'sport',
+                                '旅游搭子': 'travel',
+                                '电影搭子': 'movie',
+                                '游戏搭子': 'game'
+                            };
+
+                            const cardBuddyType = typeMapping[buddyTypeText];
+                            if (!selectedBuddyTypes.includes(cardBuddyType)) {
+                                shouldShow = false;
+                            }
+                        } else {
+                            shouldShow = false;
+                        }
+                    } else {
+                        shouldShow = false;
+                    }
+                }
+
+                card.style.display = shouldShow ? 'block' : 'none';
+            });
         }
 
         // 显示提示消息
