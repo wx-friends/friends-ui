@@ -27,15 +27,17 @@
             right: -8px;
             background: #3b82f6;
             color: white;
-            width: 32px;
+            min-width: 32px;
             height: 32px;
-            border-radius: 50%;
+            padding: 0 8px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 12px;
             z-index: 10;
+            white-space: nowrap;
         }
         .page-item {
             position: relative;
@@ -110,6 +112,15 @@
                 <div class="page-container">
                     <div class="page-number">7</div>
                     <iframe src="chat.html"></iframe>
+                </div>
+            </div>
+
+            <!-- 聊天详情页 -->
+            <div class="flex flex-col items-center page-item">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">聊天详情</h3>
+                <div class="page-container">
+                    <div class="page-number">7-2</div>
+                    <iframe src="chat-detail.html"></iframe>
                 </div>
             </div>
 
@@ -322,15 +333,6 @@
                 <div class="page-container">
                     <div class="page-number">28</div>
                     <iframe src="filter.html"></iframe>
-                </div>
-            </div>
-
-            <!-- 聊天详情页 -->
-            <div class="flex flex-col items-center page-item">
-                <h3 class="text-lg font-semibold mb-4 text-gray-700">聊天详情</h3>
-                <div class="page-container">
-                    <div class="page-number">29</div>
-                    <iframe src="chat-detail.html"></iframe>
                 </div>
             </div>
 
