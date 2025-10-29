@@ -202,6 +202,40 @@
             background: rgba(255, 255, 255, 0.35);
         }
 
+        /* 顶部设置按钮样式 */
+        .settings-btn-top {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 0.5px solid rgba(255, 255, 255, 0.3);
+        }
+        .settings-btn-top:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .settings-btn-top:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* 聊天按钮样式 */
+        .chat-btn {
+            z-index: 10;
+        }
+
+        .chat-action-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.35);
+        }
+
+        .chat-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
+        }
+
+        .chat-action-btn:active {
+            transform: scale(0.98);
+        }
+
         /* 匹配次数显示优化 */
         .match-count-badge {
             background: rgba(255, 255, 255, 0.25);
@@ -508,17 +542,12 @@
             <div class="px-6 py-4 flex items-center justify-between flex-shrink-0">
                 <div class="flex items-center space-x-2">
                     <h1 class="text-xl font-bold text-white text-shadow">匹配结果</h1>
-<!--                    <div class="px-2 py-1 bg-white bg-opacity-20 rounded-full backdrop-blur-sm">-->
-<!--                        <span class="text-white text-xs font-medium">为你推荐</span>-->
-<!--                    </div>-->
                 </div>
                 <div class="flex items-center space-x-3">
-<!--                    <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:bg-opacity-30 active:scale-95" onclick="openFilter()">-->
-<!--                        <i class="fas fa-filter text-white text-sm"></i>-->
-<!--                    </button>-->
-<!--                    <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:bg-opacity-30 active:scale-95" onclick="openMatchingPreferences()">-->
-<!--                        <i class="fas fa-cog text-white text-sm"></i>-->
-<!--                    </button>-->
+                    <!-- 调整匹配偏好按钮 -->
+                    <button class="settings-btn-top w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-opacity-35 active:scale-95" onclick="openMatchingPreferences()" title="调整匹配偏好">
+                        <i class="fas fa-cog text-white text-base"></i>
+                    </button>
                 </div>
             </div>
 
@@ -582,8 +611,12 @@
                     </div>
                 </div>
 
-                <!-- 认证标识 -->
+                <!-- 认证标识和聊天按钮 -->
                 <div class="absolute top-4 right-4 flex space-x-2">
+                    <!-- 聊天按钮 -->
+                    <button class="chat-btn w-10 h-10 rounded-full flex items-center justify-center bg-white bg-opacity-90 backdrop-blur-sm shadow-lg transition-all duration-200 hover:bg-opacity-100 active:scale-95" onclick="startChatWithUser()" title="发送消息">
+                        <i class="fas fa-comments text-blue-600 text-base"></i>
+                    </button>
                     <div class="verified-badge w-9 h-9 rounded-full flex items-center justify-center">
                         <i class="fas fa-check text-white text-sm"></i>
                     </div>
@@ -621,15 +654,16 @@
                     </button>
                 </div>
 
+                <!-- 发送消息按钮 -->
+                <div class="mt-4 text-center">
+                    <button class="chat-action-btn px-6 py-3 rounded-full text-white text-sm font-medium flex items-center justify-center mx-auto shadow-lg transition-all duration-200 hover:shadow-xl active:scale-95" onclick="startChatWithUser()">
+                        <i class="fas fa-comments mr-2 text-base"></i>
+                        开始聊天
+                    </button>
+                </div>
+
                 <!-- 匹配设置和次数 -->
                 <div class="mt-6 space-y-3 pb-6">
-                    <!-- 匹配设置按钮 -->
-                    <div class="text-center">
-                        <button class="settings-btn px-6 py-3 rounded-full text-white text-sm font-medium" onclick="openMatchingPreferences()">
-                            <i class="fas fa-cog mr-2"></i>
-                            调整匹配偏好
-                        </button>
-                    </div>
 
                     <!-- 今日匹配次数 -->
 <!--                    <div class="text-center">-->
@@ -961,15 +995,39 @@
             }, 3000);
         }
 
+        // 与当前匹配用户开始聊天
+        function startChatWithUser() {
+            // 获取当前用户信息（可以从页面或数据中获取）
+            const currentUserName = document.querySelector('.user-info-overlay h3')?.textContent || '用户';
+            
+            // 显示提示
+            showToast(`正在进入与 ${currentUserName} 的聊天...`, 'success');
+            
+            // 可以在这里传递用户ID等信息到聊天详情页
+            // const userId = '123'; // 实际应该从数据中获取
+            // localStorage.setItem('chatUserId', userId);
+            
+            setTimeout(() => {
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'navigation',
+                        page: 'chat-detail.html'
+                    }, '*');
+                } else {
+                    if (window.navigationManager) {
+                        window.navigationManager.navigateToPage('chat-detail');
+                    } else {
+                        window.location.href = 'chat-detail.html';
+                    }
+                }
+            }, 500);
+        }
+
         // 开始聊天
         function startChat() {
             showToast('正在跳转到聊天页面...', 'success');
             setTimeout(() => {
-                if (window.navigationManager) {
-                    window.navigationManager.navigateToPage('chat');
-                } else {
-                    window.location.href = 'chat.html';
-                }
+                navigateToChat();
             }, 1000);
         }
 
