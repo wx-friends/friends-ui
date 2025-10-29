@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户资料</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .profile-header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+        .photo-item {
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+        .action-btn {
+            transition: all 0.3s ease;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .follow-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        .follow-btn.following {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            color: #3b82f6;
+            border-bottom: 2px solid #3b82f6;
+        }
+    </style>
+</head>
+<body class="h-screen bg-gray-50 flex flex-col">
+    <!-- 状态栏 -->
+    <div class="flex justify-between items-center px-6 py-2 text-white text-sm font-medium profile-header">
+        <span>9:41</span>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <div class="w-6 h-3 border border-white rounded-sm">
+                <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+        <button onclick="goBack()" class="w-8 h-8 flex items-center justify-center">
+            <i class="fas fa-arrow-left text-gray-600"></i>
+        </button>
+        <h1 class="text-lg font-semibold text-gray-900">用户资料</h1>
+        <div class="flex items-center space-x-2">
+            <button onclick="shareProfile()" class="w-8 h-8 flex items-center justify-center">
+                <i class="fas fa-share text-gray-600"></i>
+            </button>
+            <button onclick="showMoreOptions()" class="w-8 h-8 flex items-center justify-center">
+                <i class="fas fa-ellipsis-h text-gray-600"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 用户信息头部 -->
+    <div class="profile-header px-6 py-8">
+        <div class="flex items-center space-x-4 mb-6">
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" 
+                     alt="头像" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg">
+                <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+                    <i class="fas fa-check text-white text-xs"></i>
+                </div>
+            </div>
+            <div class="flex-1 text-white">
+                <div class="flex items-center space-x-2 mb-1">
+                    <h2 class="text-2xl font-bold">小明</h2>
+                    <div class="bg-yellow-400 px-2 py-1 rounded-full">
+                        <span class="text-xs font-bold text-gray-800">VIP</span>
+                    </div>
+                </div>
+                <p class="text-white opacity-90 mb-2">28岁 · 北京市朝阳区 · 距离你 2.3km</p>
+                <div class="flex space-x-2 mb-3">
+                    <span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-xs">设计师</span>
+                    <span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-xs">摄影</span>
+                    <span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-xs">旅行</span>
+                </div>
+                <p class="text-white opacity-80 text-sm">希望找到一个能一起分享生活、共同成长的另一半 💕</p>
+            </div>
+        </div>
+
+        <!-- 统计数据 -->
+        <div class="grid grid-cols-4 gap-4">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-white">156</div>
+                <div class="text-white opacity-80 text-sm">关注</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-white">1.2K</div>
+                <div class="text-white opacity-80 text-sm">粉丝</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-white">23</div>
+                <div class="text-white opacity-80 text-sm">搭子匹配</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-white">45</div>
+                <div class="text-white opacity-80 text-sm">活动参与</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="bg-white px-6 py-4 border-b border-gray-100">
+        <div class="flex space-x-3">
+            <button id="followBtn" class="follow-btn action-btn flex-1 py-3 px-6 text-white rounded-xl font-medium flex items-center justify-center space-x-2" onclick="toggleFollow()">
+                <i class="fas fa-user-plus text-sm"></i>
+                <span>关注</span>
+            </button>
+            <button class="action-btn flex-1 py-3 px-6 bg-gray-100 text-gray-700 rounded-xl font-medium flex items-center justify-center space-x-2" onclick="sendMessage()">
+                <i class="fas fa-comment text-sm"></i>
+                <span>私信</span>
+            </button>
+            <button class="action-btn w-12 h-12 bg-gray-100 text-gray-700 rounded-xl flex items-center justify-center" onclick="toggleLike()">
+                <i id="likeIcon" class="far fa-heart text-lg"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 标签页导航 -->
+    <div class="bg-white border-b border-gray-100">
+        <div class="flex">
+            <button class="tab-button active flex-1 py-4 text-center font-medium" onclick="switchTab('photos')">
+                相册
+            </button>
+            <button class="tab-button flex-1 py-4 text-center font-medium" onclick="switchTab('moments')">
+                动态
+            </button>
+            <button class="tab-button flex-1 py-4 text-center font-medium" onclick="switchTab('activities')">
+                活动
+            </button>
+        </div>
+    </div>
+
+    <!-- 主要内容区域 -->
+    <div class="flex-1 overflow-y-auto">
+        <!-- 相册标签页 -->
+        <div id="photosTab" class="tab-content active p-6">
+            <div class="photo-grid">
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=300&fit=crop" alt="照片1">
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop" alt="照片2">
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&h=300&fit=crop" alt="照片3">
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop" alt="照片4">
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=300&fit=crop" alt="照片5">
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&h=300&fit=crop" alt="照片6">
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop" alt="照片7">
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=300&fit=crop" alt="照片8">
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&h=300&fit=crop" alt="照片9">
+                </div>
+            </div>
+        </div>
+
+        <!-- 动态标签页 -->
+        <div id="momentsTab" class="tab-content p-6 space-y-4">
+            <!-- 动态卡片 1 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face"
+                         alt="头像" class="w-10 h-10 rounded-full object-cover ring-2 ring-pink-200">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2">
+                            <h3 class="font-semibold text-gray-900">小明</h3>
+                            <span class="px-2 py-1 bg-pink-100 text-pink-600 rounded-full text-xs font-medium">
+                                <i class="fas fa-heart text-xs mr-1"></i>恋爱
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-500">3小时前</p>
+                    </div>
+                </div>
+
+                <p class="text-gray-800 mb-4 leading-relaxed">
+                    希望找到一个能一起分享生活、共同成长的另一半。我喜欢旅行、摄影，也喜欢安静的读书时光。希望在碰碰遇到那个对的人 💕
+                </p>
+
+                <div class="grid grid-cols-3 gap-2 mb-4 text-xs">
+                    <div class="bg-pink-50 rounded-lg p-3 text-center border border-pink-100">
+                        <div class="text-pink-600 font-medium text-sm">28岁</div>
+                        <div class="text-gray-500 text-xs">年龄</div>
+                    </div>
+                    <div class="bg-pink-50 rounded-lg p-3 text-center border border-pink-100">
+                        <div class="text-pink-600 font-medium text-sm">175cm</div>
+                        <div class="text-gray-500 text-xs">身高</div>
+                    </div>
+                    <div class="bg-pink-50 rounded-lg p-3 text-center border border-pink-100">
+                        <div class="text-pink-600 font-medium text-sm">设计师</div>
+                        <div class="text-gray-500 text-xs">职业</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200&h=200&fit=crop"
+                         alt="照片1" class="w-full h-24 object-cover rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop"
+                         alt="照片2" class="w-full h-24 object-cover rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=200&fit=crop"
+                         alt="照片3" class="w-full h-24 object-cover rounded-xl">
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                    <button class="flex items-center space-x-2 text-gray-500" onclick="likeMoment(this)">
+                        <i class="far fa-heart text-lg"></i>
+                        <span class="text-sm">32</span>
+                    </button>
+                    <button class="flex items-center space-x-2 text-gray-500" onclick="commentMoment(1)">
+                        <i class="far fa-comment text-lg"></i>
+                        <span class="text-sm">8</span>
+                    </button>
+                    <button class="flex items-center space-x-2 text-gray-500" onclick="shareMoment(1)">
+                        <i class="fas fa-share text-lg"></i>
+                        <span class="text-sm">分享</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 动态卡片 2 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face"
+                         alt="头像" class="w-10 h-10 rounded-full object-cover ring-2 ring-blue-200">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2">
+                            <h3 class="font-semibold text-gray-900">小明</h3>
+                            <span class="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-medium">
+                                学习搭子
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-500">1天前</p>
+                    </div>
+                </div>
+
+                <p class="text-gray-800 mb-4 leading-relaxed">
+                    周末想找个学习搭子一起在图书馆学习，互相监督，提高学习效率！有一起的吗？📚
+                </p>
+
+                <div class="grid grid-cols-2 gap-2 mb-4">
+                    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=200&h=200&fit=crop"
+                         alt="学习1" class="w-full h-24 object-cover rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=200&h=200&fit=crop"
+                         alt="学习2" class="w-full h-24 object-cover rounded-xl">
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                    <button class="flex items-center space-x-2 text-gray-500" onclick="likeMoment(this)">
+                        <i class="far fa-heart text-lg"></i>
+                        <span class="text-sm">15</span>
+                    </button>
+                    <button class="flex items-center space-x-2 text-gray-500" onclick="commentMoment(2)">
+                        <i class="far fa-comment text-lg"></i>
+                        <span class="text-sm">3</span>
+                    </button>
+                    <button class="flex items-center space-x-2 text-gray-500" onclick="shareMoment(2)">
+                        <i class="fas fa-share text-lg"></i>
+                        <span class="text-sm">分享</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 活动标签页 -->
+        <div id="activitiesTab" class="tab-content p-6 space-y-4">
+            <!-- 活动卡片 1 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face"
+                         alt="头像" class="w-10 h-10 rounded-full object-cover ring-2 ring-green-200">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2">
+                            <h3 class="font-semibold text-gray-900">小明</h3>
+                            <span class="px-2 py-1 bg-green-100 text-green-600 rounded-full text-xs font-medium">
+                                <i class="fas fa-handshake text-xs mr-1"></i>搭子活动
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-500">2天前</p>
+                    </div>
+                </div>
+
+                <h4 class="font-semibold text-gray-900 mb-2">寻找羽毛球搭子</h4>
+                <p class="text-gray-600 mb-4">周末想找人一起打羽毛球，技术一般，主要是想运动运动，有感兴趣的朋友吗？🏸</p>
+
+                <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 mb-4 border border-green-200">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-calendar-alt text-white"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-green-900">活动时间</div>
+                                <div class="text-xs text-green-700">本周六 14:00-16:00</div>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-medium">进行中</span>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center space-x-2 text-green-700">
+                            <i class="fas fa-map-marker-alt text-green-600"></i>
+                            <span>市体育馆羽毛球馆</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-green-700">
+                            <i class="fas fa-users text-green-600"></i>
+                            <span>已有 2 人参与 · 还需 1-2 人</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-green-700">
+                            <i class="fas fa-dollar-sign text-green-600"></i>
+                            <span>AA制 · 预估人均 30元</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                    <button class="flex items-center space-x-2 text-gray-500" onclick="likeActivity(this)">
+                        <i class="far fa-heart text-lg"></i>
+                        <span class="text-sm">15</span>
+                    </button>
+                    <button class="flex items-center space-x-2 text-gray-500" onclick="commentActivity(1)">
+                        <i class="far fa-comment text-lg"></i>
+                        <span class="text-sm">6</span>
+                    </button>
+                    <button class="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="joinActivity(1)">
+                        <i class="fas fa-handshake text-sm"></i>
+                        <span>参与活动</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 活动卡片 2 -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face"
+                         alt="头像" class="w-10 h-10 rounded-full object-cover ring-2 ring-purple-200">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2">
+                            <h3 class="font-semibold text-gray-900">小明</h3>
+                            <span class="px-2 py-1 bg-purple-100 text-purple-600 rounded-full text-xs font-medium">
+                                <i class="fas fa-star text-xs mr-1"></i>官方活动
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-500">3天前</p>
+                    </div>
+                </div>
+
+                <h4 class="font-semibold text-gray-900 mb-2">摄影兴趣派对</h4>
+                <p class="text-gray-600 mb-4">本次摄影兴趣派对由专业摄影师指导，将为大家分享摄影技巧、构图方法、后期处理等专业知识。</p>
+
+                <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-4 mb-4 border border-purple-200">
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <div class="bg-white rounded-lg p-3">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <i class="fas fa-users text-purple-600"></i>
+                                <span class="text-xs text-gray-600">参与人数</span>
+                            </div>
+                            <div class="text-sm font-bold text-purple-900">18/30人</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-3">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <i class="fas fa-dollar-sign text-purple-600"></i>
+                                <span class="text-xs text-gray-600">活动费用</span>
+                            </div>
+                            <div class="text-sm font-bold text-purple-900">免费</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 text-sm text-purple-700">
+                        <i class="fas fa-clock text-purple-600"></i>
+                        <span>活动时长：约3小时</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                    <button class="flex items-center space-x-2 text-gray-500" onclick="likeActivity(this)">
+                        <i class="far fa-heart text-lg"></i>
+                        <span class="text-sm">28</span>
+                    </button>
+                    <button class="flex items-center space-x-2 text-gray-500" onclick="commentActivity(2)">
+                        <i class="far fa-comment text-lg"></i>
+                        <span class="text-sm">12</span>
+                    </button>
+                    <button class="flex items-center space-x-2 bg-purple-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="joinActivity(2)">
+                        <i class="fas fa-user-plus text-sm"></i>
+                        <span>立即报名</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+    
+    <!-- 页面特定交互脚本 -->
+    <script>
+        let isFollowing = false;
+        let isLiked = false;
+
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
+        }
+
+        // 分享用户资料
+        function shareProfile() {
+            showToast('正在分享用户资料...', 'info');
+            // 这里可以实现分享功能
+        }
+
+        // 显示更多选项
+        function showMoreOptions() {
+            showToast('更多选项功能开发中...', 'info');
+            // 这里可以显示举报、屏蔽等选项
+        }
+
+        // 切换关注状态
+        function toggleFollow() {
+            const followBtn = document.getElementById('followBtn');
+            const icon = followBtn.querySelector('i');
+            const text = followBtn.querySelector('span');
+            
+            if (isFollowing) {
+                isFollowing = false;
+                followBtn.classList.remove('following');
+                icon.className = 'fas fa-user-plus text-sm';
+                text.textContent = '关注';
+                showToast('已取消关注', 'info');
+            } else {
+                isFollowing = true;
+                followBtn.classList.add('following');
+                icon.className = 'fas fa-check text-sm';
+                text.textContent = '已关注';
+                showToast('关注成功', 'success');
+            }
+        }
+
+        // 发送私信
+        function sendMessage() {
+            showToast('正在打开私信...', 'info');
+            if (window.navigationManager) {
+                window.navigationManager.navigateToSubPage('chat-detail');
+            } else {
+                setTimeout(() => {
+                    window.location.href = 'chat-detail.html';
+                }, 1000);
+            }
+        }
+
+        // 切换点赞状态
+        function toggleLike() {
+            const likeIcon = document.getElementById('likeIcon');
+            
+            if (isLiked) {
+                isLiked = false;
+                likeIcon.classList.remove('fas');
+                likeIcon.classList.add('far');
+                showToast('已取消点赞', 'info');
+            } else {
+                isLiked = true;
+                likeIcon.classList.remove('far');
+                likeIcon.classList.add('fas');
+                likeIcon.style.color = '#ef4444';
+                showToast('已点赞', 'success');
+            }
+        }
+
+        // 切换标签页
+        function switchTab(tabName) {
+            // 移除所有标签页的激活状态
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // 激活选中的标签页
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+
+        // 点赞动态
+        function likeMoment(button) {
+            const icon = button.querySelector('i');
+            const countSpan = button.querySelector('span');
+            let count = parseInt(countSpan.textContent);
+
+            if (icon.classList.contains('fas')) {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                count--;
+                showToast('已取消点赞', 'info');
+            } else {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = '#ef4444';
+                count++;
+                showToast('已点赞', 'success');
+            }
+
+            countSpan.textContent = count;
+        }
+
+        // 评论动态
+        function commentMoment(momentId) {
+            showToast('正在打开评论...', 'info');
+            // 这里可以跳转到评论页面
+        }
+
+        // 分享动态
+        function shareMoment(momentId) {
+            showToast('正在分享动态...', 'info');
+            // 这里可以实现分享功能
+        }
+
+        // 点赞活动
+        function likeActivity(button) {
+            const icon = button.querySelector('i');
+            const countSpan = button.querySelector('span');
+            let count = parseInt(countSpan.textContent);
+
+            if (icon.classList.contains('fas')) {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                count--;
+                showToast('已取消点赞', 'info');
+            } else {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = '#ef4444';
+                count++;
+                showToast('已点赞', 'success');
+            }
+
+            countSpan.textContent = count;
+        }
+
+        // 评论活动
+        function commentActivity(activityId) {
+            showToast('正在打开评论...', 'info');
+            // 这里可以跳转到评论页面
+        }
+
+        // 参与活动
+        function joinActivity(activityId) {
+            showToast('正在加入活动...', 'info');
+            // 这里可以跳转到活动详情页面
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
+            
+            const styles = {
+                'info': 'bg-blue-500',
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500'
+            };
+            
+            toast.className += ` ${styles[type] || styles['info']}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
