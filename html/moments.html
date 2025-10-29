@@ -154,29 +154,18 @@
                 希望找到一个能一起分享生活、共同成长的另一半。我喜欢旅行、摄影，也喜欢安静的读书时光。希望在碰碰遇到那个对的人 💕
             </p>
 
-            <div class="bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl p-4 mb-4 border border-pink-100">
-                <div class="flex items-center space-x-3 mb-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-rose-400 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-heart text-white"></i>
-                    </div>
-                    <div class="flex-1">
-                        <div class="text-sm font-medium text-pink-900">寻找恋爱对象</div>
-                        <div class="text-xs text-pink-600 mt-1">期待遇到心动的你</div>
-                    </div>
+            <div class="grid grid-cols-3 gap-2 mb-4 text-xs">
+                <div class="bg-pink-50 rounded-lg p-3 text-center border border-pink-100">
+                    <div class="text-pink-600 font-medium text-sm">28岁</div>
+                    <div class="text-gray-500 text-xs">年龄</div>
                 </div>
-                <div class="grid grid-cols-3 gap-2 text-xs">
-                    <div class="bg-white rounded-lg p-2 text-center">
-                        <div class="text-pink-600 font-medium">28岁</div>
-                        <div class="text-gray-500">年龄</div>
-                    </div>
-                    <div class="bg-white rounded-lg p-2 text-center">
-                        <div class="text-pink-600 font-medium">175cm</div>
-                        <div class="text-gray-500">身高</div>
-                    </div>
-                    <div class="bg-white rounded-lg p-2 text-center">
-                        <div class="text-pink-600 font-medium">设计师</div>
-                        <div class="text-gray-500">职业</div>
-                    </div>
+                <div class="bg-pink-50 rounded-lg p-3 text-center border border-pink-100">
+                    <div class="text-pink-600 font-medium text-sm">175cm</div>
+                    <div class="text-gray-500 text-xs">身高</div>
+                </div>
+                <div class="bg-pink-50 rounded-lg p-3 text-center border border-pink-100">
+                    <div class="text-pink-600 font-medium text-sm">设计师</div>
+                    <div class="text-gray-500 text-xs">职业</div>
                 </div>
             </div>
 
@@ -286,7 +275,7 @@
                     <span>官方</span>
                 </span>
             </div>
-            
+
             <div class="flex items-center space-x-3 mb-4">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=50&h=50&fit=crop"
@@ -355,8 +344,8 @@
                     <span class="text-sm">24</span>
                 </button>
                 <button class="flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="viewActivityDetails(4)">
-                    <i class="fas fa-info-circle text-sm"></i>
-                    <span>查看详情</span>
+                    <i class="fas fa-user-plus text-sm"></i>
+                    <span>立即报名</span>
                 </button>
             </div>
         </div>
@@ -486,7 +475,7 @@
             // 筛选动态卡片
             const momentCards = document.querySelectorAll('.moment-card');
             let visibleCount = 0;
-            
+
             momentCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
                 if (category === 'all' || cardCategory === category) {
@@ -497,11 +486,11 @@
                 }
             });
 
-            const categoryName = category === 'all' ? '全部' : 
+            const categoryName = category === 'all' ? '全部' :
                                category === 'buddy' ? '搭子' :
                                category === 'love' ? '恋爱' :
                                category === 'buddy-activity' ? '搭子活动' : '官方活动';
-            
+
             if (visibleCount > 0) {
                 showToast(`已筛选 ${categoryName} 动态（${visibleCount}条）`, 'info');
             } else {
