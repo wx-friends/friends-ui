@@ -12,7 +12,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
@@ -21,7 +21,7 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-        
+
         /* 应用容器 */
         .app-container {
             width: 100%;
@@ -31,7 +31,7 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         /* 可滚动内容区域 */
         .scrollable-content {
             flex: 1;
@@ -39,21 +39,21 @@
             overflow-x: hidden;
             min-height: 0;
         }
-        
+
         /* 自定义滚动条样式 */
         .scrollable-content::-webkit-scrollbar {
             width: 4px;
         }
-        
+
         .scrollable-content::-webkit-scrollbar-track {
             background: transparent;
         }
-        
+
         .scrollable-content::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.3);
             border-radius: 2px;
         }
-        
+
         .scrollable-content::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.5);
         }
@@ -65,7 +65,7 @@
             font-weight: 600;
             letter-spacing: -0.3px;
         }
-        
+
         /* 卡片优化 - iOS风格 */
         .card {
             background: #ffffff;
@@ -75,7 +75,7 @@
             border: 0.5px solid rgba(0, 0, 0, 0.04);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        
+
         /* 按钮优化 - iOS风格 */
         .like-btn {
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
@@ -90,7 +90,7 @@
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(255, 107, 107, 0.45);
         }
-        
+
         .pass-btn {
             background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -104,7 +104,7 @@
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(108, 117, 125, 0.45);
         }
-        
+
         .super-like-btn {
             background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -118,7 +118,7 @@
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(255, 182, 193, 0.45);
         }
-        
+
         /* 模式切换按钮优化 */
         .mode-btn {
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -132,7 +132,7 @@
         .mode-btn:active {
             transform: scale(0.98);
         }
-        
+
         /* 导航栏优化 */
         .nav-header {
             background: rgba(30, 64, 175, 0.1);
@@ -140,7 +140,7 @@
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         /* 底部导航栏优化 */
         .bottom-nav {
             background: rgba(255, 255, 255, 0.85);
@@ -149,7 +149,7 @@
             border-top: 0.5px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
         }
-        
+
         .nav-button {
             transition: all 0.2s ease;
         }
@@ -160,12 +160,12 @@
         .nav-button:active {
             transform: scale(0.9);
         }
-        
+
         /* 用户卡片信息优化 */
         .user-info-overlay {
             background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.65) 50%, transparent 100%);
         }
-        
+
         /* 标签优化 */
         .tag {
             background: rgba(255, 255, 255, 0.25);
@@ -177,18 +177,18 @@
         .tag:hover {
             background: rgba(255, 255, 255, 0.35);
         }
-        
+
         /* 认证标识优化 */
         .verified-badge {
             background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
             box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
         }
-        
+
         /* 操作按钮容器优化 */
         .action-buttons {
             padding: 20px 0;
         }
-        
+
         /* 设置按钮优化 */
         .settings-btn {
             background: rgba(255, 255, 255, 0.25);
@@ -201,7 +201,7 @@
             transform: scale(0.98);
             background: rgba(255, 255, 255, 0.35);
         }
-        
+
         /* 匹配次数显示优化 */
         .match-count-badge {
             background: rgba(255, 255, 255, 0.25);
@@ -209,32 +209,32 @@
             -webkit-backdrop-filter: blur(10px);
             border: 0.5px solid rgba(255, 255, 255, 0.3);
         }
-        
+
         /* 图片加载优化 */
         img {
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
             transition: opacity 0.3s ease;
         }
-        
+
         /* 用户卡片图片容器 */
         .user-photo-container {
             position: relative;
             overflow: hidden;
         }
-        
+
         .user-photo-container img {
             object-fit: cover;
             width: 100%;
             height: 100%;
         }
-        
+
         /* 按钮点击波纹效果 */
         button {
             position: relative;
             overflow: hidden;
         }
-        
+
         button:active::after {
             content: '';
             position: absolute;
@@ -247,7 +247,7 @@
             transform: translate(-50%, -50%);
             animation: ripple 0.6s ease-out;
         }
-        
+
         @keyframes ripple {
             to {
                 width: 200px;
@@ -255,18 +255,18 @@
                 opacity: 0;
             }
         }
-        
+
         /* 文字阴影优化 */
         .text-shadow {
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
-        
+
         /* 平滑滚动 */
         .scrollable-content {
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
         }
-        
+
         /* 全屏匹配动效样式 */
         .matching-overlay {
             position: fixed;
@@ -281,12 +281,12 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .matching-content {
             text-align: center;
             color: #2c3e50;
         }
-        
+
         .matching-title {
             font-size: 2rem;
             font-weight: bold;
@@ -294,14 +294,14 @@
             opacity: 0;
             animation: fadeInUp 0.8s ease-out forwards;
         }
-        
+
         .matching-subtitle {
             font-size: 1.2rem;
             margin-bottom: 3rem;
             opacity: 0;
             animation: fadeInUp 0.8s ease-out 0.3s forwards;
         }
-        
+
         .matching-animation {
             width: 200px;
             height: 200px;
@@ -310,13 +310,13 @@
             opacity: 0;
             animation: fadeInUp 0.8s ease-out 0.6s forwards;
         }
-        
+
         .matching-hearts {
             position: absolute;
             width: 100%;
             height: 100%;
         }
-        
+
         .heart {
             position: absolute;
             width: 20px;
@@ -325,7 +325,7 @@
             transform: rotate(45deg);
             animation: heartbeat 1.5s infinite;
         }
-        
+
         .heart:before,
         .heart:after {
             content: '';
@@ -335,48 +335,48 @@
             background: #ff6b6b;
             border-radius: 50%;
         }
-        
+
         .heart:before {
             top: -10px;
             left: 0;
         }
-        
+
         .heart:after {
             top: 0;
             left: -10px;
         }
-        
+
         .heart:nth-child(1) {
             top: 20%;
             left: 20%;
             animation-delay: 0s;
         }
-        
+
         .heart:nth-child(2) {
             top: 30%;
             right: 20%;
             animation-delay: 0.3s;
         }
-        
+
         .heart:nth-child(3) {
             bottom: 30%;
             left: 30%;
             animation-delay: 0.6s;
         }
-        
+
         .heart:nth-child(4) {
             bottom: 20%;
             right: 30%;
             animation-delay: 0.9s;
         }
-        
+
         .heart:nth-child(5) {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(45deg);
             animation-delay: 1.2s;
         }
-        
+
         .matching-progress {
             width: 300px;
             height: 4px;
@@ -387,7 +387,7 @@
             opacity: 0;
             animation: fadeInUp 0.8s ease-out 0.9s forwards;
         }
-        
+
         .matching-progress-bar {
             height: 100%;
             background: linear-gradient(90deg, #ff6b6b, #42E2B8, #FFB6C1);
@@ -395,36 +395,36 @@
             width: 0%;
             animation: progressFill 3s ease-out forwards;
         }
-        
+
         .matching-result {
             display: none;
             text-align: center;
             color: #2c3e50;
         }
-        
+
         .result-icon {
             font-size: 4rem;
             margin-bottom: 1rem;
             animation: bounceIn 0.8s ease-out;
         }
-        
+
         .result-title {
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 1rem;
         }
-        
+
         .result-subtitle {
             font-size: 1.2rem;
             margin-bottom: 2rem;
         }
-        
+
         .result-actions {
             display: flex;
             gap: 1rem;
             justify-content: center;
         }
-        
+
         .result-btn {
             padding: 12px 24px;
             border-radius: 25px;
@@ -432,21 +432,21 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .result-btn.primary {
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
         }
-        
+
         .result-btn.secondary {
             background: rgba(66, 226, 184, 0.3);
             border: 1px solid rgba(66, 226, 184, 0.5);
             color: #2c3e50;
         }
-        
+
         .result-btn:hover {
             transform: scale(1.05);
         }
-        
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -457,7 +457,7 @@
                 transform: translateY(0);
             }
         }
-        
+
         @keyframes heartbeat {
             0%, 100% {
                 transform: scale(1) rotate(45deg);
@@ -466,7 +466,7 @@
                 transform: scale(1.2) rotate(45deg);
             }
         }
-        
+
         @keyframes progressFill {
             from {
                 width: 0%;
@@ -475,7 +475,7 @@
                 width: 100%;
             }
         }
-        
+
         @keyframes bounceIn {
             0% {
                 transform: scale(0);
@@ -504,22 +504,21 @@
                 </div>
             </div>
 
-            <!-- 导航栏 -->
-            <div class="nav-header px-6 py-4 flex items-center justify-between flex-shrink-0">
-                <h1 class="text-xl font-bold text-white text-shadow">发现</h1>
+            <!-- 匹配结果顶部栏 -->
+            <div class="px-6 py-4 flex items-center justify-between flex-shrink-0">
+                <div class="flex items-center space-x-2">
+                    <h1 class="text-xl font-bold text-white text-shadow">匹配结果</h1>
+<!--                    <div class="px-2 py-1 bg-white bg-opacity-20 rounded-full backdrop-blur-sm">-->
+<!--                        <span class="text-white text-xs font-medium">为你推荐</span>-->
+<!--                    </div>-->
+                </div>
                 <div class="flex items-center space-x-3">
-                    <!-- 模式切换 -->
-                    <div class="bg-white bg-opacity-20 rounded-full p-1 backdrop-blur-sm">
-                        <button class="mode-btn active px-4 py-2 rounded-full text-white text-sm font-medium" onclick="switchMode('dating')">
-                            恋爱交友
-                        </button>
-                        <button class="mode-btn px-4 py-2 rounded-full text-white text-sm font-medium opacity-70" onclick="switchMode('buddy')">
-                            搭子匹配
-                        </button>
-                    </div>
-                    <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:bg-opacity-30 active:scale-95" onclick="openFilter()">
-                        <i class="fas fa-filter text-white text-sm"></i>
-                    </button>
+<!--                    <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:bg-opacity-30 active:scale-95" onclick="openFilter()">-->
+<!--                        <i class="fas fa-filter text-white text-sm"></i>-->
+<!--                    </button>-->
+<!--                    <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:bg-opacity-30 active:scale-95" onclick="openMatchingPreferences()">-->
+<!--                        <i class="fas fa-cog text-white text-sm"></i>-->
+<!--                    </button>-->
                 </div>
             </div>
 
@@ -631,23 +630,23 @@
                             调整匹配偏好
                         </button>
                     </div>
-                    
+
                     <!-- 今日匹配次数 -->
-                    <div class="text-center">
-                        <div class="match-count-badge inline-flex items-center px-4 py-2 rounded-full">
-                            <i class="fas fa-heart text-pink-300 mr-2 text-sm"></i>
-                            <span class="text-white text-sm match-count font-medium">今日剩余匹配次数: 2/3</span>
-                        </div>
-                    </div>
+<!--                    <div class="text-center">-->
+<!--                        <div class="match-count-badge inline-flex items-center px-4 py-2 rounded-full">-->
+<!--                            <i class="fas fa-heart text-pink-300 mr-2 text-sm"></i>-->
+<!--                            <span class="text-white text-sm match-count font-medium">今日剩余匹配次数: 2/3</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
-            
+
             <!-- 底部导航栏 -->
             <div class="bottom-nav px-6 py-3 flex-shrink-0">
                 <div class="flex justify-around">
                     <button class="nav-button active flex flex-col items-center text-blue-600" data-page="home">
                         <i class="fas fa-home text-xl mb-1"></i>
-                        <span class="text-xs font-medium">发现</span>
+                        <span class="text-xs font-medium">匹配</span>
                     </button>
                     <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="chat">
                         <i class="fas fa-comments text-xl mb-1"></i>
@@ -670,7 +669,7 @@
         <div class="matching-content">
             <h2 class="matching-title">正在寻找匹配...</h2>
             <p class="matching-subtitle">为你找到最合适的人</p>
-            
+
             <div class="matching-animation">
                 <div class="matching-hearts">
                     <div class="heart"></div>
@@ -680,12 +679,12 @@
                     <div class="heart"></div>
                 </div>
             </div>
-            
+
             <div class="matching-progress">
                 <div class="matching-progress-bar"></div>
             </div>
         </div>
-        
+
         <div class="matching-result">
             <div class="result-icon">💕</div>
             <h3 class="result-title">匹配成功！</h3>
@@ -713,7 +712,7 @@
             // 拖动手柄事件
             dragHandle.addEventListener('mousedown', dragStart);
             dragHandle.addEventListener('touchstart', dragStart);
-            
+
             // 也可以在手机边框上拖动（但不是屏幕内容区域）
             phoneContainer.addEventListener('mousedown', function(e) {
                 // 如果点击的是拖动手柄，不重复处理
@@ -731,17 +730,17 @@
                 // 点击边框区域可以拖动
                 dragStart(e);
             });
-            
+
             document.addEventListener('mousemove', drag);
             document.addEventListener('touchmove', drag);
-            
+
             document.addEventListener('mouseup', dragEnd);
             document.addEventListener('touchend', dragEnd);
 
             function dragStart(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 if (e.type === "touchstart") {
                     initialX = e.touches[0].clientX - xOffset;
                     initialY = e.touches[0].clientY - yOffset;
@@ -757,7 +756,7 @@
             function drag(e) {
                 if (isDragging) {
                     e.preventDefault();
-                    
+
                     if (e.type === "touchmove") {
                         currentX = e.touches[0].clientX - initialX;
                         currentY = e.touches[0].clientY - initialY;
@@ -834,7 +833,7 @@
             });
             event.target.classList.add('active');
             event.target.classList.remove('opacity-70');
-            
+
             if (mode === 'buddy') {
                 showToast('已切换到搭子匹配模式', 'info');
                 // 显示搭子筛选条件
@@ -886,7 +885,7 @@
             const filters = document.getElementById('buddy-filters');
             const button = event.target.closest('button');
             const icon = button.querySelector('i');
-            
+
             if (filters.classList.contains('hidden')) {
                 filters.classList.remove('hidden');
                 icon.classList.remove('fa-chevron-down');
@@ -905,13 +904,13 @@
                 btn.classList.remove('active', 'bg-blue-100', 'text-blue-600');
                 btn.classList.add('bg-gray-100', 'text-gray-600');
             });
-            
+
             // 激活当前按钮
             event.target.classList.add('active', 'bg-blue-100', 'text-blue-600');
             event.target.classList.remove('bg-gray-100', 'text-gray-600');
-            
+
             showToast(`已筛选${event.target.textContent}类型的搭子`, 'info');
-            
+
             // 这里可以添加实际的筛选逻辑
             // 根据type参数筛选用户
         }
@@ -945,23 +944,23 @@
             const overlay = document.getElementById('matchingOverlay');
             const matchingContent = overlay.querySelector('.matching-content');
             const matchingResult = overlay.querySelector('.matching-result');
-            
+
             // 显示匹配动效
             overlay.style.display = 'flex';
             matchingContent.style.display = 'block';
             matchingResult.style.display = 'none';
-            
+
             // 模拟匹配过程
             setTimeout(() => {
                 // 隐藏匹配过程，显示结果
                 matchingContent.style.display = 'none';
                 matchingResult.style.display = 'block';
-                
+
                 // 更新匹配次数
                 updateMatchCount();
             }, 3000);
         }
-        
+
         // 开始聊天
         function startChat() {
             showToast('正在跳转到聊天页面...', 'success');
@@ -973,16 +972,16 @@
                 }
             }, 1000);
         }
-        
+
         // 关闭匹配动效，继续匹配
         function closeMatching() {
             const overlay = document.getElementById('matchingOverlay');
             overlay.style.display = 'none';
-            
+
             // 加载下一个用户资料
             loadNextProfile();
         }
-        
+
         // 显示提示消息
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
