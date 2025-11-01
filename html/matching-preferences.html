@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #42E2B8 0%, #34D399 100%);
         }
         .card {
             background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.8) 100%);
@@ -21,9 +21,9 @@
             border: 2px solid transparent;
         }
         .preference-btn.active {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #42E2B8 0%, #34D399 100%);
             color: white;
-            border-color: #1e40af;
+            border-color: #42E2B8;
             transform: scale(1.05);
         }
         .preference-btn:hover {
@@ -223,7 +223,7 @@
                 <div class="loading-spinner w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"></div>
                 <h3 class="text-lg font-bold text-gray-800 mb-2">正在寻找匹配...</h3>
                 <p class="text-gray-600 text-sm mb-4">根据您的偏好，正在为您寻找合适的对象</p>
-                <div class="bg-blue-100 rounded-full h-2 mb-4">
+                <div class="bg-green-100 rounded-full h-2 mb-4">
                     <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
                 <p class="text-sm text-gray-500" id="progressText">正在分析您的偏好...</p>
@@ -430,7 +430,7 @@
             toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
 
             const styles = {
-                'info': 'bg-blue-500',
+                'info': 'bg-green-500',
                 'success': 'bg-green-500',
                 'error': 'bg-red-500',
                 'warning': 'bg-yellow-500'

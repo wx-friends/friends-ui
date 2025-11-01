@@ -30,7 +30,7 @@
             border-left: 4px solid transparent;
         }
         .moment-filter-btn.active {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background: linear-gradient(135deg, #34D399 0%, #42E2B8 100%);
             color: white;
             transform: scale(1.05);
         }
@@ -61,9 +61,9 @@
             transition: all 0.3s ease;
         }
         .buddy-type-option.selected {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background: linear-gradient(135deg, #34D399 0%, #42E2B8 100%);
             color: white;
-            border-color: #3b82f6;
+            border-color: #34D399;
         }
     </style>
 </head>
@@ -98,7 +98,7 @@
     <!-- 动态分类筛选 -->
     <div class="bg-white px-6 py-4 border-b border-gray-100">
         <div class="flex space-x-2 overflow-x-auto">
-            <!-- <button class="moment-filter-btn active px-5 py-2.5 bg-blue-100 text-blue-600 rounded-full text-sm font-medium whitespace-nowrap shadow-sm" onclick="filterMoments('all')">
+            <!-- <button class="moment-filter-btn active px-5 py-2.5 bg-green-100 text-green-600 rounded-full text-sm font-medium whitespace-nowrap shadow-sm" onclick="filterMoments('all')">
                 <i class="fas fa-th-large mr-1"></i>全部
             </button> -->
             <button class="moment-filter-btn px-5 py-2.5 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap" onclick="filterMoments('buddy')" data-category="buddy">
@@ -123,7 +123,7 @@
             <button class="flex items-center space-x-2 px-4 py-3 bg-gray-100 rounded-xl text-gray-700 font-medium" onclick="toggleFilterModal()">
                 <i class="fas fa-filter text-sm"></i>
                 <span class="text-sm">筛选</span>
-                <span id="filterCount" class="hidden bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                <span id="filterCount" class="hidden bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
             </button>
             <!-- 搜索框 -->
             <div class="flex-1 relative">
@@ -138,17 +138,17 @@
     <!-- 主要内容 -->
     <div class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
         <!-- 搭子类型动态 1 -->
-        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm border-l-4 border-blue-500" data-category="buddy">
+        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm border-l-4 border-green-500" data-category="buddy">
             <div class="flex items-center space-x-3 mb-4">
                 <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=50&h=50&fit=crop&crop=face"
-                     alt="头像" class="w-10 h-10 rounded-full object-cover ring-2 ring-blue-200">
+                     alt="头像" class="w-10 h-10 rounded-full object-cover ring-2 ring-green-200">
                 <div class="flex-1">
                     <div class="flex items-center space-x-2">
                         <h3 class="font-semibold text-gray-900">小雨</h3>
-                        <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
                             <i class="fas fa-check text-white text-xs"></i>
                         </div>
-                        <span class="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-medium">
+                        <span class="px-2 py-1 bg-green-100 text-green-600 rounded-full text-xs font-medium">
                             学习搭子
                         </span>
                     </div>
@@ -176,7 +176,7 @@
                     <i class="far fa-comment text-lg"></i>
                     <span class="text-sm">5</span>
                 </button>
-                <button class="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="joinBuddyActivity(1)">
+                <button class="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="joinBuddyActivity(1)">
                     <i class="fas fa-handshake text-sm"></i>
                     <span>成为搭子</span>
                 </button>
@@ -191,7 +191,7 @@
                 <div class="flex-1">
                     <div class="flex items-center space-x-2">
                         <h3 class="font-semibold text-gray-900">小明</h3>
-                        <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
                             <i class="fas fa-check text-white text-xs"></i>
                         </div>
                         <span class="px-2 py-1 bg-pink-100 text-pink-600 rounded-full text-xs font-medium">
@@ -403,17 +403,17 @@
         </div>
 
         <!-- 搭子类型动态 2 -->
-        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm border-l-4 border-blue-500" data-category="buddy">
+        <div class="moment-card bg-white rounded-2xl p-4 shadow-sm border-l-4 border-green-500" data-category="buddy">
             <div class="flex items-center space-x-3 mb-4">
                 <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face"
-                     alt="头像" class="w-10 h-10 rounded-full object-cover ring-2 ring-blue-200">
+                     alt="头像" class="w-10 h-10 rounded-full object-cover ring-2 ring-green-200">
                 <div class="flex-1">
                     <div class="flex items-center space-x-2">
                         <h3 class="font-semibold text-gray-900">小雅</h3>
-                        <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
                             <i class="fas fa-check text-white text-xs"></i>
                         </div>
-                        <span class="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-medium">
+                        <span class="px-2 py-1 bg-green-100 text-green-600 rounded-full text-xs font-medium">
                             饭搭子
                         </span>
                     </div>
@@ -439,7 +439,7 @@
                     <i class="far fa-comment text-lg"></i>
                     <span class="text-sm">9</span>
                 </button>
-                <button class="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="joinBuddyActivity(5)">
+                <button class="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="joinBuddyActivity(5)">
                     <i class="fas fa-handshake text-sm"></i>
                     <span>成为搭子</span>
                 </button>
@@ -484,8 +484,8 @@
 
                 <div class="grid grid-cols-2 gap-3">
                     <button class="buddy-type-option flex items-center space-x-3 p-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-left" data-type="study" onclick="toggleBuddyType('study')">
-                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-book text-blue-600"></i>
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-book text-green-600"></i>
                         </div>
                         <div>
                             <div class="font-medium text-gray-900">学习搭子</div>
@@ -549,7 +549,7 @@
                 <button onclick="clearFilter()" class="flex-1 py-3 px-4 bg-gray-100 text-gray-700 rounded-xl font-medium">
                     清空
                 </button>
-                <button onclick="applyFilter()" class="flex-1 py-3 px-4 bg-blue-500 text-white rounded-xl font-medium">
+                <button onclick="applyFilter()" class="flex-1 py-3 px-4 bg-green-500 text-white rounded-xl font-medium">
                     确定
                 </button>
             </div>
@@ -600,14 +600,14 @@
         function filterMoments(category) {
             // 移除所有按钮的激活状态
             document.querySelectorAll('.moment-filter-btn').forEach(btn => {
-                btn.classList.remove('active', 'bg-blue-100', 'text-blue-600', 'shadow-sm');
+                btn.classList.remove('active', 'bg-green-100', 'text-green-600', 'shadow-sm');
                 btn.classList.add('bg-gray-100', 'text-gray-600');
             });
 
             // 激活当前按钮
             const activeBtn = event.target.closest('.moment-filter-btn');
             if (activeBtn) {
-                activeBtn.classList.add('active', 'bg-blue-100', 'text-blue-600', 'shadow-sm');
+                activeBtn.classList.add('active', 'bg-green-100', 'text-green-600', 'shadow-sm');
                 activeBtn.classList.remove('bg-gray-100', 'text-gray-600');
             }
 
@@ -787,7 +787,7 @@
                 if (selectedBuddyTypes.length > 0) {
                     const cardCategory = card.getAttribute('data-category');
                     if (cardCategory === 'buddy') {
-                        const buddyTypeSpan = card.querySelector('span[class*="bg-blue-100"]');
+                        const buddyTypeSpan = card.querySelector('span[class*="bg-green-100"]');
                         if (buddyTypeSpan) {
                             const buddyTypeText = buddyTypeSpan.textContent.trim();
                             const typeMapping = {
@@ -821,7 +821,7 @@
             toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
 
             const styles = {
-                'info': 'bg-blue-500',
+                'info': 'bg-green-500',
                 'success': 'bg-green-500',
                 'error': 'bg-red-500',
                 'warning': 'bg-yellow-500'

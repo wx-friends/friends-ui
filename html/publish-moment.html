@@ -91,12 +91,12 @@
         <div class="bg-white rounded-2xl p-4 shadow-sm">
             <h3 class="font-semibold text-gray-900 mb-4">选择发布类型</h3>
             <div class="grid grid-cols-3 gap-3">
-                <button class="publish-type-btn active p-4 rounded-xl border-2 border-blue-500 bg-blue-50 text-center transition-all duration-300" data-type="buddy" onclick="selectPublishType('buddy')">
-                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                <button class="publish-type-btn active p-4 rounded-xl border-2 border-green-500 bg-green-50 text-center transition-all duration-300" data-type="buddy" onclick="selectPublishType('buddy')">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2">
                         <i class="fas fa-user-friends text-white text-lg"></i>
                     </div>
-                    <div class="text-sm font-medium text-blue-700">搭子</div>
-                    <div class="text-xs text-blue-600 mt-1">寻找搭子伙伴</div>
+                    <div class="text-sm font-medium text-green-700">搭子</div>
+                    <div class="text-xs text-green-600 mt-1">寻找搭子伙伴</div>
                 </button>
                 <button class="publish-type-btn p-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-center transition-all duration-300" data-type="love" onclick="selectPublishType('love')">
                     <div class="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-2">
@@ -121,9 +121,9 @@
             <div class="bg-white rounded-2xl p-4 shadow-sm mb-6">
                 <h3 class="font-semibold text-gray-900 mb-4">搭子类型</h3>
                 <div class="grid grid-cols-2 gap-3">
-                    <button class="buddy-type-btn active px-4 py-3 rounded-xl border-2 border-blue-500 bg-blue-50 text-center" data-type="study" onclick="selectBuddyType('study')">
-                        <i class="fas fa-book text-blue-600 text-lg mb-1"></i>
-                        <div class="text-sm font-medium text-blue-700">学习搭子</div>
+                    <button class="buddy-type-btn active px-4 py-3 rounded-xl border-2 border-green-500 bg-green-50 text-center" data-type="study" onclick="selectBuddyType('study')">
+                        <i class="fas fa-book text-green-600 text-lg mb-1"></i>
+                        <div class="text-sm font-medium text-green-700">学习搭子</div>
                     </button>
                     <button class="buddy-type-btn px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 text-center" data-type="food" onclick="selectBuddyType('food')">
                         <i class="fas fa-utensils text-gray-600 text-lg mb-1"></i>
@@ -147,16 +147,16 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">活动时间</label>
                         <input type="text" placeholder="例如：本周六 14:00-16:00" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">活动地点</label>
                         <input type="text" placeholder="例如：市图书馆" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">需要人数</label>
-                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent">
                             <option>1-2人</option>
                             <option>2-3人</option>
                             <option>3-5人</option>
@@ -331,15 +331,15 @@
         <div class="bg-white rounded-2xl p-4 shadow-sm">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-map-marker-alt text-blue-600"></i>
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-map-marker-alt text-green-600"></i>
                     </div>
                     <div>
                         <div class="font-medium text-gray-900">添加位置</div>
                         <div class="text-sm text-gray-500">让更多人看到你的动态</div>
                     </div>
                 </div>
-                <button class="text-blue-600 font-medium">添加</button>
+                <button class="text-green-600 font-medium">添加</button>
             </div>
         </div>
 
@@ -401,13 +401,13 @@
         function selectPublishType(type) {
             // 更新按钮状态
             document.querySelectorAll('.publish-type-btn').forEach(btn => {
-                btn.classList.remove('active', 'border-blue-500', 'bg-blue-50', 'border-pink-500', 'bg-pink-50', 'border-green-500', 'bg-green-50');
+                btn.classList.remove('active', 'border-green-500', 'bg-blue-50', 'border-pink-500', 'bg-pink-50', 'border-green-500', 'bg-green-50');
                 btn.classList.add('border-gray-200', 'bg-gray-50');
             });
             
             const activeBtn = document.querySelector(`[data-type="${type}"]`);
             if (type === 'buddy') {
-                activeBtn.classList.add('active', 'border-blue-500', 'bg-blue-50');
+                activeBtn.classList.add('active', 'border-green-500', 'bg-blue-50');
             } else if (type === 'love') {
                 activeBtn.classList.add('active', 'border-pink-500', 'bg-pink-50');
             } else if (type === 'buddy-activity') {
@@ -427,12 +427,12 @@
         // 选择搭子类型
         function selectBuddyType(type) {
             document.querySelectorAll('.buddy-type-btn').forEach(btn => {
-                btn.classList.remove('active', 'border-blue-500', 'bg-blue-50');
+                btn.classList.remove('active', 'border-green-500', 'bg-blue-50');
                 btn.classList.add('border-gray-200', 'bg-gray-50');
             });
             
             const activeBtn = document.querySelector(`[data-type="${type}"]`);
-            activeBtn.classList.add('active', 'border-blue-500', 'bg-blue-50');
+            activeBtn.classList.add('active', 'border-green-500', 'bg-blue-50');
             activeBtn.classList.remove('border-gray-200', 'bg-gray-50');
 
             currentBuddyType = type;

@@ -15,7 +15,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            background: linear-gradient(135deg, #42E2B8 0%, #34D399 50%, #A7F3D0 100%);
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -26,7 +26,7 @@
         .app-container {
             width: 100%;
             min-height: 100vh;
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            background: linear-gradient(135deg, #42E2B8 0%, #34D399 50%, #A7F3D0 100%);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -125,7 +125,7 @@
         }
         .mode-btn.active {
             background: rgba(255, 255, 255, 0.95);
-            color: #1e40af;
+            color: #42E2B8;
             font-weight: 600;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
@@ -135,7 +135,7 @@
 
         /* 导航栏优化 */
         .nav-header {
-            background: rgba(30, 64, 175, 0.1);
+            background: rgba(66, 226, 184, 0.1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
@@ -154,7 +154,7 @@
             transition: all 0.2s ease;
         }
         .nav-button.active {
-            color: #1e40af;
+            color: #42E2B8;
             opacity: 1;
         }
         .nav-button:active {
@@ -180,8 +180,8 @@
 
         /* 认证标识优化 */
         .verified-badge {
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, #A7F3D0 0%, #34D399 100%);
+            box-shadow: 0 2px 8px rgba(52, 211, 153, 0.4);
         }
 
         /* 操作按钮容器优化 */
@@ -308,7 +308,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            background: linear-gradient(135deg, #42E2B8 0%, #34D399 50%, #A7F3D0 100%);
             z-index: 9999;
             display: none;
             flex-direction: column;
@@ -563,7 +563,7 @@
                             </button>
                         </div>
                         <div class="flex flex-wrap gap-2">
-                            <button class="buddy-filter-btn active px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm" data-type="all" onclick="filterBuddyType('all')">
+                            <button class="buddy-filter-btn active px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm" data-type="all" onclick="filterBuddyType('all')">
                                 全部
                             </button>
                             <button class="buddy-filter-btn px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm" data-type="sport" onclick="filterBuddyType('sport')">
@@ -615,7 +615,7 @@
                 <div class="absolute top-4 right-4 flex space-x-2">
                     <!-- 聊天按钮 -->
                     <button class="chat-btn w-10 h-10 rounded-full flex items-center justify-center bg-white bg-opacity-90 backdrop-blur-sm shadow-lg transition-all duration-200 hover:bg-opacity-100 active:scale-95" onclick="startChatWithUser()" title="发送消息">
-                        <i class="fas fa-comments text-blue-600 text-base"></i>
+                        <i class="fas fa-comments text-green-600 text-base"></i>
                     </button>
                     <div class="verified-badge w-9 h-9 rounded-full flex items-center justify-center">
                         <i class="fas fa-check text-white text-sm"></i>
@@ -678,7 +678,7 @@
             <!-- 底部导航栏 -->
             <!-- <div class="bottom-nav px-6 py-3 flex-shrink-0">
                 <div class="flex justify-around">
-                    <button class="nav-button active flex flex-col items-center text-blue-600" data-page="home">
+                    <button class="nav-button active flex flex-col items-center text-green-600" data-page="home">
                         <i class="fas fa-home text-xl mb-1"></i>
                         <span class="text-xs font-medium">匹配</span>
                     </button>
@@ -935,12 +935,12 @@
         function filterBuddyType(type) {
             // 移除所有按钮的激活状态
             document.querySelectorAll('.buddy-filter-btn').forEach(btn => {
-                btn.classList.remove('active', 'bg-blue-100', 'text-blue-600');
+                btn.classList.remove('active', 'bg-green-100', 'text-green-600');
                 btn.classList.add('bg-gray-100', 'text-gray-600');
             });
 
             // 激活当前按钮
-            event.target.classList.add('active', 'bg-blue-100', 'text-blue-600');
+            event.target.classList.add('active', 'bg-green-100', 'text-green-600');
             event.target.classList.remove('bg-gray-100', 'text-gray-600');
 
             showToast(`已筛选${event.target.textContent}类型的搭子`, 'info');
@@ -1046,7 +1046,7 @@
             toast.className = `px-6 py-3 rounded-full text-white text-sm font-medium z-[10000] transition-all duration-300`;
 
             const styles = {
-                'info': 'bg-blue-500',
+                'info': 'bg-green-500',
                 'success': 'bg-green-500',
                 'error': 'bg-red-500',
                 'warning': 'bg-yellow-500'
