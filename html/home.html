@@ -1009,17 +1009,15 @@
             // localStorage.setItem('chatUserId', userId);
             
             setTimeout(() => {
-                if (window.parent && window.parent !== window) {
+                if (window.navigationManager) {
+                    window.navigationManager.navigateToSubPage('chat-detail');
+                } else if (window.parent && window.parent !== window) {
                     window.parent.postMessage({
                         type: 'navigation',
                         page: 'chat-detail.html'
                     }, '*');
                 } else {
-                    if (window.navigationManager) {
-                        window.navigationManager.navigateToPage('chat-detail');
-                    } else {
-                        window.location.href = 'chat-detail.html';
-                    }
+                    window.location.href = 'chat-detail.html';
                 }
             }, 500);
         }

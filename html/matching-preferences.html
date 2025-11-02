@@ -231,6 +231,9 @@
         </div>
     </div>
 
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+
     <!-- 页面特定交互脚本 -->
     <script>
         let currentMode = 'dating';
@@ -414,7 +417,9 @@
         // 随便逛逛
         function goToBrowse() {
             // 跳转到动态广场
-            if (window.parent && window.parent !== window) {
+            if (window.navigationManager) {
+                window.navigationManager.navigateToSubPage('moments');
+            } else if (window.parent && window.parent !== window) {
                 window.parent.postMessage({
                     type: 'navigation',
                     page: 'moments.html'
