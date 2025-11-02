@@ -114,7 +114,9 @@ class NavigationManager {
             'match-success': 'match-success.html',
             'followers': 'followers.html',
             'profile-detail': 'profile-detail.html',
-            'search-users': 'search-users.html'
+            'search-users': 'search-users.html',
+            'matching-preferences': 'matching-preferences.html',
+            'moments': 'moments.html'
         };
 
         if (subPages[pageName]) {

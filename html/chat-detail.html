@@ -45,7 +45,7 @@
     <!-- 聊天头部 -->
     <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
         <div class="flex items-center space-x-3">
-            <button class="w-8 h-8 flex items-center justify-center">
+            <button onclick="goBack()" class="w-8 h-8 flex items-center justify-center">
                 <i class="fas fa-chevron-left text-gray-600"></i>
             </button>
             <div class="relative">
@@ -183,5 +183,20 @@
             </button>
         </div>
     </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+    
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
+        }
+    </script>
 </body>
 </html>

@@ -80,7 +80,7 @@
 
     <!-- 导航栏 -->
     <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
-        <button class="w-8 h-8 flex items-center justify-center">
+        <button onclick="goBack()" class="w-8 h-8 flex items-center justify-center">
             <i class="fas fa-chevron-left text-gray-600"></i>
         </button>
         <h1 class="text-lg font-semibold">编辑资料</h1>
@@ -297,5 +297,20 @@
             保存修改
         </button>
     </div>
+
+    <!-- 引入导航脚本 -->
+    <script src="js/navigation.js"></script>
+    
+    <!-- 页面特定交互脚本 -->
+    <script>
+        // 返回上一页
+        function goBack() {
+            if (window.navigationManager) {
+                window.navigationManager.goBack();
+            } else {
+                window.history.back();
+            }
+        }
+    </script>
 </body>
 </html>
