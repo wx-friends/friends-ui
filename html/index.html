@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>碰碰 - 原型展示</title>
-    <script src="assets/css/tailwind.min.js"></script>
+    <!-- 使用 Tailwind CSS CDN 以确保兼容性 -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <style>
         /* iPhone风格手机外框容器 */
@@ -72,6 +73,37 @@
             height: 100%;
             border: none;
             display: block;
+            background: #fff;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .phone-frame {
+                width: 100%;
+                max-width: 393px;
+                height: auto;
+                aspect-ratio: 393 / 852;
+            }
+            .phone-screen {
+                width: 100%;
+                height: 100%;
+            }
+            .page-item {
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* 确保在不同浏览器中正常显示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        /* 修复 Windows 路径问题 */
+        @supports (-webkit-appearance: none) or (-moz-appearance: none) {
+            iframe {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
         }
 
         /* 页面编号 */
@@ -150,7 +182,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen p-8">
+<body class="bg-gray-100 min-h-screen p-8" style="margin: 0; padding: 1rem;">
 <div class="max-w-8xl mx-auto">
     <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">交友社交应用 - 移动端原型</h1>
     <p class="text-center text-gray-600 mb-12">移动端界面展示 (393×852px) - 共34个页面</p>
@@ -566,5 +598,33 @@
         <p class="mt-2 text-green-600 font-semibold">✨ 已去除手机外框，添加页面序号标识</p>
     </div>
 </div>
+
+<script>
+    // 确保所有 iframe 正确加载
+    document.addEventListener('DOMContentLoaded', function() {
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(function(iframe) {
+            iframe.addEventListener('error', function() {
+                console.error('iframe 加载失败:', iframe.src);
+                iframe.style.background = '#f3f4f6';
+                iframe.style.display = 'flex';
+                iframe.style.alignItems = 'center';
+                iframe.style.justifyContent = 'center';
+            });
+
+            // 设置加载超时
+            const timeout = setTimeout(function() {
+                if (!iframe.contentDocument || !iframe.contentDocument.readyState ||
+                    iframe.contentDocument.readyState !== 'complete') {
+                    console.warn('iframe 加载超时:', iframe.src);
+                }
+            }, 5000);
+
+            iframe.addEventListener('load', function() {
+                clearTimeout(timeout);
+            });
+        });
+    });
+</script>
 </body>
 </html>
