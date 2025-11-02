@@ -2,6 +2,15 @@
 
 这是一个基于智能匹配算法的社交交友应用，具有完整的页面交互功能。
 
+接口测试
+curl --request GET \
+--url 'http://uicraft.com.cn/api/auth/user/info?userId=5' \
+--header 'Accept: */*' \
+--header 'Accept-Encoding: gzip, deflate, br' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ2aXBMZXZlbCI6MCwib3BlbmlkIjoib1hzNnA3U2pFejZYUUpxZkFjZmxyTjBMQzNHSSIsInVzZXJJZCI6NSwiaWF0IjoxNzYxNjY0MzUyLCJleHAiOjE3NjIyNjkxNTJ9.i34eJ1YI7bXWfchRTAIFwQjojcBPD9yDIXuP89E1EIw' \
+--header 'Connection: keep-alive' \
+--header 'User-Agent: PostmanRuntime-ApipostRuntime/1.1.0'
+
 ## 项目结构
 
 ```
