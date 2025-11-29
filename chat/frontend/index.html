@@ -2,54 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chat</title>
+    <title>Private Chat</title>
     <style>
         body { font-family: sans-serif; }
         #chat-window { border: 1px solid #ccc; height: 300px; overflow-y: scroll; padding: 10px; margin-bottom: 10px; }
         #messages { list-style-type: none; margin: 0; padding: 0; }
         #messages li { padding: 5px 10px; }
+        .sent { color: blue; text-align: right; }
+        .received { color: green; }
         #message-form { display: flex; }
         #message-input { flex-grow: 1; padding: 5px; }
         #send-button { padding: 5px 10px; }
-        #name-input { margin-bottom: 10px; padding: 5px; }
+        #login-section, #chat-section { margin-bottom: 10px; }
+        #chat-section { display: none; } /* Initially hidden */
     </style>
 </head>
 <body>
 
-<h1>Simple WebSocket Chat</h1>
+<h1>Private WebSocket Chat</h1>
 
-<input type="text" id="name-input" placeholder="Enter your name">
-
-<div id="chat-window">
-    <ul id="messages"></ul>
+<div id="login-section">
+    <input type="text" id="name-input" placeholder="Enter your name">
+    <button id="connect-button">Connect</button>
 </div>
 
-<form id="message-form">
-    <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off" />
-    <button id="send-button">Send</button>
-</form>
+<div id="chat-section">
+    <div id="chat-window">
+        <ul id="messages"></ul>
+    </div>
+
+    <form id="message-form">
+        <input type="text" id="recipient-input" placeholder="Recipient" autocomplete="off" />
+        <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off" style="flex-grow: 1;" />
+        <button id="send-button">Send</button>
+    </form>
+</div>
 
 <script>
+    const loginSection = document.getElementById('login-section');
+    const chatSection = document.getElementById('chat-section');
+    const nameInput = document.getElementById('name-input');
+    const connectButton = document.getElementById('connect-button');
+
     const messages = document.getElementById('messages');
     const messageForm = document.getElementById('message-form');
+    const recipientInput = document.getElementById('recipient-input');
     const messageInput = document.getElementById('message-input');
-    const nameInput = document.getElementById('name-input');
 
-    const ws = new WebSocket('ws://localhost:8080/chat');
+    let ws;
 
-    ws.onmessage = function(event) {
-        const messageData = JSON.parse(event.data);
-        const item = document.createElement('li');
-        item.textContent = `${messageData.sender}: ${messageData.content}`;
-        messages.appendChild(item);
-        window.scrollTo(0, document.body.scrollHeight);
-    };
+    connectButton.addEventListener('click', function() {
+        const username = nameInput.value;
+        if (!username) {
+            alert('Please enter your name.');
+            return;
+        }
+
+        // Establish WebSocket connection with username as a query parameter
+        ws = new WebSocket(`ws://localhost:8080/chat?username=${username}`);
+
+        ws.onopen = function() {
+            console.log('WebSocket connection established.');
+            loginSection.style.display = 'none';
+            chatSection.style.display = 'block';
+        };
+
+        ws.onmessage = function(event) {
+            const messageData = JSON.parse(event.data);
+            const item = document.createElement('li');
+            
+            // Check if the message is sent by the current user or received from someone else
+            if (messageData.sender === nameInput.value) {
+                item.textContent = `(To ${messageData.recipient}): ${messageData.content}`;
+                item.className = 'sent';
+            } else {
+                item.textContent = `(From ${messageData.sender}): ${messageData.content}`;
+                item.className = 'received';
+            }
+            
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        };
+
+        ws.onclose = function() {
+            console.log('WebSocket connection closed.');
+            alert('Connection closed. Please refresh and reconnect.');
+            loginSection.style.display = 'block';
+            chatSection.style.display = 'none';
+        };
+
+        ws.onerror = function(error) {
+            console.error('WebSocket Error:', error);
+            alert('An error occurred with the WebSocket connection.');
+        };
+    });
 
     messageForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        if (messageInput.value && nameInput.value) {
+        if (messageInput.value && recipientInput.value) {
             const message = {
                 sender: nameInput.value,
+                recipient: recipientInput.value,
                 content: messageInput.value
             };
             ws.send(JSON.stringify(message));

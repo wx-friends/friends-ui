@@ -2,6 +2,7 @@ package com.example.chatdemo;
 
 public class ChatMessage {
     private String sender;
+    private String recipient;
     private String content;
 
     // Getters and Setters
@@ -13,6 +14,14 @@ public class ChatMessage {
         this.sender = sender;
     }
 
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
     public String getContent() {
         return content;
     }
@@ -21,4 +30,3 @@ public class ChatMessage {
         this.content = content;
     }
 }
-
