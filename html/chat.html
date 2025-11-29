@@ -79,13 +79,30 @@
         .online-indicator {
             background: #10b981;
         }
+        /* 底部导航栏（与星球页面一致） */
+        .bottom-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+        }
+        .app-container { padding-bottom: 80px; }
+        .nav-button { transition: all 0.2s ease; }
+        .nav-button.active { color: #8b5cf6; opacity: 1; }
+        .nav-button:active { transform: scale(0.9); }
     </style>
 </head>
 <body>
     <div class="mobile-frame">
         <div class="mobile-screen">
             <div class="notch"></div>
-            <div class="app-container h-screen flex flex-col">
+            <div class="app-container h-full flex flex-col">
     <!-- 状态栏 -->
     <div class="flex justify-between items-center px-6 py-2 text-black text-sm font-medium bg-white">
         <span>9:41</span>
@@ -240,23 +257,23 @@
     </div>
 
     <!-- 底部导航栏 -->
-    <div class="bg-white border-t border-gray-200 px-6 py-3">
+    <div class="bottom-nav px-6 py-3 flex-shrink-0">
         <div class="flex justify-around">
-            <button class="nav-button flex flex-col items-center text-gray-400" data-page="home">
-                <i class="fas fa-home text-xl mb-1"></i>
-                <span class="text-xs">发现</span>
+            <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="home">
+                <i class="fas fa-globe text-xl mb-1"></i>
+                <span class="text-xs font-medium">星球</span>
             </button>
-            <button class="nav-button flex flex-col items-center text-purple-600" data-page="chat">
+            <button class="nav-button active flex flex-col items-center text-purple-600" data-page="chat">
                 <i class="fas fa-comments text-xl mb-1"></i>
-                <span class="text-xs">消息</span>
+                <span class="text-xs font-medium">消息</span>
             </button>
-            <button class="nav-button flex flex-col items-center text-gray-400" data-page="moments">
+            <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="moments">
                 <i class="fas fa-heart text-xl mb-1"></i>
-                <span class="text-xs">遇见</span>
+                <span class="text-xs font-medium">遇见</span>
             </button>
-            <button class="nav-button flex flex-col items-center text-gray-400" data-page="profile">
+            <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="profile">
                 <i class="fas fa-user text-xl mb-1"></i>
-                <span class="text-xs">我的</span>
+                <span class="text-xs font-medium">我的</span>
             </button>
         </div>
     </div>

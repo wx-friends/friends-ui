@@ -56,7 +56,7 @@ class NavigationManager {
     // 页面导航
     navigateToPage(pageName) {
         const pages = {
-            'home': 'home.html',
+            'home': 'planet-encounter.html',
             'chat': 'chat.html', 
             'moments': 'moments.html',
             'profile': 'profile.html'

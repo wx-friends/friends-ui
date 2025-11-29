@@ -1,0 +1,32 @@
+/* 底部导航栏 */
+.bottom-nav {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.nav-button {
+    transition: all 0.2s ease;
+}
+
+.nav-button.active {
+    color: #8b5cf6;
+    opacity: 1;
+}
+
+.nav-button:active {
+    transform: scale(0.9);
+}
+
+/* 应用容器，为底部导航栏留出空间 */
+.app-container {
+    padding-bottom: 80px; /* 根据导航栏高度调整 */
+}
+
