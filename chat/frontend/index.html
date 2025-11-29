@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <style>
+        body { font-family: sans-serif; }
+        #chat-window { border: 1px solid #ccc; height: 300px; overflow-y: scroll; padding: 10px; margin-bottom: 10px; }
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 5px 10px; }
+        #message-form { display: flex; }
+        #message-input { flex-grow: 1; padding: 5px; }
+        #send-button { padding: 5px 10px; }
+        #name-input { margin-bottom: 10px; padding: 5px; }
+    </style>
+</head>
+<body>
+
+<h1>Simple WebSocket Chat</h1>
+
+<input type="text" id="name-input" placeholder="Enter your name">
+
+<div id="chat-window">
+    <ul id="messages"></ul>
+</div>
+
+<form id="message-form">
+    <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off" />
+    <button id="send-button">Send</button>
+</form>
+
+<script>
+    const messages = document.getElementById('messages');
+    const messageForm = document.getElementById('message-form');
+    const messageInput = document.getElementById('message-input');
+    const nameInput = document.getElementById('name-input');
+
+    const ws = new WebSocket('ws://localhost:8080/chat');
+
+    ws.onmessage = function(event) {
+        const messageData = JSON.parse(event.data);
+        const item = document.createElement('li');
+        item.textContent = `${messageData.sender}: ${messageData.content}`;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+    };
+
+    messageForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (messageInput.value && nameInput.value) {
+            const message = {
+                sender: nameInput.value,
+                content: messageInput.value
+            };
+            ws.send(JSON.stringify(message));
+            messageInput.value = '';
+        }
+    });
+</script>
+
+</body>
+</html>
