@@ -4,20 +4,24 @@
 
 ### 1.1 技术栈选择
 - **前端**: HTML5 + JavaScript + WebSocket
-- **后端**: Node.js + Express + Socket.io
-- **数据库**: MongoDB (存储消息记录)
-- **实时通信**: WebSocket + Socket.io
+- **后端**: Java Spring Boot + Spring WebSocket
+- **数据库**: MySQL 8.0(详见《数据库选型分析-MySQL-vs-MongoDB.md》)
+- **缓存**: Redis (在线状态、消息队列)
+- **实时通信**: WebSocket (原生协议)
 - **文件存储**: 阿里云OSS/腾讯云COS (图片/文件)
 
 ### 1.2 系统架构
 ```
-客户端 (Web/小程序) 
+客户端 (Web/小程序)
     ↓ WebSocket连接
-Socket.io服务器 (实时通信)
+Spring Boot WebSocket服务器 (实时通信)
     ↓ 消息处理
-业务服务器 (Node.js)
+业务服务层 (Spring Boot)
+    ├── Controller (接口层)
+    ├── Service (业务层)
+    └── Mapper (数据层)
     ↓ 数据存储
-MongoDB数据库
+MySQL数据库 + Redis缓存
     ↓ 文件存储
 云存储服务
 ```
@@ -27,41 +31,56 @@ MongoDB数据库
 ### 2.1 实时通信模块
 **实现原理:**
 - 使用WebSocket建立长连接，实现实时双向通信
-- Socket.io提供自动重连、房间管理、事件处理等功能
-- 客户端与服务端通过事件驱动模式进行消息传递
+- Spring WebSocket提供连接管理、消息路由等功能
+- 客户端与服务端通过文本消息(JSON格式)进行消息传递
+- 使用Redis实现分布式Session和集群间消息同步
 
-**核心事件:**
-- `join_room`: 用户加入聊天室
-- `send_message`: 发送消息
-- `receive_message`: 接收消息
-- `typing`: 正在输入状态
-- `user_online`: 用户上线状态
-- `user_offline`: 用户下线状态
+**核心消息类型:**
+- `JOIN_ROOM`: 用户加入聊天室
+- `SEND_MESSAGE`: 发送消息
+- `RECEIVE_MESSAGE`: 接收消息
+- `TYPING`: 正在输入状态
+- `USER_ONLINE`: 用户上线状态
+- `USER_OFFLINE`: 用户下线状态
+- `HEARTBEAT`: 心跳检测
 
 ### 2.2 消息存储模块
 **数据结构设计:**
-```javascript
-消息表 (messages):
-- _id: 消息唯一ID
-- chat_id: 聊天会话ID
-- sender_id: 发送者ID
-- receiver_id: 接收者ID
-- message_type: 消息类型 (text/image/file)
-- content: 消息内容
-- file_url: 文件链接 (图片/文件消息)
-- timestamp: 发送时间
-- read_status: 已读状态
-- is_deleted: 是否删除
-```
+```sql
+-- 消息表 (t_message)
+CREATE TABLE t_message (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    chat_id BIGINT NOT NULL COMMENT '聊天会话ID',
+    sender_id BIGINT NOT NULL COMMENT '发送者ID',
+    receiver_id BIGINT NOT NULL COMMENT '接收者ID',
+    message_type TINYINT NOT NULL DEFAULT 1 COMMENT '消息类型: 1-文本, 2-图片, 3-文件',
+    content TEXT COMMENT '消息内容',
+    file_url VARCHAR(500) COMMENT '文件链接 (图片/文件消息)',
+    send_time DATETIME NOT NULL COMMENT '发送时间',
+    read_status TINYINT NOT NULL DEFAULT 0 COMMENT '已读状态: 0-未读, 1-已读',
+    is_deleted TINYINT NOT NULL DEFAULT 0 COMMENT '是否删除: 0-否, 1-是',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_chat_id_time (chat_id, send_time),
+    INDEX idx_receiver_id (receiver_id),
+    INDEX idx_sender_id (sender_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息表';
 
-**聊天会话表 (chats):**
-```javascript
-- _id: 会话ID
-- participants: 参与者ID数组
-- last_message: 最后一条消息
-- last_message_time: 最后消息时间
-- unread_count: 未读消息数
-- created_at: 创建时间
+-- 聊天会话表 (t_chat)
+CREATE TABLE t_chat (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user1_id BIGINT NOT NULL COMMENT '用户1ID',
+    user2_id BIGINT NOT NULL COMMENT '用户2ID',
+    last_message TEXT COMMENT '最后一条消息',
+    last_message_time DATETIME COMMENT '最后消息时间',
+    user1_unread_count INT NOT NULL DEFAULT 0 COMMENT '用户1未读消息数',
+    user2_unread_count INT NOT NULL DEFAULT 0 COMMENT '用户2未读消息数',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uk_users (user1_id, user2_id),
+    INDEX idx_user1_id (user1_id),
+    INDEX idx_user2_id (user2_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='聊天会话表';
 ```
 
 ### 2.3 消息类型支持
@@ -85,29 +104,35 @@ MongoDB数据库
 
 ### 3.1 WebSocket连接管理
 **连接建立:**
-1. 客户端发起WebSocket连接请求
-2. 服务端验证用户身份 (JWT Token)
-3. 建立连接并加入用户房间
-4. 维护用户在线状态
+1. 客户端发起WebSocket连接请求 (ws://host/ws/{userId}?token=JWT_TOKEN)
+2. 服务端拦截器验证用户身份 (JWT Token)
+3. 建立连接并存储到ConcurrentHashMap (userId → WebSocketSession)
+4. 将用户在线状态存储到Redis
+5. 用户加入自己的房间 (用于接收所有消息)
 
 **连接维护:**
-- 心跳检测机制 (30秒间隔)
-- 自动重连机制
-- 连接异常处理
+- 心跳检测机制 (30秒间隔，客户端发送PING，服务端回复PONG)
+- 自动重连机制 (客户端实现)
+- 连接异常处理 (OnError、OnClose事件)
+- Redis存储连接映射 (支持集群部署)
 
 ### 3.2 消息传递流程
 **发送消息:**
-1. 客户端发送消息事件
-2. 服务端验证消息合法性
-3. 存储消息到数据库
-4. 通过WebSocket推送给接收方
-5. 更新聊天会话信息
+1. 客户端发送JSON消息: `{"type":"SEND_MESSAGE","data":{"chatId":123,"content":"Hello"}}`
+2. 服务端WebSocketHandler接收消息
+3. 验证消息合法性 (权限、频率限制)
+4. 存储消息到MySQL数据库
+5. 查询接收方在线状态 (Redis)
+6. 如果在线：通过WebSocket实时推送
+7. 如果离线：存储离线消息到数据库
+8. 更新聊天会话信息 (最后消息、未读数)
 
 **接收消息:**
-1. 服务端接收消息事件
-2. 验证接收方在线状态
-3. 实时推送给在线用户
-4. 离线消息存储到数据库
+1. 服务端WebSocketHandler接收消息
+2. 解析JSON消息类型
+3. 验证接收方在线状态 (Redis)
+4. 实时推送给在线用户 (通过WebSocketSession发送)
+5. 离线消息存储到数据库，等待用户上线后拉取
 
 ### 3.3 消息状态管理
 **消息状态:**
@@ -132,13 +157,21 @@ MongoDB数据库
 - 回复后解除限制
 
 **数据库设计:**
-```javascript
-聊天限制表 (chat_limits):
-- user_id: 用户ID
-- target_user_id: 目标用户ID
-- first_message_sent: 首次消息发送时间
-- has_replied: 是否已回复
-- message_count: 消息数量
+```sql
+-- 聊天限制表 (t_chat_limit)
+CREATE TABLE t_chat_limit (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL COMMENT '用户ID',
+    target_user_id BIGINT NOT NULL COMMENT '目标用户ID',
+    first_message_sent DATETIME COMMENT '首次消息发送时间',
+    has_replied TINYINT NOT NULL DEFAULT 0 COMMENT '是否已回复: 0-否, 1-是',
+    message_count INT NOT NULL DEFAULT 0 COMMENT '消息数量',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uk_users (user_id, target_user_id),
+    INDEX idx_user_id (user_id),
+    INDEX idx_target_user_id (target_user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='聊天限制表';
 ```
 
 ### 4.2 防骚扰机制
@@ -163,15 +196,17 @@ MongoDB数据库
 - 图片消息缩略图缓存
 
 **服务端缓存:**
-- Redis缓存活跃聊天会话
-- 用户在线状态缓存
-- 消息推送队列缓存
+- Redis缓存活跃聊天会话 (key: `chat:active:{chatId}`, TTL: 1小时)
+- 用户在线状态缓存 (key: `user:online:{userId}`, value: `socketId`, TTL: 5分钟)
+- 用户连接映射缓存 (key: `ws:session:{userId}`, value: `sessionId`, TTL: 5分钟)
+- 消息推送队列缓存 (使用Redis List存储离线消息)
 
 ### 5.3 数据库优化
-- 消息表按时间分片
-- 索引优化 (chat_id + timestamp)
-- 定期清理过期消息
-- 读写分离
+- 消息表按时间分片 (按月分表: t_message_202501, t_message_202502...)
+- 索引优化 (chat_id + send_time 联合索引)
+- 定期清理过期消息 (保留最近6个月，归档历史数据)
+- 读写分离 (主库写，从库读)
+- 连接池优化 (HikariCP配置)
 
 ## 6. 安全机制
 
@@ -211,10 +246,11 @@ MongoDB数据库
 ## 8. 部署架构
 
 ### 8.1 服务部署
-- Socket.io服务器集群
-- 负载均衡配置
-- 消息队列处理
-- 数据库主从配置
+- Spring Boot WebSocket服务器集群
+- Nginx负载均衡 (支持WebSocket升级)
+- Redis集群 (存储Session和消息队列)
+- MySQL主从配置 (读写分离)
+- 使用Redis Pub/Sub实现集群间消息同步
 
 ### 8.2 监控告警
 - 连接数监控
@@ -250,13 +286,57 @@ MongoDB数据库
 - 客户端消息去重
 
 ### 10.2 大量并发处理
-- Socket.io集群部署
-- Redis消息队列
-- 数据库连接池优化
+- Spring Boot WebSocket集群部署
+- Redis Pub/Sub实现集群间消息同步
+- Redis消息队列 (异步处理消息存储)
+- 数据库连接池优化 (HikariCP)
+- 使用Netty替代Tomcat WebSocket (可选，性能更好)
+- JVM参数优化 (堆内存、GC策略)
 
 ### 10.3 跨平台兼容
 - WebSocket标准兼容
 - 移动端适配
 - 浏览器兼容性处理
 
-这个方案涵盖了消息聊天功能的核心实现原理，可以根据实际需求进行调整和优化。
+> **数据库选型分析**: 详见《数据库选型分析-MySQL-vs-MongoDB.md》
+
+这个方案涵盖了使用Java Spring Boot实现WebSocket聊天功能的核心实现原理，可以根据实际需求进行调整和优化。
+
+
+1. 客户端发起连接
+   ↓
+2. HTTP握手升级为WebSocket
+   ↓
+3. 服务端创建socket对象，分配socket.id
+   ↓
+4. 建立 userId ↔ socket.id 映射
+   ↓
+5. 连接保持，可以双向通信
+   ↓
+6. 心跳检测（保持连接活跃）
+   ↓
+7. 断开连接（用户关闭页面/网络断开）
+   ↓
+8. 清理映射关系
+
+
+┌─────────┐                    ┌─────────┐                    ┌─────────┐
+│ 用户A   │                    │ 服务端  │                    │ 用户B   │
+│(前端)   │                    │(后端)   │                    │(前端)   │
+└────┬────┘                    └────┬────┘                    └────┬────┘
+     │                              │                              │
+     │ 1. socket.emit('send_message')│                              │
+     │──────────────────────────────>│                              │
+     │                              │                              │
+     │                              │ 2. 验证身份                  │
+     │                              │ socket.id → userId           │
+     │                              │                              │
+     │                              │ 3. 存储消息到数据库          │
+     │                              │                              │
+     │                              │ 4. 查找B的连接ID             │
+     │                              │ userId_B → socket.id_B       │
+     │                              │                              │
+     │                              │ 5. io.to(socket.id_B).emit() │
+     │                              │──────────────────────────────>│
+     │                              │                              │
+     │                              │                              │ 6. 显示消息
