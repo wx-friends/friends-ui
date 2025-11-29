@@ -18,18 +18,20 @@
             background: #fff;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            height: 100vh;
+            max-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow-x: hidden;
+            overflow: hidden;
             position: relative;
         }
 
         .mobile-frame {
             position: relative;
             width: 375px;
-            height: 812px;
+            height: 100vh;
+            max-height: 100vh;
             border: 16px solid black;
             border-radius: 36px;
             box-shadow: 0 0 24px rgba(0,0,0,0.5);
@@ -71,9 +73,10 @@
         /* 可滚动内容区域 */
         .scrollable-content {
             flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: hidden;
             min-height: 0;
+            display: flex;
+            flex-direction: column;
         }
 
         /* 自定义滚动条样式 */
@@ -224,7 +227,7 @@
 
         /* 操作按钮容器优化 */
         .action-buttons {
-            padding: 20px 0;
+            padding: 10px 0;
         }
 
         /* 设置按钮优化 */
@@ -333,10 +336,9 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
-        /* 平滑滚动 */
+        /* 内容区域自适应 */
         .scrollable-content {
             -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
         }
 
         /* 全屏匹配动效样式 */
@@ -628,13 +630,13 @@
                 </div>
 
                 <!-- 主要内容 -->
-                <div class="px-6 pb-6">
+                <div class="px-6 pb-6 flex-1 flex flex-col min-h-0">
         <!-- 用户卡片 -->
-        <div class="card rounded-3xl overflow-hidden shadow-2xl">
+        <div class="card rounded-3xl overflow-hidden shadow-2xl flex-1 flex flex-col min-h-0">
             <!-- 照片区域 -->
-            <div class="relative h-96">
+            <div class="relative flex-1 min-h-0" style="max-height: 50vh;">
                 <img src="https://k.sinaimg.cn/n/sinakd10122/400/w720h1280/20231213/3a52-95af2ee853d9a9cdd229bb14923ad063.png/w700d1q75cms.jpg"
-                     alt="用户照片" class="w-full h-full object-cover">
+                     alt="用户照片" class="w-full h-full object-cover" style="max-height: 100%;">
 
                 <!-- 用户信息覆盖层 -->
                 <div class="user-info-overlay absolute bottom-0 left-0 right-0 p-6">
@@ -666,46 +668,46 @@
             </div>
 
             <!-- 详细信息 -->
-            <div class="p-6">
-                <div class="grid grid-cols-2 gap-4 mb-5">
-                    <div class="text-center py-2">
-                        <div class="text-2xl font-bold text-gray-900 mb-1">175cm</div>
+            <div class="p-4 flex-shrink-0">
+                <div class="grid grid-cols-2 gap-4 mb-3">
+                    <div class="text-center py-1">
+                        <div class="text-xl font-bold text-gray-900 mb-1">175cm</div>
                         <div class="text-xs text-gray-500 font-medium">身高</div>
                     </div>
-                    <div class="text-center py-2">
-                        <div class="text-2xl font-bold text-gray-900 mb-1">本科</div>
+                    <div class="text-center py-1">
+                        <div class="text-xl font-bold text-gray-900 mb-1">本科</div>
                         <div class="text-xs text-gray-500 font-medium">学历</div>
                     </div>
                 </div>
-                <p class="text-gray-700 text-sm leading-relaxed font-normal">
+                <p class="text-gray-700 text-xs leading-relaxed font-normal line-clamp-2">
                     热爱生活，喜欢摄影和旅行。希望能找到一个志同道合的人，一起探索这个世界的美好。
                 </p>
             </div>
         </div>
 
                 <!-- 操作按钮 -->
-                <div class="action-buttons flex justify-center items-center space-x-6 mt-8">
-                    <button class="pass-btn w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg" onclick="handlePass()">
-                        <i class="fas fa-times text-xl"></i>
+                <div class="action-buttons flex justify-center items-center space-x-6 mt-4 flex-shrink-0">
+                    <button class="pass-btn w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg" onclick="handlePass()">
+                        <i class="fas fa-times text-lg"></i>
                     </button>
-                    <button class="super-like-btn w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg" onclick="handleSuperLike()">
-                        <i class="fas fa-star text-lg"></i>
+                    <button class="super-like-btn w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg" onclick="handleSuperLike()">
+                        <i class="fas fa-star text-base"></i>
                     </button>
-                    <button class="like-btn w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg" onclick="handleLike()">
-                        <i class="fas fa-heart text-xl"></i>
+                    <button class="like-btn w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg" onclick="handleLike()">
+                        <i class="fas fa-heart text-lg"></i>
                     </button>
                 </div>
 
                 <!-- 发送消息按钮 -->
-                <div class="mt-4 text-center">
-                    <button class="chat-action-btn px-6 py-3 rounded-full text-white text-sm font-medium flex items-center justify-center mx-auto shadow-lg transition-all duration-200 hover:shadow-xl active:scale-95" onclick="startChatWithUser()">
-                        <i class="fas fa-comments mr-2 text-base"></i>
+                <div class="mt-3 text-center flex-shrink-0">
+                    <button class="chat-action-btn px-5 py-2 rounded-full text-white text-xs font-medium flex items-center justify-center mx-auto shadow-lg transition-all duration-200 hover:shadow-xl active:scale-95" onclick="startChatWithUser()">
+                        <i class="fas fa-comments mr-2 text-sm"></i>
                         开始聊天
                     </button>
                 </div>
 
                 <!-- 匹配设置和次数 -->
-                <div class="mt-6 space-y-3 pb-6">
+                <div class="mt-3 space-y-2 pb-4 flex-shrink-0">
 
                     <!-- 今日匹配次数 -->
 <!--                    <div class="text-center">-->
