@@ -5,6 +5,19 @@
     <title>Private Chat</title>
     <style>
         body { font-family: sans-serif; }
+        #chat-container { display: flex; gap: 20px; }
+        #session-list-container { width: 200px; border: 1px solid #ccc; padding: 10px; height: 320px; }
+        #session-list { list-style-type: none; margin: 0; padding: 0; }
+        #session-list li { padding: 8px; cursor: pointer; border-bottom: 1px solid #eee; }
+        #session-list li:hover { background-color: #f0f0f0; }
+        #session-list li.active { background-color: #e0e0e0; font-weight: bold; }
+        #session-list li.unread::after {
+            content: ' ●';
+            color: red;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+        #chat-area { flex-grow: 1; }
         #chat-window { border: 1px solid #ccc; height: 300px; overflow-y: scroll; padding: 10px; margin-bottom: 10px; }
         #messages { list-style-type: none; margin: 0; padding: 0; }
         #messages li { padding: 5px 10px; }
@@ -27,15 +40,22 @@
 </div>
 
 <div id="chat-section">
-    <div id="chat-window">
-        <ul id="messages"></ul>
+    <div id="chat-container">
+        <div id="session-list-container">
+            <h2>Sessions</h2>
+            <ul id="session-list"></ul>
+        </div>
+        <div id="chat-area">
+            <div id="chat-window">
+                <ul id="messages"></ul>
+            </div>
+            <form id="message-form">
+                <input type="text" id="recipient-input" placeholder="Recipient" autocomplete="off" />
+                <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off" style="flex-grow: 1;" />
+                <button id="send-button">Send</button>
+            </form>
+        </div>
     </div>
-
-    <form id="message-form">
-        <input type="text" id="recipient-input" placeholder="Recipient" autocomplete="off" />
-        <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off" style="flex-grow: 1;" />
-        <button id="send-button">Send</button>
-    </form>
 </div>
 
 <script>
@@ -48,8 +68,68 @@
     const messageForm = document.getElementById('message-form');
     const recipientInput = document.getElementById('recipient-input');
     const messageInput = document.getElementById('message-input');
+    const sessionList = document.getElementById('session-list');
 
     let ws;
+    const activeSessions = new Set();
+    const chatHistories = {}; // { 'username': [message1, message2], ... }
+    const unreadSessions = new Set();
+
+    function renderChatHistory(username) {
+        messages.innerHTML = '';
+        const history = chatHistories[username] || [];
+        history.forEach(msg => {
+            const item = document.createElement('li');
+            if (msg.sender === nameInput.value) {
+                item.textContent = `(To ${msg.recipient}): ${msg.content}`;
+                item.className = 'sent';
+            } else {
+                item.textContent = `(From ${msg.sender}): ${msg.content}`;
+                item.className = 'received';
+            }
+            messages.appendChild(item);
+        });
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function updateSessionList() {
+        sessionList.innerHTML = '';
+        const currentRecipient = recipientInput.value;
+        activeSessions.forEach(sessionName => {
+            const sessionItem = document.createElement('li');
+            sessionItem.textContent = sessionName;
+            if (sessionName === currentRecipient) {
+                sessionItem.classList.add('active');
+            }
+            if (unreadSessions.has(sessionName)) {
+                sessionItem.classList.add('unread');
+            }
+            sessionItem.addEventListener('click', () => {
+                recipientInput.value = sessionName;
+                unreadSessions.delete(sessionName);
+                renderChatHistory(sessionName);
+                updateSessionList(); // Re-render to show active state and remove unread mark
+            });
+            sessionList.appendChild(sessionItem);
+        });
+    }
+
+    function storeMessage(messageData) {
+        const myUsername = nameInput.value;
+        const chatPartner = messageData.sender === myUsername ? messageData.recipient : messageData.sender;
+
+        // Store message in history
+        if (!chatHistories[chatPartner]) {
+            chatHistories[chatPartner] = [];
+        }
+        chatHistories[chatPartner].push(messageData);
+
+        // Add to session list if new
+        if (!activeSessions.has(chatPartner)) {
+            activeSessions.add(chatPartner);
+            updateSessionList();
+        }
+    }
 
     connectButton.addEventListener('click', function() {
         const username = nameInput.value;
@@ -58,7 +138,6 @@
             return;
         }
 
-        // Establish WebSocket connection with username as a query parameter
         ws = new WebSocket(`ws://localhost:8080/chat?username=${username}`);
 
         ws.onopen = function() {
@@ -69,19 +148,21 @@
 
         ws.onmessage = function(event) {
             const messageData = JSON.parse(event.data);
-            const item = document.createElement('li');
-            
-            // Check if the message is sent by the current user or received from someone else
-            if (messageData.sender === nameInput.value) {
-                item.textContent = `(To ${messageData.recipient}): ${messageData.content}`;
-                item.className = 'sent';
-            } else {
-                item.textContent = `(From ${messageData.sender}): ${messageData.content}`;
-                item.className = 'received';
+            storeMessage(messageData);
+
+            const isReceived = messageData.sender !== nameInput.value;
+            const isFromOtherSession = messageData.sender !== recipientInput.value;
+
+            if (isReceived && isFromOtherSession) {
+                alert(`You have a new message from ${messageData.sender}`);
+                unreadSessions.add(messageData.sender);
+                updateSessionList();
             }
-            
-            messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
+
+            // Render only if it's the currently active chat
+            if (messageData.sender === recipientInput.value || messageData.recipient === recipientInput.value) {
+                renderChatHistory(recipientInput.value);
+            }
         };
 
         ws.onclose = function() {
@@ -99,14 +180,22 @@
 
     messageForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        if (messageInput.value && recipientInput.value) {
+        const recipient = recipientInput.value;
+        if (messageInput.value && recipient) {
             const message = {
                 sender: nameInput.value,
-                recipient: recipientInput.value,
+                recipient: recipient,
                 content: messageInput.value
             };
             ws.send(JSON.stringify(message));
+            storeMessage(message);
+            renderChatHistory(recipient);
             messageInput.value = '';
+
+            if (!activeSessions.has(recipient)) {
+                activeSessions.add(recipient);
+                updateSessionList();
+            }
         }
     });
 </script>
