@@ -15,18 +15,53 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000000;
+            background: #fff;
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow-x: hidden;
             position: relative;
         }
+
+        .mobile-frame {
+            position: relative;
+            width: 375px;
+            height: 812px;
+            border: 16px solid black;
+            border-radius: 36px;
+            box-shadow: 0 0 24px rgba(0,0,0,0.5);
+            background: #000;
+            overflow: hidden;
+        }
+
+        .mobile-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 210px;
+            height: 30px;
+            background: black;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            z-index: 10;
+        }
         
         /* 星空背景 */
-        body::before {
+        .app-container::before {
             content: '';
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -52,11 +87,12 @@
         
         .app-container {
             width: 100%;
-            min-height: 100vh;
+            height: 100%;
             display: flex;
             flex-direction: column;
             position: relative;
             z-index: 1;
+            background: #000;
         }
         
         /* iOS风格状态栏 */
@@ -66,6 +102,8 @@
             -webkit-backdrop-filter: blur(20px);
             font-weight: 600;
             letter-spacing: -0.3px;
+            position: relative;
+            z-index: 5;
         }
         
         /* 星球容器 */
@@ -285,91 +323,96 @@
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- 状态栏 -->
-        <div class="status-bar flex justify-between items-center px-6 py-2 text-white text-sm font-medium">
-            <span>9:41</span>
-            <div class="flex items-center space-x-1">
-                <i class="fas fa-signal text-xs"></i>
-                <i class="fas fa-wifi text-xs"></i>
-                <div class="w-6 h-3 border border-white rounded-sm">
-                    <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 主要内容 -->
-        <div class="flex-1 overflow-y-auto">
-            <!-- 星球区域 -->
-            <div class="planet-container">
-                <!-- 星球 -->
-                <div class="planet">
-                    <div class="planet-ring"></div>
-                    <div class="planet-ring"></div>
-                </div>
-                
-                <!-- 用户头像1 -->
-                <div class="user-avatar user-avatar-top-right">
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face" alt="Laura">
-                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
-                        Laura 27
-                    </div>
-                </div>
-                
-                <!-- 用户头像2 -->
-                <div class="user-avatar user-avatar-left">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="用户">
-                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
-                        美联榆 | 19
-                    </div>
-                </div>
-            </div>
-
-            <!-- 功能按钮区域 -->
-            <div class="feature-buttons">
-                <!-- 星球奇遇 -->
-                <div class="feature-card" onclick="navigateToPlanetEncounter()">
-                    <div class="feature-icon">
-                        <i class="fas fa-globe text-white text-2xl"></i>
-                    </div>
-                    <div class="feature-content">
-                        <div class="feature-title">星球奇遇</div>
-                        <div class="feature-desc">只为遇见惊喜的你</div>
+    <div class="mobile-frame">
+        <div class="mobile-screen">
+            <div class="notch"></div>
+            <div class="app-container">
+                <!-- 状态栏 -->
+                <div class="status-bar flex justify-between items-center px-6 py-2 text-white text-sm font-medium">
+                    <span>9:41</span>
+                    <div class="flex items-center space-x-1">
+                        <i class="fas fa-signal text-xs"></i>
+                        <i class="fas fa-wifi text-xs"></i>
+                        <div class="w-6 h-3 border border-white rounded-sm">
+                            <div class="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 兴趣搭子 -->
-                <div class="feature-card" onclick="navigateToCityBuddy()">
-                    <div class="feature-icon">
-                        <i class="fas fa-comments text-white text-2xl"></i>
+                <!-- 主要内容 -->
+                <div class="flex-1 overflow-y-auto">
+                    <!-- 星球区域 -->
+                    <div class="planet-container">
+                        <!-- 星球 -->
+                        <div class="planet">
+                            <div class="planet-ring"></div>
+                            <div class="planet-ring"></div>
+                        </div>
+                        
+                        <!-- 用户头像1 -->
+                        <div class="user-avatar user-avatar-top-right">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face" alt="Laura">
+                            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
+                                Laura 27
+                            </div>
+                        </div>
+                        
+                        <!-- 用户头像2 -->
+                        <div class="user-avatar user-avatar-left">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="用户">
+                            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
+                                美联榆 | 19
+                            </div>
+                        </div>
                     </div>
-                    <div class="feature-content">
-                        <div class="feature-title">兴趣搭子</div>
-                        <div class="feature-desc">邂逅同城此刻的Ta</div>
+
+                    <!-- 功能按钮区域 -->
+                    <div class="feature-buttons">
+                        <!-- 星球奇遇 -->
+                        <div class="feature-card" onclick="navigateToPlanetEncounter()">
+                            <div class="feature-icon">
+                                <i class="fas fa-globe text-white text-2xl"></i>
+                            </div>
+                            <div class="feature-content">
+                                <div class="feature-title">星球奇遇</div>
+                                <div class="feature-desc">只为遇见惊喜的你</div>
+                            </div>
+                        </div>
+
+                        <!-- 兴趣搭子 -->
+                        <div class="feature-card" onclick="navigateToCityBuddy()">
+                            <div class="feature-icon">
+                                <i class="fas fa-comments text-white text-2xl"></i>
+                            </div>
+                            <div class="feature-content">
+                                <div class="feature-title">兴趣搭子</div>
+                                <div class="feature-desc">邂逅同城此刻的Ta</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- 底部导航栏 -->
-        <div class="bottom-nav px-6 py-3 flex-shrink-0">
-            <div class="flex justify-around">
-                <button class="nav-button active flex flex-col items-center text-purple-600" data-page="planet-encounter">
-                    <i class="fas fa-globe text-xl mb-1"></i>
-                    <span class="text-xs font-medium">星球</span>
-                </button>
-                <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="chat">
-                    <i class="fas fa-comments text-xl mb-1"></i>
-                    <span class="text-xs font-medium">消息</span>
-                </button>
-                <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="moments">
-                    <i class="fas fa-heart text-xl mb-1"></i>
-                    <span class="text-xs font-medium">遇见</span>
-                </button>
-                <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="profile">
-                    <i class="fas fa-user text-xl mb-1"></i>
-                    <span class="text-xs font-medium">我的</span>
-                </button>
+                <!-- 底部导航栏 -->
+                <div class="bottom-nav px-6 py-3 flex-shrink-0">
+                    <div class="flex justify-around">
+                        <button class="nav-button active flex flex-col items-center text-purple-600" data-page="planet-encounter">
+                            <i class="fas fa-globe text-xl mb-1"></i>
+                            <span class="text-xs font-medium">星球</span>
+                        </button>
+                        <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="chat">
+                            <i class="fas fa-comments text-xl mb-1"></i>
+                            <span class="text-xs font-medium">消息</span>
+                        </button>
+                        <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="moments">
+                            <i class="fas fa-heart text-xl mb-1"></i>
+                            <span class="text-xs font-medium">遇见</span>
+                        </button>
+                        <button class="nav-button flex flex-col items-center text-gray-600 opacity-70" data-page="profile">
+                            <i class="fas fa-user text-xl mb-1"></i>
+                            <span class="text-xs font-medium">我的</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -378,7 +421,7 @@
     <script>
         // 创建星星
         function createStars() {
-            const container = document.body;
+            const container = document.querySelector('.app-container');
             const starCount = 50;
             
             for (let i = 0; i < starCount; i++) {
