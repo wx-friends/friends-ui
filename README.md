@@ -2,6 +2,9 @@
 
 这是一个基于智能匹配算法的社交交友应用，具有完整的页面交互功能。
 
+接口测试
+curl "https://friend.uicraft.com.cn/api/auth/user/info"
+
 ## 项目结构
 
 ```
