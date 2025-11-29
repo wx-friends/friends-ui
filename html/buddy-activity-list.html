@@ -334,14 +334,14 @@
 
         // 打开发布活动页面
         function openPublishActivity() {
-            showToast('正在跳转到发布活动页面...', 'info');
+            // showToast('正在跳转到发布活动页面...', 'info');
             setTimeout(() => {
                 if (window.navigationManager) {
                     window.navigationManager.navigateToSubPage('publish-buddy-activity');
                 } else {
                     window.location.href = 'publish-buddy-activity.html';
                 }
-            }, 500);
+            }, 50);
         }
 
         // 显示提示消息
@@ -384,7 +384,7 @@
             }
         }
     </script>
-    
+
     <!-- 引入导航脚本 -->
     <script src="js/navigation.js"></script>
             </div>

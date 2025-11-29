@@ -306,14 +306,14 @@
     <script>
         // 跳转到关注/粉丝页面
         function navigateToFollowers(type) {
-            showToast(`正在跳转到${type === 'following' ? '关注' : '粉丝'}列表...`, 'info');
+            // showToast(`正在跳转到${type === 'following' ? '关注' : '粉丝'}列表...`, 'info');
             setTimeout(() => {
                 if (window.navigationManager) {
                     window.navigationManager.navigateToSubPage('followers', { tab: type });
                 } else {
                     window.location.href = `followers.html?tab=${type}`;
                 }
-            }, 1000);
+            }, 50);
         }
 
         // 处理个人中心操作
@@ -323,16 +323,16 @@
             } else {
                 const actions = {
                     'edit-profile': () => {
-                        showToast('正在跳转到编辑资料页面...', 'info');
+                        // showToast('正在跳转到编辑资料页面...', 'info');
                         setTimeout(() => {
                             window.location.href = 'edit-profile.html';
-                        }, 1000);
+                        }, 50);
                     },
                     'vip-center': () => {
-                        showToast('正在跳转到会员中心...', 'info');
+                        // showToast('正在跳转到会员中心...', 'info');
                         setTimeout(() => {
                             window.location.href = 'vip.html';
-                        }, 1000);
+                        }, 50);
                     },
                     'liked-me': () => {
                         showToast('正在加载喜欢我的人...', 'info');
@@ -353,16 +353,16 @@
                         }, 1000);
                     },
                     'buddy-activity-list': () => {
-                        showToast('正在跳转到搭子活动...', 'info');
+                        // showToast('正在跳转到搭子活动...', 'info');
                         setTimeout(() => {
                             window.location.href = 'buddy-activity-list.html';
-                        }, 1000);
+                        }, 50);
                     },
                     'offline-activities': () => {
-                        showToast('正在跳转到官方活动...', 'info');
+                        // showToast('正在跳转到官方活动...', 'info');
                         setTimeout(() => {
                             window.location.href = 'offline-activity-list.html';
-                        }, 1000);
+                        }, 50);
                     },
                     'activity-history': () => {
                         showToast('正在加载活动记录...', 'info');
@@ -371,40 +371,40 @@
                         }, 1000);
                     },
                     'settings': () => {
-                        showToast('正在跳转到设置页面...', 'info');
+                        // showToast('正在跳转到设置页面...', 'info');
                         setTimeout(() => {
                             window.location.href = 'settings.html';
-                        }, 1000);
+                        }, 50);
                     },
                     'privacy': () => {
-                        showToast('正在跳转到隐私设置...', 'info');
+                        // showToast('正在跳转到隐私设置...', 'info');
                         setTimeout(() => {
                             window.location.href = 'privacy.html';
-                        }, 1000);
+                        }, 50);
                     },
                     'notifications': () => {
-                        showToast('正在跳转到通知设置...', 'info');
+                        // showToast('正在跳转到通知设置...', 'info');
                         setTimeout(() => {
                             window.location.href = 'notifications.html';
-                        }, 1000);
+                        }, 50);
                     },
                     'help': () => {
-                        showToast('正在跳转到帮助页面...', 'info');
+                        // showToast('正在跳转到帮助页面...', 'info');
                         setTimeout(() => {
                             window.location.href = 'help.html';
-                        }, 1000);
+                        }, 50);
                     },
                     'buddy-history': () => {
-                        showToast('正在跳转到搭子匹配历史...', 'info');
+                        // showToast('正在跳转到搭子匹配历史...', 'info');
                         setTimeout(() => {
                             window.location.href = 'buddy-history.html';
-                        }, 1000);
+                        }, 50);
                     },
                     'activity-history': () => {
-                        showToast('正在跳转到活动参与记录...', 'info');
+                        // showToast('正在跳转到活动参与记录...', 'info');
                         setTimeout(() => {
                             window.location.href = 'activity-history.html';
-                        }, 1000);
+                        }, 50);
                     }
                 };
 
@@ -418,18 +418,18 @@
 
         // 导航到搭子匹配历史
         function navigateToBuddyHistory() {
-            showToast('正在跳转到搭子匹配历史...', 'info');
+            // showToast('正在跳转到搭子匹配历史...', 'info');
             setTimeout(() => {
                 window.location.href = 'buddy-history.html';
-            }, 1000);
+            }, 50);
         }
 
         // 导航到活动参与记录
         function navigateToActivityHistory() {
-            showToast('正在跳转到活动参与记录...', 'info');
+            // showToast('正在跳转到活动参与记录...', 'info');
             setTimeout(() => {
                 window.location.href = 'activity-history.html';
-            }, 1000);
+            }, 50);
         }
 
         // 显示提示消息

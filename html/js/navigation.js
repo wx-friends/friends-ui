@@ -16,10 +16,10 @@ class NavigationManager {
     getCurrentPage() {
         const path = window.location.pathname;
         const filename = path.split('/').pop().replace('.html', '');
-        
+
         const pageMap = {
             'home': 'home',
-            'chat': 'chat', 
+            'chat': 'chat',
             'moments': 'moments',
             'profile': 'profile',
             'chat-detail': 'chat',
@@ -35,7 +35,7 @@ class NavigationManager {
             'profile-detail': 'profile',
             'search-users': 'profile'
         };
-        
+
         return pageMap[filename] || 'home';
     }
 
@@ -57,16 +57,16 @@ class NavigationManager {
     navigateToPage(pageName) {
         const pages = {
             'home': 'planet-encounter.html',
-            'chat': 'chat.html', 
+            'chat': 'chat.html',
             'moments': 'moments.html',
             'profile': 'profile.html'
         };
 
         if (pages[pageName]) {
-            this.showToast('正在跳转...', 'info');
+            // this.showToast('正在跳转...', 'info');
             setTimeout(() => {
                 window.location.href = pages[pageName];
-            }, 300);
+            }, 50);
         }
     }
 
@@ -122,8 +122,8 @@ class NavigationManager {
         if (subPages[pageName]) {
             // 添加历史记录
             window.history.pushState({ page: this.currentPage }, '', window.location.href);
-            
-            this.showToast('正在跳转...', 'info');
+
+            // this.showToast('正在跳转...', 'info');
             setTimeout(() => {
                 let url = subPages[pageName];
                 if (Object.keys(params).length > 0) {
@@ -131,7 +131,7 @@ class NavigationManager {
                     url += `?${queryString}`;
                 }
                 window.location.href = url;
-            }, 300);
+            }, 50);
         }
     }
 
@@ -402,7 +402,7 @@ class NavigationManager {
         // 创建提示元素
         const toast = document.createElement('div');
         toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-medium z-50 transition-all duration-300`;
-        
+
         // 根据类型设置样式
         const styles = {
             'info': 'bg-blue-500',
@@ -410,18 +410,18 @@ class NavigationManager {
             'error': 'bg-red-500',
             'warning': 'bg-yellow-500'
         };
-        
+
         toast.className += ` ${styles[type] || styles['info']}`;
         toast.textContent = message;
-        
+
         document.body.appendChild(toast);
-        
+
         // 显示动画
         setTimeout(() => {
             toast.style.opacity = '1';
             toast.style.transform = 'translate(-50%, 0)';
         }, 100);
-        
+
         // 自动隐藏
         setTimeout(() => {
             toast.style.opacity = '0';

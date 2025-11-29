@@ -745,10 +745,10 @@
             if (window.navigationManager) {
                 window.navigationManager.navigateToSubPage('publish-moment');
             } else {
-                showToast('正在跳转到发布动态页面...', 'info');
+                // showToast('正在跳转到发布动态页面...', 'info');
                 setTimeout(() => {
                     window.location.href = 'publish-moment.html';
-                }, 500);
+                }, 50);
             }
         }
 

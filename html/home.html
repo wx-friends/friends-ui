@@ -998,10 +998,10 @@
             if (window.navigationManager) {
                 window.navigationManager.navigateToSubPage('matching-preferences');
             } else {
-                showToast('正在跳转到匹配设置页面...', 'info');
+                // showToast('正在跳转到匹配设置页面...', 'info');
                 setTimeout(() => {
                     window.location.href = 'matching-preferences.html';
-                }, 500);
+                }, 50);
             }
         }
 
@@ -1010,10 +1010,10 @@
             if (window.navigationManager) {
                 window.navigationManager.navigateToSubPage('filter');
             } else {
-                showToast('正在跳转到筛选页面...', 'info');
+                // showToast('正在跳转到筛选页面...', 'info');
                 setTimeout(() => {
                     window.location.href = 'filter.html';
-                }, 500);
+                }, 50);
             }
         }
 
@@ -1043,14 +1043,14 @@
         function startChatWithUser() {
             // 获取当前用户信息（可以从页面或数据中获取）
             const currentUserName = document.querySelector('.user-info-overlay h3')?.textContent || '用户';
-            
+
             // 显示提示
             showToast(`正在进入与 ${currentUserName} 的聊天...`, 'success');
-            
+
             // 可以在这里传递用户ID等信息到聊天详情页
             // const userId = '123'; // 实际应该从数据中获取
             // localStorage.setItem('chatUserId', userId);
-            
+
             setTimeout(() => {
                 if (window.navigationManager) {
                     window.navigationManager.navigateToSubPage('chat-detail');
@@ -1067,10 +1067,10 @@
 
         // 开始聊天
         function startChat() {
-            showToast('正在跳转到聊天页面...', 'success');
+            // showToast('正在跳转到聊天页面...', 'success');
             setTimeout(() => {
                 navigateToChat();
-            }, 1000);
+            }, 50);
         }
 
         // 关闭匹配动效，继续匹配
