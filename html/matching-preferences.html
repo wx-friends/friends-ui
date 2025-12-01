@@ -66,6 +66,13 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            overflow: hidden;
+        }
+        /* 底部按钮区域 */
+        .bottom-button-area {
+            flex-shrink: 0;
+            background: transparent;
+            padding: 16px 24px;
         }
         .card {
             background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.8) 100%);
@@ -86,13 +93,13 @@
             transform: scale(1.02);
         }
         .match-btn {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
         .match-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
         .match-btn:active {
             transform: translateY(0);
@@ -117,7 +124,7 @@
     <div class="mobile-frame">
         <div class="mobile-screen">
             <div class="notch"></div>
-            <div class="app-container h-screen flex flex-col">
+            <div class="app-container h-full flex flex-col">
     <!-- 状态栏 -->
     <div class="flex justify-between items-center px-6 py-2 text-white text-sm font-medium">
         <span>9:41</span>
@@ -269,16 +276,8 @@
             </div>
         </div>
 
-        <!-- 匹配按钮 -->
-        <div class="text-center">
-            <button id="matchBtn" class="match-btn w-full py-4 rounded-2xl text-white font-bold text-lg" onclick="startMatching()">
-                <i class="fas fa-search mr-2"></i>
-                开始匹配
-            </button>
-        </div>
-
         <!-- 匹配进度提示 -->
-        <div id="matchingProgress" class="card rounded-2xl p-6 mt-6 hidden">
+        <div id="matchingProgress" class="card rounded-2xl p-6 mb-6 hidden">
             <div class="text-center">
                 <div class="loading-spinner w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"></div>
                 <h3 class="text-lg font-bold text-gray-800 mb-2">正在寻找匹配...</h3>
@@ -289,6 +288,14 @@
                 <p class="text-sm text-gray-500" id="progressText">正在分析您的偏好...</p>
             </div>
         </div>
+    </div>
+
+    <!-- 底部按钮 -->
+    <div class="bottom-button-area">
+        <button id="matchBtn" class="match-btn w-full py-4 rounded-2xl text-white font-bold text-lg" onclick="startMatching()">
+            <i class="fas fa-search mr-2"></i>
+            开始匹配
+        </button>
     </div>
 
     <!-- 引入导航脚本 -->

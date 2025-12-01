@@ -119,7 +119,7 @@
         <!-- 登录按钮区域 -->
         <div class="space-y-6">
             <!-- 微信登录 -->
-            <button class="wechat-btn w-full py-4 rounded-2xl text-white font-semibold text-lg flex items-center justify-center space-x-3">
+            <button class="wechat-btn w-full py-4 rounded-2xl text-white font-semibold text-lg flex items-center justify-center space-x-3" onclick="handleLogin()">
                 <i class="fab fa-weixin text-2xl"></i>
                 <span>微信一键登录</span>
             </button>
@@ -143,5 +143,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // 处理登录
+        function handleLogin() {
+            // 模拟登录过程
+            setTimeout(() => {
+                // 跳转到资料完善页面（编号3）
+                window.location.href = 'profile-setup.html';
+            }, 500);
+        }
+    </script>
 </body>
 </html>
