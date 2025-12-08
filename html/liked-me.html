@@ -74,21 +74,17 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
-        .like-btn {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-            transition: all 0.3s ease;
-        }
-        .like-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-        }
         .pass-btn {
             background: linear-gradient(135deg, #42E2B8 0%, #34D399 100%);
             transition: all 0.3s ease;
         }
         .pass-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(66, 226, 184, 0.4);
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(66, 226, 184, 0.3);
+            background: linear-gradient(135deg, #34D399 0%, #10b981 100%);
+        }
+        .pass-btn:active {
+            transform: scale(0.95);
         }
         .tab-button {
             transition: all 0.3s ease;
@@ -155,10 +151,11 @@
     <!-- 标签页导航 -->
     <div class="bg-white px-6 py-4 border-b border-gray-100">
         <div class="flex space-x-2 overflow-x-auto">
-            <button class="tab-button active flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium" data-tab="liked-me" onclick="switchTab('liked-me')">
-                喜欢我
-<!--                <span class="ml-1 bg-white bg-opacity-20 px-2 py-0.5 rounded-full text-xs"></span>-->
+            <button class="tab-button flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600" data-tab="favorites" onclick="switchTab('favorites')">
+                搭子
+                <!--                <span class="ml-1 bg-gray-200 px-2 py-0.5 rounded-full text-xs"></span>-->
             </button>
+
             <button class="tab-button flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600" data-tab="following" onclick="switchTab('following')">
                 关注
 <!--                <span class="ml-1 bg-gray-200 px-2 py-0.5 rounded-full text-xs"></span>-->
@@ -167,10 +164,11 @@
                 粉丝
 <!--                <span class="ml-1 bg-gray-200 px-2 py-0.5 rounded-full text-xs"></span>-->
             </button>
-            <button class="tab-button flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600" data-tab="favorites" onclick="switchTab('favorites')">
-                收藏
-<!--                <span class="ml-1 bg-gray-200 px-2 py-0.5 rounded-full text-xs"></span>-->
+            <button class="tab-button active flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium" data-tab="liked-me" onclick="switchTab('liked-me')">
+                喜欢
+                <!--                <span class="ml-1 bg-white bg-opacity-20 px-2 py-0.5 rounded-full text-xs"></span>-->
             </button>
+
         </div>
     </div>
 
@@ -179,134 +177,134 @@
         <!-- 喜欢我的人标签页 -->
         <div id="liked-me-tab" class="tab-content active px-6 py-4 space-y-4">
         <!-- 用户卡片 1 -->
-        <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
-            <div class="flex items-center space-x-4">
-                <div class="relative">
+        <div class="user-card bg-white rounded-2xl p-5 shadow-sm border border-gray-50 hover:shadow-md transition-shadow">
+            <div class="flex items-start space-x-4">
+                <div class="relative flex-shrink-0">
                     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
-                         alt="用户头像" class="w-15 h-15 rounded-full object-cover">
+                         alt="用户头像" class="w-16 h-16 rounded-full object-cover ring-2 ring-gray-100">
                     <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
                 </div>
-                <div class="flex-1">
-                    <div class="flex items-center space-x-2 mb-1">
-                        <h3 class="font-semibold text-gray-900">李明</h3>
-                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2 mb-1.5">
+                        <h3 class="font-semibold text-gray-900 text-base">李明</h3>
+                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                             <i class="fas fa-check text-white text-xs"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600 mb-2">28岁 · 设计师 · 距离你2.3km</p>
-                    <div class="flex space-x-2 mb-2">
-                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">摄影</span>
-                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">旅行</span>
-                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">运动</span>
+                    <p class="text-sm text-gray-600 mb-2.5">28岁 · 设计师 · 距离你2.3km</p>
+                    <div class="flex flex-nowrap gap-1.5 mb-3 overflow-x-auto">
+                        <span class="bg-green-100 text-green-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">摄影</span>
+                        <span class="bg-green-100 text-green-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">旅行</span>
+                        <span class="bg-green-100 text-green-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">运动</span>
                     </div>
-                    <p class="text-xs text-gray-500">2小时前喜欢了你</p>
+                    <!-- <div class="flex items-center space-x-1.5 text-xs text-pink-500 font-medium">
+                        <i class="fas fa-heart text-xs"></i>
+                        <span>2小时前喜欢了你</span>
+                    </div> -->
                 </div>
-                <div class="flex space-x-2">
-                    <button class="pass-btn w-10 h-10 rounded-full flex items-center justify-center text-white" onclick="handlePass(1)">
-                        <i class="fas fa-times"></i>
+                <!-- <div class="flex-shrink-0">
+                    <button class="pass-btn w-11 h-11 rounded-full flex items-center justify-center text-white shadow-sm" onclick="handlePass(1)">
+                        <i class="fas fa-times text-lg"></i>
                     </button>
-                    <button class="like-btn w-10 h-10 rounded-full flex items-center justify-center text-white" onclick="handleLike(1)">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                </div>
+                </div> -->
             </div>
         </div>
 
         <!-- 用户卡片 2 -->
-        <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
-            <div class="flex items-center space-x-4">
-                <div class="relative">
+        <div class="user-card bg-white rounded-2xl p-5 shadow-sm border border-gray-50 hover:shadow-md transition-shadow">
+            <div class="flex items-start space-x-4">
+                <div class="relative flex-shrink-0">
                     <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face"
-                         alt="用户头像" class="w-15 h-15 rounded-full object-cover">
+                         alt="用户头像" class="w-16 h-16 rounded-full object-cover ring-2 ring-gray-100">
                     <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
                 </div>
-                <div class="flex-1">
-                    <div class="flex items-center space-x-2 mb-1">
-                        <h3 class="font-semibold text-gray-900">小雅</h3>
-                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2 mb-1.5">
+                        <h3 class="font-semibold text-gray-900 text-base">小雅</h3>
+                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                             <i class="fas fa-check text-white text-xs"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600 mb-2">26岁 · 教师 · 距离你1.8km</p>
-                    <div class="flex space-x-2 mb-2">
-                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">读书</span>
-                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">音乐</span>
-                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">电影</span>
+                    <p class="text-sm text-gray-600 mb-2.5">26岁 · 教师 · 距离你1.8km</p>
+                    <div class="flex flex-nowrap gap-1.5 mb-3 overflow-x-auto">
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">读书</span>
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">音乐</span>
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">电影</span>
                     </div>
-                    <p class="text-xs text-gray-500">5小时前喜欢了你</p>
+                    <!-- <div class="flex items-center space-x-1.5 text-xs text-pink-500 font-medium">
+                        <i class="fas fa-heart text-xs"></i>
+                        <span>5小时前喜欢了你</span>
+                    </div> -->
                 </div>
-                <div class="flex space-x-2">
-                    <button class="pass-btn w-10 h-10 rounded-full flex items-center justify-center text-white" onclick="handlePass(2)">
-                        <i class="fas fa-times"></i>
+                <!-- <div class="flex-shrink-0">
+                    <button class="pass-btn w-11 h-11 rounded-full flex items-center justify-center text-white shadow-sm" onclick="handlePass(2)">
+                        <i class="fas fa-times text-lg"></i>
                     </button>
-                    <button class="like-btn w-10 h-10 rounded-full flex items-center justify-center text-white" onclick="handleLike(2)">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                </div>
+                </div> -->
             </div>
         </div>
 
         <!-- 用户卡片 3 -->
-        <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
-            <div class="flex items-center space-x-4">
-                <div class="relative">
+        <div class="user-card bg-white rounded-2xl p-5 shadow-sm border border-gray-50 hover:shadow-md transition-shadow">
+            <div class="flex items-start space-x-4">
+                <div class="relative flex-shrink-0">
                     <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face"
-                         alt="用户头像" class="w-15 h-15 rounded-full object-cover">
+                         alt="用户头像" class="w-16 h-16 rounded-full object-cover ring-2 ring-gray-100">
                 </div>
-                <div class="flex-1">
-                    <div class="flex items-center space-x-2 mb-1">
-                        <h3 class="font-semibold text-gray-900">王强</h3>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2 mb-1.5">
+                        <h3 class="font-semibold text-gray-900 text-base">王强</h3>
                     </div>
-                    <p class="text-sm text-gray-600 mb-2">30岁 · 工程师 · 距离你3.2km</p>
-                    <div class="flex space-x-2 mb-2">
-                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">编程</span>
-                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">游戏</span>
-                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">科技</span>
+                    <p class="text-sm text-gray-600 mb-2.5">30岁 · 工程师 · 距离你3.2km</p>
+                    <div class="flex flex-nowrap gap-1.5 mb-3 overflow-x-auto">
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">编程</span>
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">游戏</span>
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">科技</span>
                     </div>
-                    <p class="text-xs text-gray-500">1天前喜欢了你</p>
+                    <!-- <div class="flex items-center space-x-1.5 text-xs text-pink-500 font-medium">
+                        <i class="fas fa-heart text-xs"></i>
+                        <span>1天前喜欢了你</span>
+                    </div> -->
                 </div>
-                <div class="flex space-x-2">
-                    <button class="pass-btn w-10 h-10 rounded-full flex items-center justify-center text-white" onclick="handlePass(3)">
-                        <i class="fas fa-times"></i>
+                <!-- <div class="flex-shrink-0">
+                    <button class="pass-btn w-11 h-11 rounded-full flex items-center justify-center text-white shadow-sm" onclick="handlePass(3)">
+                        <i class="fas fa-times text-lg"></i>
                     </button>
-                    <button class="like-btn w-10 h-10 rounded-full flex items-center justify-center text-white" onclick="handleLike(3)">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                </div>
+                </div> -->
             </div>
         </div>
 
         <!-- 用户卡片 4 -->
-        <div class="user-card bg-white rounded-2xl p-4 shadow-sm">
-            <div class="flex items-center space-x-4">
-                <div class="relative">
+        <div class="user-card bg-white rounded-2xl p-5 shadow-sm border border-gray-50 hover:shadow-md transition-shadow">
+            <div class="flex items-start space-x-4">
+                <div class="relative flex-shrink-0">
                     <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face"
-                         alt="用户头像" class="w-15 h-15 rounded-full object-cover">
+                         alt="用户头像" class="w-16 h-16 rounded-full object-cover ring-2 ring-gray-100">
                     <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
                 </div>
-                <div class="flex-1">
-                    <div class="flex items-center space-x-2 mb-1">
-                        <h3 class="font-semibold text-gray-900">小美</h3>
-                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2 mb-1.5">
+                        <h3 class="font-semibold text-gray-900 text-base">小美</h3>
+                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                             <i class="fas fa-check text-white text-xs"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600 mb-2">24岁 · 学生 · 距离你0.9km</p>
-                    <div class="flex space-x-2 mb-2">
-                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">艺术</span>
-                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">绘画</span>
-                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">设计</span>
+                    <p class="text-sm text-gray-600 mb-2.5">24岁 · 学生 · 距离你0.9km</p>
+                    <div class="flex flex-nowrap gap-1.5 mb-3 overflow-x-auto">
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">艺术</span>
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">绘画</span>
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap">设计</span>
                     </div>
-                    <p class="text-xs text-gray-500">2天前喜欢了你</p>
+                    <!-- <div class="flex items-center space-x-1.5 text-xs text-pink-500 font-medium">
+                        <i class="fas fa-heart text-xs"></i>
+                        <span>2天前喜欢了你</span>
+                    </div> -->
                 </div>
-                <div class="flex space-x-2">
-                    <button class="pass-btn w-10 h-10 rounded-full flex items-center justify-center text-white" onclick="handlePass(4)">
-                        <i class="fas fa-times"></i>
+                <!-- <div class="flex-shrink-0">
+                    <button class="pass-btn w-11 h-11 rounded-full flex items-center justify-center text-white shadow-sm" onclick="handlePass(4)">
+                        <i class="fas fa-times text-lg"></i>
                     </button>
-                    <button class="like-btn w-10 h-10 rounded-full flex items-center justify-center text-white" onclick="handleLike(4)">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -694,12 +692,6 @@
             if (activeContent) {
                 activeContent.classList.add('active');
             }
-        }
-
-        // 处理喜欢操作
-        function handleLike(userId) {
-            showToast('已喜欢！', 'success');
-            // 这里可以添加喜欢逻辑
         }
 
         // 处理跳过操作
