@@ -66,18 +66,29 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            overflow: hidden;
-        }
-        /* 底部按钮区域 */
-        .bottom-button-area {
-            flex-shrink: 0;
-            background: transparent;
-            padding: 16px 24px;
         }
         .card {
             background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.8) 100%);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.3);
+        }
+        /* 年龄列表样式 */
+        .age-list-item {
+            padding: 6px 10px;
+            margin-bottom: 4px;
+            border-radius: 999px;
+            font-size: 13px;
+            color: #4b5563;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .age-list-item:hover {
+            background: rgba(16, 185, 129, 0.08);
+        }
+        .age-list-item.active {
+            background: linear-gradient(135deg, #42E2B8 0%, #34D399 100%);
+            color: #fff;
+            font-weight: 600;
         }
         .preference-btn {
             transition: all 0.3s ease;
@@ -93,13 +104,13 @@
             transform: scale(1.02);
         }
         .match-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
         }
         .match-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
         }
         .match-btn:active {
             transform: translateY(0);
@@ -124,7 +135,7 @@
     <div class="mobile-frame">
         <div class="mobile-screen">
             <div class="notch"></div>
-            <div class="app-container h-full flex flex-col">
+            <div class="app-container h-screen flex flex-col">
     <!-- 状态栏 -->
     <div class="flex justify-between items-center px-6 py-2 text-white text-sm font-medium">
         <span>9:41</span>
@@ -174,19 +185,26 @@
         <div id="dating-preferences" class="card rounded-2xl p-6 mb-6">
             <h2 class="text-lg font-bold text-gray-800 mb-4">恋爱交友偏好</h2>
 
-            <!-- 年龄范围 -->
+            <!-- 年龄范围（列表拖动选择） -->
             <div class="mb-6">
-                <h3 class="font-semibold text-gray-700 mb-3">年龄范围</h3>
-                <div class="flex items-center space-x-4">
-                    <div class="flex-1">
-                        <label class="text-sm text-gray-600">最小年龄</label>
-                        <input type="range" min="18" max="50" value="22" class="w-full" id="minAge" onchange="updateAgeRange()">
-                        <div class="text-center text-sm text-gray-600" id="minAgeValue">22岁</div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold text-gray-700">年龄范围</h3>
+                    <span class="text-xs text-gray-500" id="ageRangeDisplayText">22 - 30 岁</span>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- 起始年龄列表 -->
+                    <div class="card rounded-2xl px-3 py-3">
+                        <div class="text-xs text-gray-500 mb-1">最小年龄</div>
+                        <div class="relative h-9 overflow-y-auto age-list" id="minAgeList">
+                            <!-- JS 动态渲染 18-50 岁 -->
+                        </div>
                     </div>
-                    <div class="flex-1">
-                        <label class="text-sm text-gray-600">最大年龄</label>
-                        <input type="range" min="18" max="50" value="30" class="w-full" id="maxAge" onchange="updateAgeRange()">
-                        <div class="text-center text-sm text-gray-600" id="maxAgeValue">30岁</div>
+                    <!-- 结束年龄列表 -->
+                    <div class="card rounded-2xl px-3 py-3">
+                        <div class="text-xs text-gray-500 mb-1">最大年龄</div>
+                        <div class="relative h-9 overflow-y-auto age-list" id="maxAgeList">
+                            <!-- JS 动态渲染 18-50 岁 -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -203,19 +221,26 @@
                 </div>
             </div>
 
-            <!-- 身高要求 -->
+            <!-- 身高要求（列表拖动选择） -->
             <div class="mb-6">
-                <h3 class="font-semibold text-gray-700 mb-3">身高要求</h3>
-                <div class="flex items-center space-x-4">
-                    <div class="flex-1">
-                        <label class="text-sm text-gray-600">最低身高</label>
-                        <input type="range" min="150" max="200" value="160" class="w-full" id="minHeight" onchange="updateHeightRange()">
-                        <div class="text-center text-sm text-gray-600" id="minHeightValue">160cm</div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold text-gray-700">身高要求</h3>
+                    <span class="text-xs text-gray-500" id="heightRangeDisplayText">160 - 180 cm</span>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- 最低身高列表 -->
+                    <div class="card rounded-2xl px-3 py-3">
+                        <div class="text-xs text-gray-500 mb-1">最低身高</div>
+                        <div class="relative h-9 overflow-y-auto age-list" id="minHeightList">
+                            <!-- JS 动态渲染 150-200 cm -->
+                        </div>
                     </div>
-                    <div class="flex-1">
-                        <label class="text-sm text-gray-600">最高身高</label>
-                        <input type="range" min="150" max="200" value="180" class="w-full" id="maxHeight" onchange="updateHeightRange()">
-                        <div class="text-center text-sm text-gray-600" id="maxHeightValue">180cm</div>
+                    <!-- 最高身高列表 -->
+                    <div class="card rounded-2xl px-3 py-3">
+                        <div class="text-xs text-gray-500 mb-1">最高身高</div>
+                        <div class="relative h-9 overflow-y-auto age-list" id="maxHeightList">
+                            <!-- JS 动态渲染 150-200 cm -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -276,8 +301,16 @@
             </div>
         </div>
 
+        <!-- 匹配按钮 -->
+        <div class="text-center">
+            <button id="matchBtn" class="match-btn w-full py-4 rounded-2xl text-white font-bold text-lg" onclick="startMatching()">
+                <i class="fas fa-search mr-2"></i>
+                开始匹配
+            </button>
+        </div>
+
         <!-- 匹配进度提示 -->
-        <div id="matchingProgress" class="card rounded-2xl p-6 mb-6 hidden">
+        <div id="matchingProgress" class="card rounded-2xl p-6 mt-6 hidden">
             <div class="text-center">
                 <div class="loading-spinner w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"></div>
                 <h3 class="text-lg font-bold text-gray-800 mb-2">正在寻找匹配...</h3>
@@ -288,14 +321,6 @@
                 <p class="text-sm text-gray-500" id="progressText">正在分析您的偏好...</p>
             </div>
         </div>
-    </div>
-
-    <!-- 底部按钮 -->
-    <div class="bottom-button-area">
-        <button id="matchBtn" class="match-btn w-full py-4 rounded-2xl text-white font-bold text-lg" onclick="startMatching()">
-            <i class="fas fa-search mr-2"></i>
-            开始匹配
-        </button>
     </div>
 
     <!-- 引入导航脚本 -->
@@ -340,15 +365,149 @@
             showToast(`已选择${mode === 'dating' ? '恋爱交友' : '搭子匹配'}模式`, 'info');
         }
 
-        // 更新年龄范围
-        function updateAgeRange() {
-            const minAge = document.getElementById('minAge').value;
-            const maxAge = document.getElementById('maxAge').value;
+        // 年龄范围：列表拖动 / 点击选择
+        function clampAge(value) {
+            if (isNaN(value)) return 18;
+            return Math.min(50, Math.max(18, value));
+        }
 
-            document.getElementById('minAgeValue').textContent = minAge + '岁';
-            document.getElementById('maxAgeValue').textContent = maxAge + '岁';
+        function updateAgeRangeDisplay() {
+            const { min, max } = selectedPreferences.dating.ageRange;
+            const text = document.getElementById('ageRangeDisplayText');
+            if (text) {
+                text.textContent = `${min} - ${max} 岁`;
+            }
+        }
 
-            selectedPreferences.dating.ageRange = { min: parseInt(minAge), max: parseInt(maxAge) };
+        function updateAgeListActive() {
+            const { min, max } = selectedPreferences.dating.ageRange;
+            document.querySelectorAll('#minAgeList .age-list-item').forEach(item => {
+                const v = parseInt(item.getAttribute('data-value'), 10);
+                item.classList.toggle('active', v === min);
+            });
+            document.querySelectorAll('#maxAgeList .age-list-item').forEach(item => {
+                const v = parseInt(item.getAttribute('data-value'), 10);
+                item.classList.toggle('active', v === max);
+            });
+        }
+
+        function selectAgeFromList(type, value) {
+            let { min, max } = selectedPreferences.dating.ageRange;
+            value = clampAge(value);
+            if (type === 'min') {
+                min = value;
+                if (min > max) max = min;
+            } else {
+                max = value;
+                if (max < min) min = max;
+            }
+            selectedPreferences.dating.ageRange = { min, max };
+            updateAgeListActive();
+            updateAgeRangeDisplay();
+        }
+
+        function renderAgeLists() {
+            const minList = document.getElementById('minAgeList');
+            const maxList = document.getElementById('maxAgeList');
+            if (!minList || !maxList) return;
+
+            minList.innerHTML = '';
+            maxList.innerHTML = '';
+
+            for (let age = 18; age <= 50; age++) {
+                const minItem = document.createElement('div');
+                minItem.className = 'age-list-item';
+                minItem.setAttribute('data-value', age);
+                minItem.textContent = age + ' 岁';
+                minItem.onclick = () => selectAgeFromList('min', age);
+                minList.appendChild(minItem);
+
+                const maxItem = document.createElement('div');
+                maxItem.className = 'age-list-item';
+                maxItem.setAttribute('data-value', age);
+                maxItem.textContent = age + ' 岁';
+                maxItem.onclick = () => selectAgeFromList('max', age);
+                maxList.appendChild(maxItem);
+            }
+
+            // 初始选中和滚动位置
+            updateAgeListActive();
+            updateAgeRangeDisplay();
+            const { min, max } = selectedPreferences.dating.ageRange;
+            scrollListToValue(minList, min);
+            scrollListToValue(maxList, max);
+        }
+
+        // 身高范围：列表拖动 / 点击选择
+        function clampHeight(value) {
+            if (isNaN(value)) return 150;
+            return Math.min(200, Math.max(150, value));
+        }
+
+        function updateHeightRangeDisplay() {
+            const { min, max } = selectedPreferences.dating.heightRange;
+            const text = document.getElementById('heightRangeDisplayText');
+            if (text) {
+                text.textContent = `${min} - ${max} cm`;
+            }
+        }
+
+        function updateHeightListActive() {
+            const { min, max } = selectedPreferences.dating.heightRange;
+            document.querySelectorAll('#minHeightList .age-list-item').forEach(item => {
+                const v = parseInt(item.getAttribute('data-value'), 10);
+                item.classList.toggle('active', v === min);
+            });
+            document.querySelectorAll('#maxHeightList .age-list-item').forEach(item => {
+                const v = parseInt(item.getAttribute('data-value'), 10);
+                item.classList.toggle('active', v === max);
+            });
+        }
+
+        function selectHeightFromList(type, value) {
+            let { min, max } = selectedPreferences.dating.heightRange;
+            value = clampHeight(value);
+            if (type === 'min') {
+                min = value;
+                if (min > max) max = min;
+            } else {
+                max = value;
+                if (max < min) min = max;
+            }
+            selectedPreferences.dating.heightRange = { min, max };
+            updateHeightListActive();
+            updateHeightRangeDisplay();
+        }
+
+        function renderHeightLists() {
+            const minList = document.getElementById('minHeightList');
+            const maxList = document.getElementById('maxHeightList');
+            if (!minList || !maxList) return;
+
+            minList.innerHTML = '';
+            maxList.innerHTML = '';
+
+            for (let h = 150; h <= 200; h++) {
+                const minItem = document.createElement('div');
+                minItem.className = 'age-list-item';
+                minItem.setAttribute('data-value', h);
+                minItem.textContent = h + ' cm';
+                minItem.onclick = () => selectHeightFromList('min', h);
+                minList.appendChild(minItem);
+
+                const maxItem = document.createElement('div');
+                maxItem.className = 'age-list-item';
+                maxItem.setAttribute('data-value', h);
+                maxItem.textContent = h + ' cm';
+                maxItem.onclick = () => selectHeightFromList('max', h);
+                maxList.appendChild(maxItem);
+            }
+
+            updateHeightListActive();
+            updateHeightRangeDisplay();
+            const { min, max } = selectedPreferences.dating.heightRange;
+            scrollListToValue(minList, min);
+            scrollListToValue(maxList, max);
         }
 
         // 更新身高范围
@@ -360,6 +519,15 @@
             document.getElementById('maxHeightValue').textContent = maxHeight + 'cm';
 
             selectedPreferences.dating.heightRange = { min: parseInt(minHeight), max: parseInt(maxHeight) };
+        }
+
+        // 辅助：通用滚动到指定值
+        function scrollListToValue(listEl, value) {
+            if (!listEl) return;
+            const target = listEl.querySelector(`[data-value="${value}"]`);
+            if (target) {
+                listEl.scrollTop = target.offsetTop - listEl.clientHeight / 2 + target.clientHeight / 2;
+            }
         }
 
         // 选择距离
@@ -531,6 +699,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             // 默认选择恋爱交友模式
             document.querySelector('[data-mode="dating"]').classList.add('active');
+            // 渲染年龄、身高列表
+            renderAgeLists();
+            renderHeightLists();
         });
     </script>
             </div>
